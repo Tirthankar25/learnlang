@@ -1,0 +1,338 @@
+I want an overall scheme like this - I call this system LeLa which is an automated tutor teaching me (student) Kannada in a 1-1 setup. The design is Agentic. The tutor starts the class by greeting the student - the student should return the greeting - if not, the teacher tells how to greet back. And the conversation continues. So the roles are reversed i.e., the Totor asks and the Student replies mostly. The student can also ask for clarity. As a second language to help the student understand the meanig, English may be used. The code environment constitutes Python (Pytorch, Huggingface), React frontend - assume Ubuntu server with Python 3+ and use open-source models for ASR, TTS, LLM and others. How to go about this?
+
+To build LeLa, you need a reactive conversational state machine running on top of a multi-modal pipeline (ASR $\to$ LLM Tutor Agent $\to$ TTS). Because speech-to-speech roundtrip latency is crucial in language teaching, the pipeline should minimize token and audio wait times.
+Here is the architectural blueprint, recommended open-source stack, and implementation plan.
+
+1. Technology Stack
+See Table1.png
+
+2. Architecture & State Design
+LeLa's role reversal means the agent is the proactive speaker and evaluator, while the student responds.
+See arch_schematic1.png
+
+State Machine Flow
+SESSION_INIT: LeLa generates initial greeting audio: "ನಮಸ್ಕಾರ! ನೀವು ಹೇಗಿದ್ದೀರಾ? (Namaskara! Neevu hegiddira? - Hello! How are you?)".
+WAIT_STUDENT_AUDIO: Frontend streams user microphone input via WebSocket.
+EVALUATE_RESPONSE:
+Condition A (Student greeted back appropriately): Praise the student in Kannada/English and advance the lesson to the next topic (e.g., asking for their name).
+Condition B (Student failed to greet, stayed silent, or answered wrongly): Don't scold. Break down how to respond: "You should say 'ನಮಸ್ಕಾರ' (Namaskara). Try repeating after me: 'ನಮಸ್ಕಾರ'."
+Condition C (Student asked for clarification in English/Kannada): Switch to English explanatory mode, clarify the phrase, and re-prompt the drill.
+
+3. Backend Agent Implementation (Python / FastAPI)
+Pedagogical System Prompt (with Structured Output)
+
+LELA_SYSTEM_PROMPT = """
+You are LeLa, an empathetic 1-on-1 Kannada language tutor.
+Your primary role is to lead the conversation: YOU ask questions and guide the student.
+Target language: Kannada. Explanatory language: English.
+
+Rules:
+1. Always output strict JSON with keys:
+   - "evaluation": string (brief assessment of student's answer)
+   - "passed": boolean (true if response was acceptable)
+   - "kannada_speech": string (ONLY Kannada text to be read aloud by TTS)
+   - "english_support": string (English translation and phonetics for screen display)
+   - "next_state": string ("GREETING", "NAME_INTRO", "VOCAB_DRILL", etc.)
+2. If the student answers incorrectly or fails to greet, explain the correct reply in English, give the phonetic guide, and prompt them to repeat it.
+3. Keep spoken Kannada sentences short and clear for beginners.
+"""
+
+See websockets_pipeline.py
+See speech_models_setup.py
+
+4. React Frontend Architecture
+The user interface needs two main duties: smooth audio capture with visual metering, and bilingual card display.
+Audio Recording Component:
+Uses navigator.mediaDevices.getUserMedia({ audio: true }).
+Record via AudioContext and convert to 16 kHz WAV or Opus chunk.
+Send the binary chunk over the WebSocket once silence is detected (simple client-side VAD) or via a "Push to Talk" button to eliminate crosstalk.
+Display Feed:
+Teacher Card: Shows the Kannada script with larger font (ನಮಸ್ಕಾರ!), an English transliteration (Namaskara!), and meaning.
+Audio Player: Automatically buffers and plays raw binary chunks sent by the server using an AudioContext buffer queue.
+5. Step-by-Step Implementation Roadmap
+Step 1: Offline Model Sanity Check
+Launch a Python script on your Ubuntu server.
+Load your chosen Kannada ASR model, transcribe a short sample WAV, and pass the text through your LLM.
+Synthesize the LLM output with indic-parler-tts to confirm pronunciation quality.
+Step 2: Build the Deterministic Agent Logic
+Define lesson milestones in code:
+Milestone 1: Greeting exchange (ನಮಸ್ಕಾರ).
+Milestone 2: Name introduction (ನಿಮ್ಮ ಹೆಸರೇನು? $\to$ ನನ್ನ ಹೆಸರು...).
+Milestone 3: Daily objects vocabulary.
+Ensure the LLM returns strict JSON with validation to avoid UI parsing failures.
+Step 3: Setup WebSocket Service
+Write the FastAPI WebSocket handler to bridge audio ingestion and response synthesis.
+Step 4: Connect the React Voice UI
+Implement Push-to-Talk first. (Full duplex streaming with Voice Activity Detection can be added later once baseline latency is tuned.)
+
+Operations -
+
+1. Ubuntu Setup & Package Installation
+Run these commands inside your virtual environment on Ubuntu:
+# 1. System dependencies for audio & build tools
+sudo apt-get update && sudo apt-get install -y \
+    build-essential ffmpeg libsndfile1 git git-lfs curl python3-pip python3-venv
+
+# 2. Virtual environment
+python3 -m venv lela-env
+source lela-env/bin/activate
+pip install --upgrade pip setuptools wheel
+
+# 3. PyTorch with CUDA 12.1 / 12.4
+pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+# 4. vLLM, FastAPI, and inference packages
+pip install vllm fastapi "uvicorn[standard]" websockets transformers soundfile librosa openai
+
+# 5. Install IndicF5 (AI4Bharat) and its F5-TTS diffusion backend
+pip install git+https://github.com/ai4bharat/IndicF5.git
+
+# 6. Install AI4Bharat NeMo fork (required by IndicConformer)
+git clone https://github.com/AI4Bharat/NeMo.git
+cd NeMo && git checkout nemo-v2
+pip install -e .
+cd ..
+
+# 7. Authenticate Hugging Face for Llama-3.1 access
+huggingface-cli login
+
+
+2. Create the Teacher Reference Audio (prompts/)
+IndicF5 requires a short 3–6 second reference audio clip to set the speaker's vocal timbre, pacing, and style. Create a directory and place your reference clip there:
+mkdir -p prompts
+
+Place a clean, warm Kannada teacher clip at prompts/kannada_teacher.wav (mono, 24 kHz or 16 kHz). For example, a clip speaking:
+"ನಮಸ್ಕಾರ, ಎಲ್ಲರಿಗೂ ಸುಸ್ವಾಗತ." (Namaskara, ellarigu suswagatha.)
+
+
+3. Service 1: Launch Llama-3.1 on vLLM (start_vllm.sh)
+Create start_vllm.sh:
+
+cat << 'EOF' > start_vllm.sh
+#!/usr/bin/env bash
+
+# Export your HF token if running the gated official Llama-3.1 checkpoint
+# export HF_TOKEN="hf_xxxxxxxxxxxxxxxxxxxx"
+
+# For 24GB GPUs (RTX 3090/4090): Use unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit or AWQ
+# For 40GB/80GB GPUs: Use "meta-llama/Meta-Llama-3.1-8B-Instruct" directly
+
+python3 -m vllm.entrypoints.openai.api_server \
+    --model meta-llama/Meta-Llama-3.1-8B-Instruct \
+    --port 8001 \
+    --host 0.0.0.0 \
+    --gpu-memory-utilization 0.50 \
+    --max-model-len 4096 \
+    --trust-remote-code \
+    --enforce-eager
+EOF
+chmod +x start_vllm.sh
+
+
+4. Service 2: FastAPI Gateway with IndicConformer & IndicF5 (app.py)
+Create app.py:
+import io
+import json
+import numpy as np
+from openai import AsyncOpenAI
+import soundfile as sf
+import torch
+import torchaudio
+
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from transformers import AutoModel
+import nemo.collections.asr as nemo_asr
+
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import os
+
+
+
+app = FastAPI()
+
+# Connect to local vLLM endpoint
+vllm_client = AsyncOpenAI(
+    base_url="http://localhost:8001/v1",
+    api_key="token-dummy"
+)
+
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
+print("[Init] Loading models into GPU memory...")
+
+# 1. Load IndicConformer (ASR)
+asr_model = nemo_asr.models.ASRModel.from_pretrained(
+    "ai4bharat/indicconformer_stt_kn_hybrid_ctc_rnnt_large"
+).to(DEVICE)
+asr_model.freeze()
+asr_model.cur_decoder = "rnnt"
+
+# 2. Load IndicF5 (Diffusion TTS)
+indic_f5_model = AutoModel.from_pretrained(
+    "ai4bharat/IndicF5", trust_remote_code=True
+).to(DEVICE)
+
+# 3. Reference audio prompt conditioning IndicF5 voice
+REF_AUDIO_PATH = "prompts/kannada_teacher.wav"
+REF_AUDIO_TEXT = "ನಮಸ್ಕಾರ, ಎಲ್ಲರಿಗೂ ಸುಸ್ವಾಗತ."
+
+print("[Init] All models loaded successfully.")
+
+
+def transcribe_audio_chunk(audio_bytes: bytes) -> str:
+    """Takes incoming WAV/PCM audio bytes and decodes with IndicConformer."""
+    wav_stream = io.BytesIO(audio_bytes)
+    audio_tensor, sr = torchaudio.load(wav_stream)
+
+    if sr != 16000:
+        resampler = torchaudio.transforms.Resample(orig_freq=sr, new_freq=16000)
+        audio_tensor = resampler(audio_tensor)
+    if audio_tensor.shape[0] > 1:
+        audio_tensor = torch.mean(audio_tensor, dim=0, keepdim=True)
+
+    temp_wav = io.BytesIO()
+    torchaudio.save(temp_wav, audio_tensor, 16000, format="WAV")
+    temp_wav.seek(0)
+
+    transcript = asr_model.transcribe(
+        [temp_wav], batch_size=1, language_id="kn"
+    )[0]
+    return transcript.strip()
+
+
+def synthesize_speech(text: str) -> bytes:
+    """Generates natural Kannada speech using IndicF5 flow-matching."""
+    audio = indic_f5_model(
+        text,
+        ref_audio_path=REF_AUDIO_PATH,
+        ref_text=REF_AUDIO_TEXT
+    )
+
+    if audio.dtype == np.int16:
+        audio = audio.astype(np.float32) / 32768.0
+
+    out_buffer = io.BytesIO()
+    sf.write(out_buffer, np.array(audio, dtype=np.float32), 24000, format="WAV")
+    return out_buffer.getvalue()
+
+
+SYSTEM_PROMPT = """
+You are LeLa, an interactive 1-on-1 Kannada language tutor.
+You take the lead in conversation: ask questions, prompt greetings, and evaluate the student's reply.
+Always reply in strict JSON format:
+{
+  "evaluation": "<brief assessment>",
+  "passed": true/false,
+  "kannada_speech": "<ONLY Kannada script text for the student to hear>",
+  "english_support": "<Phonetics & English translation for visual UI>",
+  "next_state": "<GREETING | INTRO | DRILL>"
+}
+"""
+
+@app.websocket("/ws/tutor")
+async def websocket_tutor(ws: WebSocket):
+    await ws.accept()
+
+    # Initial Greeting turn
+    welcome_kannada = "ನಮಸ್ಕಾರ! ನೀವು ಹೇಗಿದ್ದೀರಾ?"
+    welcome_audio = synthesize_speech(welcome_kannada)
+    await ws.send_bytes(welcome_audio)
+    await ws.send_text(json.dumps({
+        "teacher_kannada": welcome_kannada,
+        "english_help": "Namaskara! Neevu hegiddira? (Hello! How are you?)",
+        "state": "GREETING"
+    }))
+
+    try:
+        while True:
+            # Receive speech audio from React client
+            student_bytes = await ws.receive_bytes()
+
+            # 1. ASR
+            student_text = transcribe_audio_chunk(student_bytes)
+
+            # 2. Llama-3.1 Reasoning via vLLM
+            response = await vllm_client.chat.completions.create(
+                model="meta-llama/Meta-Llama-3.1-8B-Instruct",
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": f"Student said: '{student_text}'. Respond as LeLa."}
+                ],
+                temperature=0.3,
+                extra_body={"response_format": {"type": "json_object"}}
+            )
+            decision = json.loads(response.choices[0].message.content)
+
+            # 3. IndicF5 TTS
+            tts_audio = synthesize_speech(decision["kannada_speech"])
+
+            # 4. Stream response to client
+            await ws.send_bytes(tts_audio)
+            await ws.send_text(json.dumps({
+                "student_transcript": student_text,
+                "teacher_kannada": decision["kannada_speech"],
+                "english_help": decision["english_support"],
+                "passed": decision["passed"],
+                "state": decision["next_state"]
+            }))
+
+    except WebSocketDisconnect:
+        print("[WS] Session closed by student.")
+
+
+# Mount React static files (assuming React build output is in './frontend/build' or './dist')
+FRONTEND_DIST = os.path.join(os.path.dirname(__file__), "dist")
+
+if os.path.exists(FRONTEND_DIST):
+    app.mount("/assets", StaticFiles(directory=os.path.join(FRONTEND_DIST, "assets")), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        file_path = os.path.join(FRONTEND_DIST, full_path)
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+            return FileResponse(file_path)
+        return FileResponse(os.path.join(FRONTEND_DIST, "index.html"))
+
+
+
+
+5. Unified Launcher (run_all.sh)
+Create run_all.sh:
+cat << 'EOF' > run_all.sh
+#!/usr/bin/env bash
+source lela-env/bin/activate
+
+echo "--> 1. Starting vLLM (Llama-3.1-8B) on port 8001..."
+./start_vllm.sh > vllm.log 2>&1 &
+VLLM_PID=$!
+
+echo "Waiting for vLLM health check on port 8001..."
+while ! curl -s http://localhost:8001/health > /dev/null; do
+    sleep 3
+done
+echo "--> vLLM is operational!"
+
+echo "--> 2. Starting FastAPI Gateway (IndicConformer + IndicF5) on port 8000..."
+# uvicorn app:app --host 0.0.0.0 --port 8000
+uvicorn app:app --host 0.0.0.0 --port 7800
+
+
+trap "kill $VLLM_PID" EXIT
+EOF
+chmod +x run_all.sh
+
+Tunnel:
+ssh -N -L 7800:127.0.0.1:7800 <user>@<ubuntu-server-ip>
+
+
+6. Run & Monitor
+./run_all.sh
+
+To verify memory bounds across all components on your GPU:
+watch -n 1 nvidia-smi
+------------------------
+localhost:7800
+
+
+

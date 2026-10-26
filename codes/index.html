@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeLa - Kannada AI Tutor</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #f59e0b;
+      --accent-hover: #d97706;
+      --text: #f8fafc;
+      --subtext: #94a3b8;
+      --green: #10b981;
+      --red: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      background: var(--card);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 1rem;
+    }
+
+    .status-badge {
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #334155;
+      color: var(--subtext);
+    }
+    .status-badge.connected { background: #064e3b; color: #6ee7b7; }
+    .status-badge.recording { background: #7f1d1d; color: #fca5a5; }
+
+    .speech-box {
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 1.25rem;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .kannada-text {
+      font-size: 1.5rem;
+      color: var(--accent);
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .english-help {
+      font-size: 0.95rem;
+      color: var(--subtext);
+      font-style: italic;
+    }
+
+    .transcript-box {
+      border: 1px dashed #334155;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--subtext);
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    button {
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+
+    .btn-mic {
+      background: #334155;
+      color: var(--text);
+      display: none;
+    }
+    .btn-mic.recording {
+      background: var(--red);
+      animation: pulse 1.5s infinite;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .romanized { font-size: 1rem; color: var(--text); opacity: 0.85; }
+    .btn-mic { touch-action: none; user-select: none; -webkit-user-select: none; }
+    .btn-ask { background: transparent; color: var(--subtext); border: 1px solid #334155; display: none; }
+    .btn-ask.recording { border-color: var(--red); color: #fca5a5; }
+    .text-row { display: none; gap: 0.5rem; }
+    .text-row input {
+      flex: 1; padding: 0.6rem 0.8rem; border-radius: 8px; border: 1px solid #334155;
+      background: #0f172a; color: var(--text); font-size: 1rem;
+    }
+    .controls { flex-wrap: wrap; }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <h2>LeLa (ಲೆಲಾ)</h2>
+      <p style="color: var(--subtext); font-size: 0.85rem;">Interactive Kannada Tutor</p>
+    </div>
+    <span id="status" class="status-badge">Standby</span>
+  </header>
+
+  <!-- Teacher Prompt Area -->
+  <div class="speech-box">
+    <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--subtext); letter-spacing: 0.05em;">Tutor</div>
+    <div id="tutorKannada" class="kannada-text" lang="kn">Click "Start Session" to begin.</div>
+    <div id="tutorRoman" class="romanized"></div>
+    <div id="englishHelp" class="english-help">Audio will play automatically upon starting.</div>
+    <div id="audioNote" style="font-size: 0.8rem; color: var(--red);"></div>
+  </div>
+
+  <!-- Student Speech Recognized -->
+  <div class="transcript-box">
+    <strong>You said:</strong> <span id="studentTranscript">—</span>
+  </div>
+
+  <!-- Control Buttons -->
+  <div class="controls">
+    <button id="startBtn" class="btn-primary">Start Session</button>
+    <button id="micBtn" class="btn-mic">Hold to answer (Kannada)</button>
+    <button id="askBtn" class="btn-ask">Hold to ask in English</button>
+  </div>
+  <form id="textRow" class="text-row">
+    <input id="textInput" type="text" autocomplete="off" placeholder="Or type a question / answer (English or ಕನ್ನಡ)">
+    <button class="btn-primary" type="submit">Send</button>
+  </form>
+</div>
+
+<script>
+  let ws = null;
+  let audioCtx = null;
+  let mediaStream = null;
+  let recorder = null;
+  let chunks = [];
+  let busy = false;            // true while the tutor is thinking or speaking
+  const playQueue = [];
+  let playing = false;
+  let turnEnded = true;
+
+  const $ = (id) => document.getElementById(id);
+  const statusBadge = $("status"), startBtn = $("startBtn"), micBtn = $("micBtn"), askBtn = $("askBtn");
+  const textRow = $("textRow"), textInput = $("textInput");
+
+  function setStatus(text, cls = "connected") {
+    statusBadge.textContent = text;
+    statusBadge.className = "status-badge " + cls;
+  }
+
+  // Mic is locked while the tutor thinks/speaks, so the student never talks over LeLa
+  // and the tutor's own voice is not recorded as the student's answer.
+  function setBusy(b) {
+    busy = b;
+    micBtn.disabled = askBtn.disabled = b;
+    textInput.disabled = b;
+    if (!b) setStatus("Your turn");
+  }
+
+  function maybeIdle() {
+    if (turnEnded && !playing && playQueue.length === 0) setBusy(false);
+  }
+
+  startBtn.addEventListener("click", async () => {
+    startBtn.disabled = true;
+    startBtn.innerText = "Connecting...";
+    try {
+      // Created inside the click so autoplay policies allow playback. Native rate; decodeAudioData resamples.
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === "suspended") await audioCtx.resume();
+      // getUserMedia only works on https:// or http://localhost (see review).
+      mediaStream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, channelCount: 1 },
+      });
+      connect();
+    } catch (err) {
+      console.error("Initialization failed:", err);
+      alert("Mic permission or audio init failed: " + err.message +
+            "\n(The mic needs https:// or http://localhost.)");
+      startBtn.disabled = false;
+      startBtn.innerText = "Retry Start";
+    }
+  });
+
+  function connect() {
+    const protocol = location.protocol === "https:" ? "wss:" : "ws:";
+    ws = new WebSocket(`${protocol}//${location.host}/ws/tutor`);
+    ws.binaryType = "arraybuffer";
+
+    ws.onopen = () => {
+      startBtn.style.display = "none";
+      micBtn.style.display = askBtn.style.display = "inline-block";
+      textRow.style.display = "flex";
+      turnEnded = false;
+      setBusy(true);
+      setStatus("Tutor speaking");
+    };
+
+    ws.onmessage = (event) => {
+      if (event.data instanceof ArrayBuffer) {
+        playQueue.push(event.data);
+        playNext();
+        return;
+      }
+      const p = JSON.parse(event.data);
+      if (p.type === "turn_end") {
+        // Make a silent tutor visible instead of failing quietly (details in the server log).
+        $("audioNote").textContent = p.tts_error ? "Tutor audio unavailable: " + p.tts_error : "";
+        turnEnded = true; maybeIdle(); return;
+      }
+      // Kannada speech is shown in English letters; English speech as is.
+      if (p.student_display) $("studentTranscript").textContent = p.student_display;
+      if (p.type === "heard") return;
+      if (p.teacher_kannada) $("tutorKannada").textContent = p.teacher_kannada;
+      $("tutorRoman").textContent = p.romanized || "";
+      if (p.english_help) $("englishHelp").textContent = p.english_help;
+      if (p.lesson_done) setStatus("Lesson complete");
+    };
+
+    ws.onclose = () => {
+      setStatus("Disconnected", "");
+      micBtn.disabled = askBtn.disabled = textInput.disabled = true;
+    };
+    ws.onerror = (err) => console.error("WebSocket Error:", err);
+  }
+
+  // Plays clips one after another instead of overlapping them.
+  async function playNext() {
+    if (playing || playQueue.length === 0) return;
+    playing = true;
+    setStatus("Tutor speaking");
+    try {
+      if (audioCtx.state === "suspended") await audioCtx.resume();
+      const decoded = await audioCtx.decodeAudioData(playQueue.shift());
+      const src = audioCtx.createBufferSource();
+      src.buffer = decoded;
+      src.connect(audioCtx.destination);
+      await new Promise((resolve) => { src.onended = resolve; src.start(0); });
+    } catch (err) {
+      console.error("Audio playback failed:", err);
+      $("audioNote").textContent = "Browser could not play the tutor audio: " + err.message;
+    }
+    playing = false;
+    if (playQueue.length) playNext(); else maybeIdle();
+  }
+
+  // ---- Recording: MediaRecorder (webm/opus or mp4) -> server decodes + resamples to 16 kHz.
+  function startRecording(lang, btn) {
+    if (busy || recorder || !mediaStream || ws?.readyState !== WebSocket.OPEN) return;
+    chunks = [];
+    recorder = new MediaRecorder(mediaStream);
+    recorder.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
+    recorder.onstop = async () => {
+      const blob = new Blob(chunks, { type: recorder.mimeType });
+      recorder = null;
+      if (blob.size === 0) { turnEnded = true; setBusy(false); return; }
+      ws.send(JSON.stringify({ type: "audio_lang", lang }));
+      ws.send(await blob.arrayBuffer());
+    };
+    recorder.start();
+    btn.classList.add("recording");
+    setStatus("Listening", "recording");
+  }
+
+  function stopRecording(btn) {
+    btn.classList.remove("recording");
+    if (!recorder || recorder.state !== "recording") return;
+    turnEnded = false;
+    setBusy(true);
+    setStatus("Thinking...");
+    recorder.stop();
+  }
+
+  // Pointer events cover mouse, touch and pen once, so a tap no longer fires
+  // touch + emulated mouse events (which sent a second, empty recording).
+  // Pointer capture keeps the release event even if the finger slides off the button.
+  for (const [btn, lang] of [[micBtn, "kn"], [askBtn, "en"]]) {
+    btn.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      btn.setPointerCapture(e.pointerId);
+      startRecording(lang, btn);
+    });
+    btn.addEventListener("pointerup", () => stopRecording(btn));
+    btn.addEventListener("pointercancel", () => stopRecording(btn));
+    btn.addEventListener("contextmenu", (e) => e.preventDefault());
+  }
+
+  textRow.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = textInput.value.trim();
+    if (!text || busy || ws?.readyState !== WebSocket.OPEN) return;
+    ws.send(JSON.stringify({ type: "text", text }));
+    textInput.value = "";
+    turnEnded = false;
+    setBusy(true);
+    setStatus("Thinking...");
+  });
+</script>
+
+</body>
+</html>

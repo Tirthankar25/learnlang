@@ -1,0 +1,81 @@
+{
+  "id": "lesson_01_greetings",
+  "title": "Greetings and introductions",
+  "steps": [
+    {
+      "id": "greet",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ನಾನು ಲೆಲಾ, ನಿಮ್ಮ ಕನ್ನಡ ಶಿಕ್ಷಕಿ.",
+      "tutor_en": "Hello! I am LeLa, your Kannada teacher.",
+      "goal_en": "The student greets the teacher back.",
+      "expected_kn": [
+        "ನಮಸ್ಕಾರ",
+        "ನಮಸ್ಕಾರಗಳು",
+        "ನಮಸ್ತೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನೀವೂ ನನಗೆ ನಮಸ್ಕಾರ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "To greet me back, just say ನಮಸ್ಕಾರ (namaskāra), meaning 'hello'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "how_are_you",
+      "tutor_kn": "ನೀವು ಹೇಗಿದ್ದೀರಿ?",
+      "tutor_en": "How are you?",
+      "goal_en": "The student says they are fine.",
+      "expected_kn": [
+        "ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ",
+        "ಚೆನ್ನಾಗಿದ್ದೇನೆ",
+        "ಚೆನ್ನಾಗಿದ್ದೀನಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ (nānu chennāgiddēne), meaning 'I am fine'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "name",
+      "tutor_kn": "ನಿಮ್ಮ ಹೆಸರು ಏನು?",
+      "tutor_en": "What is your name?",
+      "goal_en": "The student says 'my name is <name>' in Kannada. Any name is fine.",
+      "expected_kn": [
+        "ನನ್ನ ಹೆಸರು"
+      ],
+      "match": "prefix",
+      "hint_kn": "ನನ್ನ ಹೆಸರು, ನಂತರ ನಿಮ್ಮ ಹೆಸರು ಹೇಳಿ.",
+      "hint_en": "Say ನನ್ನ ಹೆಸರು (nanna hesaru) followed by your name, meaning 'my name is ...'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "where_from",
+      "tutor_kn": "ನೀವು ಎಲ್ಲಿಂದ ಬಂದಿದ್ದೀರಿ?",
+      "tutor_en": "Where are you from?",
+      "goal_en": "The student says where they are from: 'ನಾನು <place>-ಇಂದ ಬಂದಿದ್ದೇನೆ' (I have come from <place>). Any place is fine, and so is a slightly wrong case ending on the place name (e.g. 'ಕೋಲ್ಕತ ಇಂದ' instead of 'ಕೋಲ್ಕತ್ತಾದಿಂದ'); accept it and praise.",
+      "expected_kn": [
+        "ಬಂದಿದ್ದೇನೆ",
+        "ಬಂದಿದ್ದೀನಿ",
+        "ಬಂದಿದ್ದೀನ್",
+        "ಬಂದೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಉದಾಹರಣೆಗೆ, ನಾನು ಬೆಂಗಳೂರಿನಿಂದ ಬಂದಿದ್ದೇನೆ.",
+      "hint_en": "Say ನಾನು (nānu) + your town + ಇಂದ (-inda, 'from') + ಬಂದಿದ್ದೇನೆ (bandiddēne, 'have come'). For example: ನಾನು ಬೆಂಗಳೂರಿನಿಂದ ಬಂದಿದ್ದೇನೆ (nānu bengaḷūrininda bandiddēne), 'I have come from Bengaluru'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ತುಂಬಾ ಚೆನ್ನಾಗಿ ಮಾಡಿದ್ದೀರಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "You did very well! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2
+    }
+  ]
+}
