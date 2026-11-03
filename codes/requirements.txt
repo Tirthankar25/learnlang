@@ -1,0 +1,25 @@
+# LeLa server. Checked on Python 3.10 (3.10.20). vLLM is installed separately per vLLM docs.
+fastapi
+uvicorn[standard]        # [standard] pulls in websockets; plain "uvicorn" returns 404 on /ws/tutor
+httpx
+numpy
+soundfile
+av                       # decodes browser recordings (webm/opus, mp4); app.py calls PyAV directly
+faster-whisper           # English questions (and Kannada if LELA_ASR_KN=whisper)
+
+# Keep the torch / torchaudio / transformers versions you already have working with IndicF5.
+# Don't upgrade them just for this file: IndicF5 runs remote code that may not support
+# transformers 5.x. If you install torchaudio fresh, match it to your torch version.
+torch
+torchaudio
+transformers<5
+
+# One clean cuDNN 9 for both torch 2.4.1 (built with 9.1) and onnxruntime-gpu 1.20.
+# pip warns that torch pins 9.1.0.70; newer 9.x minors are backward compatible, so that's fine.
+nvidia-cudnn-cu12==9.5.1.17
+
+# IndicConformer. Install onnxruntime-gpu with --no-deps after everything else: faster-whisper
+# pulls in the CPU "onnxruntime" package, which overwrites the GPU one if both are installed. Its model card says 1.20.1, but onnxruntime-gpu 1.20.1 was never published
+# on PyPI; 1.20.2 is the matching patch release. Don't also install the CPU "onnxruntime" package.
+onnx==1.20.1
+onnxruntime-gpu==1.20.2
