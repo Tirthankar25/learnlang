@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeLa Kannada Tutor</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #f59e0b;
+      --accent-hover: #d97706;
+      --text: #f8fafc;
+      --subtext: #94a3b8;
+      --green: #10b981;
+      --red: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      background: var(--card);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 1rem;
+    }
+
+    .status-badge {
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #334155;
+      color: var(--subtext);
+    }
+    .status-badge.connected { background: #064e3b; color: #6ee7b7; }
+    .status-badge.recording { background: #7f1d1d; color: #fca5a5; }
+
+    .speech-box {
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 1.25rem;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .kannada-text {
+      font-size: 1.5rem;
+      color: var(--accent);
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .english-help {
+      font-size: 0.95rem;
+      color: var(--subtext);
+      font-style: italic;
+    }
+
+    .transcript-box {
+      border: 1px dashed #334155;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--subtext);
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    button {
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+
+    .btn-mic {
+      background: #334155;
+      color: var(--text);
+      display: none;
+    }
+    .btn-mic.recording {
+      background: var(--red);
+      animation: pulse 1.5s infinite;
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .romanized { font-size: 1rem; color: var(--text); opacity: 0.85; }
+    .btn-mic { touch-action: none; user-select: none; -webkit-user-select: none; }
+    .btn-ask { background: transparent; color: var(--subtext); border: 1px solid #334155; display: none; }
+    .btn-ask.recording { border-color: var(--red); color: #fca5a5; }
+    .text-row { display: none; gap: 0.5rem; }
+    .controls { flex-wrap: wrap; }
+
+    /* Learner name, lesson picker and progress cards */
+    .hidden { display: none !important; }
+    .muted { color: var(--subtext); font-size: 0.9rem; }
+    .link-btn { background: none; border: none; color: var(--accent); padding: 0; font-weight: 500; font-size: 0.9rem; }
+    .name-form { display: flex; gap: 0.5rem; }
+    .name-form input, .text-row input {
+      flex: 1; padding: 0.6rem 0.8rem; border-radius: 8px; border: 1px solid #334155;
+      background: #0f172a; color: var(--text); font-size: 1rem; min-width: 0;
+    }
+    .lesson-grid { display: grid; gap: 0.9rem; }
+    .lesson-card {
+      background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 1rem 1.1rem;
+      display: flex; flex-direction: column; gap: 0.55rem;
+    }
+    .lesson-card.suggested { border-color: var(--accent); }
+    .lesson-card h3 { font-size: 1.05rem; }
+    .lesson-num { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--subtext); }
+    .card-top { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+    .pill { font-size: 0.75rem; padding: 2px 9px; border-radius: 999px; background: #334155; color: var(--subtext); white-space: nowrap; }
+    .pill.in_progress { background: #78350f; color: #fde68a; }
+    .pill.completed { background: #064e3b; color: #6ee7b7; }
+    .bar { height: 6px; background: #334155; border-radius: 999px; overflow: hidden; }
+    .bar > div { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.3s ease; }
+    .bar.done > div { background: var(--green); }
+    .stats { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-size: 0.8rem; color: var(--subtext); }
+    .card-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .card-actions button.btn-primary { padding: 0.5rem 1.1rem; font-size: 0.95rem; }
+    .lesson-head { display: flex; flex-direction: column; gap: 0.4rem; }
+    .lesson-head-row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+    .done-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <h2>LeLa (ಲೆಲಾ)</h2>
+      <p style="color: var(--subtext); font-size: 0.85rem;">Interactive Kannada Tutor</p>
+    </div>
+    <span id="status" class="status-badge">Standby</span>
+  </header>
+
+  <!-- 1. Who is learning (name only, remembered in this browser) -->
+  <section id="whoView" class="hidden">
+    <p style="margin-bottom: 0.75rem;">Who is learning today?</p>
+    <form id="nameForm" class="name-form">
+      <input id="nameInput" type="text" maxlength="40" autocomplete="name" placeholder="Your name" required>
+      <button class="btn-primary" type="submit">Continue</button>
+    </form>
+    <p class="muted" style="margin-top: 0.6rem;">Each name keeps its own progress on every lesson.</p>
+  </section>
+
+  <!-- 2. Lesson picker with this learner's progress card on each lesson -->
+  <section id="pickView" class="hidden">
+    <div class="lesson-head-row" style="margin-bottom: 0.9rem;">
+      <span>Hi <strong id="whoName"></strong>, pick a lesson.</span>
+      <button id="switchBtn" class="link-btn" type="button">Not you?</button>
+    </div>
+    <div id="lessonGrid" class="lesson-grid"><p class="muted">Loading lessons…</p></div>
+  </section>
+
+  <!-- 3. The lesson itself -->
+  <section id="lessonView" class="hidden" style="display: flex; flex-direction: column; gap: 1.25rem;">
+  <div class="lesson-head">
+    <div class="lesson-head-row">
+      <strong id="lessonTitle"></strong>
+      <button id="backBtn" class="link-btn" type="button">All lessons</button>
+    </div>
+    <div class="bar" id="lessonBar"><div style="width: 0%"></div></div>
+    <div class="muted" id="lessonStepText" style="font-size: 0.8rem;"></div>
+  </div>
+
+  <!-- Teacher Prompt Area -->
+  <div class="speech-box">
+    <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--subtext); letter-spacing: 0.05em;">Tutor</div>
+    <div id="tutorKannada" class="kannada-text" lang="kn">…</div>
+    <div id="tutorRoman" class="romanized"></div>
+    <div id="englishHelp" class="english-help">Connecting…</div>
+    <div id="audioNote" style="font-size: 0.8rem; color: var(--red);"></div>
+  </div>
+
+  <!-- Student Speech Recognized -->
+  <div class="transcript-box">
+    <strong>You said:</strong> <span id="studentTranscript">—</span>
+  </div>
+
+  <!-- Control Buttons -->
+  <div class="controls">
+    <button id="micBtn" class="btn-mic">Hold to answer (Kannada)</button>
+    <button id="askBtn" class="btn-ask">Hold to ask in English</button>
+  </div>
+  <form id="textRow" class="text-row">
+    <input id="textInput" type="text" autocomplete="off" placeholder="Or type a question / answer (English or ಕನ್ನಡ)">
+    <button class="btn-primary" type="submit">Send</button>
+  </form>
+  <div id="doneRow" class="done-row hidden">
+    <button id="nextBtn" class="btn-primary" type="button">Next lesson</button>
+    <button id="doneBackBtn" class="btn-ask" style="display: inline-block;" type="button">All lessons</button>
+  </div>
+  </section>
+</div>
+
+<script>
+  let ws = null;
+  let audioCtx = null;
+  let mediaStream = null;
+  let recorder = null;
+  let chunks = [];
+  let busy = false;            // true while the tutor is thinking or speaking
+  const playQueue = [];
+  let playing = false;
+  let currentSrc = null;       // the clip playing now, so leaving a lesson can stop it
+  let turnEnded = true;
+
+  const $ = (id) => document.getElementById(id);
+  const statusBadge = $("status"), micBtn = $("micBtn"), askBtn = $("askBtn");
+  const textRow = $("textRow"), textInput = $("textInput");
+
+  // ---- Learner, lessons and progress cards
+  let learner = "";
+  let lessons = [];            // [{id, num, title, summary, steps}]
+  let progress = {};           // {lessonId: card} for this learner
+  let suggested = null;
+  let current = null;          // lesson being played
+  let lessonDone = false;
+
+  function store(key, value) {  // localStorage can be blocked (private windows): never fail on it
+    try { value == null ? localStorage.removeItem(key) : localStorage.setItem(key, value); } catch (e) {}
+  }
+  function recall(key) { try { return localStorage.getItem(key) || ""; } catch (e) { return ""; } }
+
+  function show(view) {
+    for (const v of ["whoView", "pickView", "lessonView"]) $(v).classList.toggle("hidden", v !== view);
+  }
+
+  function setStatus(text, cls = "connected") {
+    statusBadge.textContent = text;
+    statusBadge.className = "status-badge " + cls;
+  }
+
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function ago(iso) {
+    if (!iso) return "";
+    const s = (Date.now() - new Date(iso).getTime()) / 1000;
+    if (s < 90) return "just now";
+    if (s < 5400) return Math.round(s / 60) + " min ago";
+    if (s < 129600) return Math.round(s / 3600) + " h ago";
+    return Math.round(s / 86400) + " days ago";
+  }
+
+  // How far through the lesson the card is: finished steps / all steps.
+  function stepsDone(card) {
+    if (!card) return 0;
+    return card.status === "completed" ? card.total : Object.keys(card.results || {}).length;
+  }
+
+  async function loadPicker() {
+    show("pickView");
+    setStatus("Choose a lesson", "");
+    $("whoName").textContent = learner;
+    try {
+      const r = await fetch("/api/lessons?user=" + encodeURIComponent(learner));
+      const data = await r.json();
+      lessons = data.lessons; progress = data.progress || {}; suggested = data.suggested;
+    } catch (err) {
+      $("lessonGrid").replaceChildren(el("p", "muted", "Could not load lessons: " + err.message));
+      return;
+    }
+    renderCards();
+  }
+
+  function renderCards() {
+    const grid = $("lessonGrid");
+    grid.replaceChildren();
+    for (const l of lessons) {
+      const c = progress[l.id] || { status: "not_started", total: l.steps, results: {} };
+      const card = el("div", "lesson-card" + (l.id === suggested ? " suggested" : ""));
+      const top = el("div", "card-top");
+      const titles = el("div");
+      titles.append(el("div", "lesson-num", "Lesson " + l.num + (l.id === suggested ? " · up next" : "")),
+                    el("h3", null, l.title));
+      const label = { not_started: "Not started", in_progress: "In progress", completed: "Completed" }[c.status];
+      top.append(titles, el("span", "pill " + c.status, label));
+      card.append(top);
+      if (l.summary) card.append(el("div", "muted", l.summary));
+
+      const done = stepsDone(c);
+      const bar = el("div", "bar" + (c.status === "completed" ? " done" : ""));
+      const fill = el("div"); fill.style.width = Math.round(100 * done / c.total) + "%";
+      bar.append(fill); card.append(bar);
+
+      const stats = el("div", "stats");
+      stats.append(el("span", null, `${done} of ${c.total} steps`));
+      if (done) stats.append(el("span", null, `${c.first_try || 0} right first time`));
+      if (c.completions) stats.append(el("span", null,
+        `Finished ${c.completions}×, best ${c.best_first_try}/${c.total} first time`));
+      if (c.last_played) stats.append(el("span", null, "Last played " + ago(c.last_played)));
+      card.append(stats);
+
+      const actions = el("div", "card-actions");
+      const go = el("button", "btn-primary",
+        c.status === "in_progress" && done ? "Continue" : c.completions ? "Practise again" : "Start");
+      go.type = "button";
+      go.onclick = () => startLesson(l.id, false);
+      actions.append(go);
+      if (c.status === "in_progress" && done) {
+        const over = el("button", "link-btn", "Start over");
+        over.type = "button";
+        over.onclick = () => startLesson(l.id, true);
+        actions.append(over);
+      }
+      card.append(actions);
+      grid.append(card);
+    }
+  }
+
+  function showLessonProgress(card) {
+    const done = stepsDone(card);
+    $("lessonBar").className = "bar" + (card.status === "completed" ? " done" : "");
+    $("lessonBar").firstElementChild.style.width = Math.round(100 * done / card.total) + "%";
+    $("lessonStepText").textContent = card.status === "completed"
+      ? `Lesson complete: ${card.first_try} of ${card.total} right first time`
+      : `Step ${Math.min(done + 1, card.total)} of ${card.total}`;
+    progress[current.id] = card;
+  }
+
+  $("nameForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = $("nameInput").value.trim();
+    if (!name) return;
+    learner = name; store("lela_learner", name);
+    loadPicker();
+  });
+  $("switchBtn").onclick = () => { store("lela_learner", null); $("nameInput").value = ""; show("whoView"); setStatus("Standby", ""); };
+  $("backBtn").onclick = $("doneBackBtn").onclick = () => { leaveLesson(); loadPicker(); };
+  $("nextBtn").onclick = () => {
+    const i = lessons.findIndex((l) => l.id === current.id);
+    leaveLesson();
+    if (i + 1 < lessons.length) startLesson(lessons[i + 1].id, false); else loadPicker();
+  };
+
+  // Mic is locked while the tutor thinks/speaks, so the student never talks over LeLa
+  // and the tutor's own voice is not recorded as the student's answer.
+  function setBusy(b) {
+    busy = b;
+    micBtn.disabled = askBtn.disabled = b;
+    textInput.disabled = b;
+    if (!b) setStatus(lessonDone ? "Lesson complete" : "Your turn");
+  }
+
+  function maybeIdle() {
+    if (turnEnded && !playing && playQueue.length === 0) setBusy(false);
+  }
+
+  // Picking a lesson card is the click that lets the browser play audio and open the mic.
+  async function startLesson(lessonId, restart) {
+    current = lessons.find((l) => l.id === lessonId);
+    lessonDone = false;
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === "suspended") await audioCtx.resume();
+      // getUserMedia only works on https:// or http://localhost (see review).
+      if (!mediaStream) mediaStream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, channelCount: 1 },
+      });
+    } catch (err) {
+      console.error("Initialization failed:", err);
+      alert("Mic permission or audio init failed: " + err.message +
+            "\n(The mic needs https:// or http://localhost.)");
+      return;
+    }
+    $("lessonTitle").textContent = `Lesson ${current.num}: ${current.title}`;
+    $("tutorKannada").textContent = "…"; $("tutorRoman").textContent = "";
+    $("englishHelp").textContent = "Connecting…"; $("audioNote").textContent = "";
+    $("studentTranscript").textContent = "—";
+    $("doneRow").classList.add("hidden");
+    $("nextBtn").classList.toggle("hidden", lessons.indexOf(current) + 1 >= lessons.length);
+    showLessonProgress(progress[lessonId] || { status: "not_started", total: current.steps, results: {} });
+    show("lessonView");
+    setStatus("Connecting…", "");
+    connect(lessonId, restart);
+  }
+
+  // Back to the picker: close the socket and stop any audio or recording in flight.
+  function leaveLesson() {
+    if (ws) { ws.onclose = null; ws.close(); ws = null; }
+    if (recorder && recorder.state === "recording") { recorder.onstop = null; recorder.stop(); }
+    recorder = null;
+    micBtn.classList.remove("recording"); askBtn.classList.remove("recording");
+    playQueue.length = 0;
+    if (currentSrc) { try { currentSrc.stop(); } catch (e) {} }
+    turnEnded = true;
+  }
+
+  function connect(lessonId, restart) {
+    const protocol = location.protocol === "https:" ? "wss:" : "ws:";
+    const q = new URLSearchParams({ user: learner, lesson: lessonId });
+    if (restart) q.set("restart", "1");
+    const sock = new WebSocket(`${protocol}//${location.host}/ws/tutor?${q}`);
+    ws = sock;
+    sock.binaryType = "arraybuffer";
+
+    sock.onopen = () => {
+      micBtn.style.display = askBtn.style.display = "inline-block";
+      textRow.style.display = "flex";
+      turnEnded = false;
+      setBusy(true);
+      setStatus("Tutor speaking");
+    };
+
+    sock.onmessage = (event) => {
+      if (ws !== sock) return;  // a message from a lesson the learner already left
+      if (event.data instanceof ArrayBuffer) {
+        playQueue.push(event.data);
+        playNext();
+        return;
+      }
+      const p = JSON.parse(event.data);
+      if (p.type === "progress") { showLessonProgress(p.card); return; }
+      if (p.type === "turn_end") {
+        // Make a silent tutor visible instead of failing quietly (details in the server log).
+        $("audioNote").textContent = p.tts_error ? "Tutor audio unavailable: " + p.tts_error : "";
+        turnEnded = true; maybeIdle(); return;
+      }
+      // Kannada speech is shown in English letters; English speech as is.
+      if (p.student_display) $("studentTranscript").textContent = p.student_display;
+      if (p.type === "heard") return;
+      if (p.teacher_kannada) $("tutorKannada").textContent = p.teacher_kannada;
+      $("tutorRoman").textContent = p.romanized || "";
+      if (p.english_help) $("englishHelp").textContent = p.english_help;
+      if (p.lesson_done) { lessonDone = true; setStatus("Lesson complete"); $("doneRow").classList.remove("hidden"); }
+    };
+
+    sock.onclose = (e) => {
+      setStatus("Disconnected", "");
+      micBtn.disabled = askBtn.disabled = textInput.disabled = true;
+      if (e.reason) $("englishHelp").textContent = e.reason;
+    };
+    sock.onerror = (err) => console.error("WebSocket Error:", err);
+  }
+
+  // Start where the learner left off: remembered name -> lesson picker.
+  learner = recall("lela_learner");
+  if (learner) loadPicker(); else show("whoView");
+
+  // Plays clips one after another instead of overlapping them.
+  async function playNext() {
+    if (playing || playQueue.length === 0) return;
+    playing = true;
+    setStatus("Tutor speaking");
+    try {
+      if (audioCtx.state === "suspended") await audioCtx.resume();
+      const decoded = await audioCtx.decodeAudioData(playQueue.shift());
+      const src = audioCtx.createBufferSource();
+      src.buffer = decoded;
+      src.connect(audioCtx.destination);
+      currentSrc = src;
+      await new Promise((resolve) => { src.onended = resolve; src.start(0); });
+      currentSrc = null;
+    } catch (err) {
+      console.error("Audio playback failed:", err);
+      $("audioNote").textContent = "Browser could not play the tutor audio: " + err.message;
+    }
+    playing = false;
+    if (playQueue.length) playNext(); else maybeIdle();
+  }
+
+  // ---- Recording: MediaRecorder (webm/opus or mp4) -> server decodes + resamples to 16 kHz.
+  function startRecording(lang, btn) {
+    if (busy || recorder || !mediaStream || ws?.readyState !== WebSocket.OPEN) return;
+    chunks = [];
+    recorder = new MediaRecorder(mediaStream);
+    recorder.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
+    recorder.onstop = async () => {
+      const blob = new Blob(chunks, { type: recorder.mimeType });
+      recorder = null;
+      if (blob.size === 0) { turnEnded = true; setBusy(false); return; }
+      ws.send(JSON.stringify({ type: "audio_lang", lang }));
+      ws.send(await blob.arrayBuffer());
+    };
+    recorder.start();
+    btn.classList.add("recording");
+    setStatus("Listening", "recording");
+  }
+
+  function stopRecording(btn) {
+    btn.classList.remove("recording");
+    if (!recorder || recorder.state !== "recording") return;
+    turnEnded = false;
+    setBusy(true);
+    setStatus("Thinking...");
+    recorder.stop();
+  }
+
+  // Pointer events cover mouse, touch and pen once, so a tap no longer fires
+  // touch + emulated mouse events (which sent a second, empty recording).
+  // Pointer capture keeps the release event even if the finger slides off the button.
+  for (const [btn, lang] of [[micBtn, "kn"], [askBtn, "en"]]) {
+    btn.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      btn.setPointerCapture(e.pointerId);
+      startRecording(lang, btn);
+    });
+    btn.addEventListener("pointerup", () => stopRecording(btn));
+    btn.addEventListener("pointercancel", () => stopRecording(btn));
+    btn.addEventListener("contextmenu", (e) => e.preventDefault());
+  }
+
+  textRow.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = textInput.value.trim();
+    if (!text || busy || ws?.readyState !== WebSocket.OPEN) return;
+    ws.send(JSON.stringify({ type: "text", text }));
+    textInput.value = "";
+    turnEnded = false;
+    setBusy(true);
+    setStatus("Thinking...");
+  });
+</script>
+
+</body>
+</html>

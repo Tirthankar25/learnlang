@@ -1,0 +1,86 @@
+{
+  "id": "lesson_03_food",
+  "title": "Food and drink",
+  "summary_en": "Say what you would like to drink and talk about your meal.",
+  "steps": [
+    {
+      "id": "coffee_or_tea",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ನಿಮಗೆ ಕಾಫಿ ಬೇಕಾ, ಟೀ ಬೇಕಾ?",
+      "tutor_en": "Hello! Would you like coffee or tea?",
+      "goal_en": "The student says which drink they want, e.g. 'ನನಗೆ ಕಾಫಿ ಬೇಕು' (I want coffee). Just the word for the drink is fine too.",
+      "expected_kn": [
+        "ಕಾಫಿ",
+        "ಟೀ",
+        "ಚಹಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನನಗೆ ಕಾಫಿ ಬೇಕು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನನಗೆ ಕಾಫಿ ಬೇಕು (nanage kāphi bēku), meaning 'I want coffee'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "water",
+      "tutor_kn": "ನಿಮಗೆ ನೀರು ಬೇಕಾ?",
+      "tutor_en": "Would you like some water?",
+      "goal_en": "The student answers yes or no: 'ಹೌದು, ನೀರು ಬೇಕು' (yes, I want water) or 'ಬೇಡ' (no, I don't want it). Either answer is fine.",
+      "expected_kn": [
+        "ಹೌದು",
+        "ಬೇಕು",
+        "ಬೇಡ",
+        "ಇಲ್ಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ನೀರು ಬೇಕು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ನೀರು ಬೇಕು (haudu, nīru bēku), 'yes, I want water', or ಬೇಡ (bēḍa), 'no thanks'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "eaten",
+      "tutor_kn": "ನಿಮ್ಮ ಊಟ ಆಯಿತಾ?",
+      "tutor_en": "Have you eaten?",
+      "goal_en": "The student says whether they have eaten: 'ಹೌದು, ಊಟ ಆಯಿತು' (yes, I have eaten) or 'ಇನ್ನೂ ಇಲ್ಲ' (not yet). Either answer is fine.",
+      "expected_kn": [
+        "ಆಯಿತು",
+        "ಆಯ್ತು",
+        "ಇನ್ನೂ ಇಲ್ಲ",
+        "ಇಲ್ಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಊಟ ಆಯಿತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಊಟ ಆಯಿತು (haudu, ūṭa āyitu), 'yes, I have eaten', or ಇನ್ನೂ ಇಲ್ಲ (innū illa), 'not yet'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "how_was_it",
+      "tutor_kn": "ಊಟ ಹೇಗಿತ್ತು?",
+      "tutor_en": "How was the food?",
+      "goal_en": "The student says the food was good: 'ಊಟ ಚೆನ್ನಾಗಿತ್ತು' (the food was good) or 'ರುಚಿಯಾಗಿತ್ತು' (it was tasty).",
+      "expected_kn": [
+        "ಚೆನ್ನಾಗಿತ್ತು",
+        "ರುಚಿಯಾಗಿತ್ತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಊಟ ತುಂಬಾ ಚೆನ್ನಾಗಿತ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಊಟ ತುಂಬಾ ಚೆನ್ನಾಗಿತ್ತು (ūṭa tumbā chennāgittu), 'the food was very good'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ತುಂಬಾ ಚೆನ್ನಾಗಿ ಮಾಡಿದ್ದೀರಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "You did very well! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

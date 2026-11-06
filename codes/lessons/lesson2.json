@@ -1,0 +1,90 @@
+{
+  "id": "lesson_02_numbers",
+  "title": "Numbers one to five",
+  "summary_en": "Count from one to five: ondu, eraḍu, mūru, nālku, aidu.",
+  "steps": [
+    {
+      "id": "one",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಇವತ್ತು ಎಣಿಕೆ ಕಲಿಯೋಣ. ಒಂದು ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Hello! Today let's learn to count. Say ಒಂದು (ondu), 'one'.",
+      "goal_en": "The student says ಒಂದು (one).",
+      "expected_kn": [
+        "ಒಂದು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಒಂದು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಒಂದು (ondu), meaning 'one'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "two",
+      "tutor_kn": "ಈಗ ಎರಡು ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Now say ಎರಡು (eraḍu), 'two'.",
+      "goal_en": "The student says ಎರಡು (two).",
+      "expected_kn": [
+        "ಎರಡು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಎರಡು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಎರಡು (eraḍu), meaning 'two'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "three",
+      "tutor_kn": "ಈಗ ಮೂರು ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Now say ಮೂರು (mūru), 'three'.",
+      "goal_en": "The student says ಮೂರು (three).",
+      "expected_kn": [
+        "ಮೂರು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಮೂರು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಮೂರು (mūru), meaning 'three'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "four",
+      "tutor_kn": "ಒಂದು, ಎರಡು, ಮೂರು. ಮುಂದಿನ ಸಂಖ್ಯೆ ಯಾವುದು?",
+      "tutor_en": "One, two, three. What number comes next?",
+      "goal_en": "The student says ನಾಲ್ಕು (four).",
+      "expected_kn": [
+        "ನಾಲ್ಕು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಮುಂದಿನ ಸಂಖ್ಯೆ ನಾಲ್ಕು. ನಾಲ್ಕು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "The next number is ನಾಲ್ಕು (nālku), 'four'. Say ನಾಲ್ಕು.",
+      "max_attempts": 3
+    },
+    {
+      "id": "five",
+      "tutor_kn": "ಒಂದು ಕೈಯಲ್ಲಿ ಎಷ್ಟು ಬೆರಳುಗಳಿವೆ?",
+      "tutor_en": "How many fingers are there on one hand?",
+      "goal_en": "The student says ಐದು (five), alone or in a sentence.",
+      "expected_kn": [
+        "ಐದು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಒಂದು ಕೈಯಲ್ಲಿ ಐದು ಬೆರಳುಗಳಿವೆ. ಐದು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "There are five fingers on one hand. Say ಐದು (aidu), 'five'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ತುಂಬಾ ಚೆನ್ನಾಗಿ ಮಾಡಿದ್ದೀರಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "You did very well! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}
