@@ -1,6 +1,6 @@
 import asyncio, json
 from tutor import LessonSession, match_score, kannada_only, parse_llm_json
-L = json.load(open("lessons.json"))
+L = json.load(open("lessons/lesson1.json", encoding="utf-8"))
 def fake(replies):
     it = iter(replies)
     async def llm(msgs):
@@ -159,3 +159,60 @@ async def plain_answers():
     t = await s.handle_student("Do we have any class tomorrow?", "en")
     assert "ಮತ್ತೊಮ್ಮೆ ಕೇಳಿ" in t.kn, t.kn
 asyncio.run(plain_answers()); print("plain answers OK")
+
+# Lessons are lessons/lesson1.json, lesson2.json, ... and every learner has a progress card per lesson.
+import tempfile
+from progress import ProgressStore, load_lessons, user_key
+from translit import has_kannada
+LS = load_lessons("lessons")
+assert [l["num"] for l in LS][:3] == ["1", "1a", "2"] and LS[0]["id"] == L["id"], [l["num"] for l in LS]
+assert LS[1]["id"] == "lesson_01a_introduction"
+for l in LS:  # every lesson file has what LessonSession needs
+    for st in l["steps"]:
+        for k in ("id", "tutor_kn", "tutor_en", "goal_en", "hint_kn", "hint_en"):
+            assert st.get(k), (l["id"], st.get("id"), k)
+        assert has_kannada(st["tutor_kn"]) and kannada_only(st["tutor_kn"]) == st["tutor_kn"], st["tutor_kn"]
+assert user_key("  Tirthankar B. ") == "tirthankar_b" and user_key("../..") == ""
+
+async def progress_cards():
+    with tempfile.TemporaryDirectory() as d:
+        store = ProgressStore(d, LS)
+        lid = LS[0]["id"]
+        assert store.next_lesson("Ana") == lid and store.cards("Ana")[lid]["status"] == "not_started"
+        card = store.start("Ana", lid)
+        s = LessonSession(LS[0], fake([J("advance"), J("retry"), J("retry")]), step_idx=card["step"])
+        await s.handle_student("ನಮಸ್ಕಾರ", "kn")                      # first try
+        await s.handle_student("ಏನೋ", "kn")                           # retry ...
+        await s.handle_student("ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ", "kn")           # ... then passed
+        card = store.update("Ana", lid, s)
+        assert card["status"] == "in_progress" and card["step"] == 2 and card["first_try"] == 1, card
+        assert card["results"] == {"greet": "first_try", "how_are_you": "passed"}, card["results"]
+        # Another learner is untouched.
+        assert store.cards("Bo")[lid]["status"] == "not_started"
+        # Reconnect: resumes at the saved step with a welcome back.
+        card = store.start("Ana", lid)
+        s = LessonSession(LS[0], fake([J("advance")] * 20), step_idx=card["step"], results=dict(card["results"]))
+        t = s.opening()
+        assert card["step"] == 2 and t.kn.startswith("ಮತ್ತೆ ಸ್ವಾಗತ!") and t.kn.endswith(LS[0]["steps"][2]["tutor_kn"]), t.kn
+        while not s.done:
+            await s.handle_student(s.step["expected_kn"][0], "kn")
+            card = store.update("Ana", lid, s)
+        card = store.update("Ana", lid, s)  # extra turns after the end don't count twice
+        assert card["status"] == "completed" and card["completions"] == 1 and len(card["results"]) == card["total"], card
+        assert store.next_lesson("Ana") == LS[1]["id"]
+        # Replaying a finished lesson starts at step 0 and keeps the completion count.
+        card = store.start("Ana", lid)
+        assert card["step"] == 0 and card["results"] == {} and card["completions"] == 1
+        # Survives a restart of the server (new store, same folder).
+        assert ProgressStore(d, LS).cards("ana")[lid]["completions"] == 1
+asyncio.run(progress_cards()); print("progress OK")
+
+# Each lesson can be finished by saying its expected phrases, even with a strict LLM.
+async def all_lessons():
+    for l in LS:
+        s = LessonSession(l, fake([J("retry")] * 50))
+        s.opening()
+        while not s.done:
+            await s.handle_student(s.step["expected_kn"][0], "kn")
+        assert all(r == "first_try" for r in s.results.values()), (l["id"], s.results)
+asyncio.run(all_lessons()); print("all lessons OK")

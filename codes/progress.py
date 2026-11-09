@@ -4,6 +4,8 @@ Pure Python (no torch / FastAPI) so it can be unit-tested without a GPU.
 
 Lessons:  lessons/lesson1.json, lessons/lesson2.json, ...  The number in the file name sets the
           order; add a lesson by dropping in the next lessonN.json (same format) and restarting.
+          A letter after the number adds a supplementary lesson: lesson1a.json comes after
+          lesson1.json and before lesson2.json, and is shown as "Lesson 1a".
 Progress: progress/<user>.json, one file per learner, holding one card per lesson id:
   {
     "status": "not_started" | "in_progress" | "completed",
@@ -27,21 +29,26 @@ import re
 import threading
 from datetime import datetime, timezone
 
-_LESSON_FILE = re.compile(r"^lesson(\d+)\.json$")
+_LESSON_FILE = re.compile(r"^lesson(\d+)([a-z]?)\.json$", re.IGNORECASE)
 _UNSAFE = re.compile(r"[^\w-]+", re.UNICODE)
 
 
 def load_lessons(lesson_dir: str) -> list[dict]:
-    """All lessonN.json files in lesson_dir, ordered by N. Adds "num" (N) to each lesson."""
+    """All lessonN.json / lessonNx.json files in lesson_dir, ordered by N then x (1, 1a, 1b, 2, ...).
+    Adds "num" to each lesson: its label as a string, e.g. "1" or "1a"."""
     found = []
     for name in os.listdir(lesson_dir):
         m = _LESSON_FILE.match(name)
         if m:
             with open(os.path.join(lesson_dir, name), encoding="utf-8") as f:
                 lesson = json.load(f)
-            lesson["num"] = int(m.group(1))
-            found.append(lesson)
-    found.sort(key=lambda l: l["num"])
+            n, sub = int(m.group(1)), m.group(2).lower()
+            lesson["num"] = f"{n}{sub}"
+            found.append(((n, sub), lesson))
+    found = [l for _, l in sorted(found, key=lambda t: t[0])]
+    nums = [l["num"] for l in found]
+    if len(nums) != len(set(nums)):
+        raise ValueError(f"Two lesson files in {lesson_dir} share a number: {nums}")
     ids = [l["id"] for l in found]
     if len(ids) != len(set(ids)):
         raise ValueError(f"Two lesson files in {lesson_dir} share an id: {ids}")

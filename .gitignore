@@ -1,0 +1,29 @@
+# Secrets and environment
+.env
+.env.*
+*.pem
+*token*
+*secret*
+*credentials*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Data / model artifacts (often large, don't belong in git)
+*.bin
+*.safetensors
+*.ckpt
+data/
+models/
+checkpoints/
+
+# OS / editor noise
+.DS_Store
+.vscode/
+.idea/
+*.log
+

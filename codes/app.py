@@ -11,6 +11,10 @@ Config (env vars):
   LELA_TTS          "mms" (default, Meta MMS-TTS Kannada: fast) | "parler" (AI4Bharat Indic Parler-TTS: nicer, slow)
                     | "indicf5" (voice clone of prompts/kannada_teacher.wav)
                     | "sarvam" (Sarvam Bulbul cloud API: most natural; falls back to MMS when offline)
+                    | "indictts" (AI4Bharat Indic-TTS Kannada on CPU: free, offline, clear pronunciation; see indictts.py)
+  LELA_INDICTTS_DIR     folder with fastpitch/ and hifigan/ (default ./models/indictts/kn)
+  LELA_INDICTTS_SPEAKER "female" (default) | "male"
+  LELA_TTS_CACHE_DIR    where Sarvam audio is saved so each line is paid for once (default ./tts_cache)
   SARVAM_API_KEY    Sarvam API key (dashboard.sarvam.ai), needed for LELA_TTS=sarvam
   LELA_SARVAM_MODEL   default bulbul:v3 (bulbul:v4-flash is cheaper and faster)
   LELA_SARVAM_SPEAKER default shubh (bulbul:v3 voices include anand, kavitha, roopa, vijay, gokul, mani)
@@ -21,6 +25,7 @@ Config (env vars):
                     say it in Kannada before moving on | "accept": said back in Kannada, then the lesson moves on
   LELA_SARVAM_TRANSLATE_MODEL  default sarvam-translate:v1 (mayura:v1 also works)
   LELA_TTS_RATE     MMS speaking rate (default 0.85: a little slower than normal, for a learner)
+  LELA_TTS_PAD      seconds of silence added after each spoken line, half as much before (default 0.4)
   LELA_TTS_VOICE    Parler voice description (default: Anu, slow and clear)
   LELA_LLM_JSON_SCHEMA  1 (default): ask vLLM for schema-forced JSON; 0 turns it off
   LELA_LLM_KANNADA  0 (default): LeLa speaks only hand-checked Kannada; 1: also speak the LLM's own Kannada
@@ -33,6 +38,7 @@ Config (env vars):
 
 import asyncio
 import base64
+import hashlib
 import io
 import json
 import os
@@ -81,6 +87,11 @@ SARVAM_TRANSLATE_URL = "https://api.sarvam.ai/translate"
 SARVAM_TRANSLATE_MODEL = os.getenv("LELA_SARVAM_TRANSLATE_MODEL", "sarvam-translate:v1")
 TRANSLATE_BACKEND = os.getenv("LELA_TRANSLATE", "sarvam" if SARVAM_KEY else "llm")
 SARVAM_RATE = 24000  # requested from Sarvam; LeLa's output rate when LELA_TTS=sarvam
+# Sarvam audio is saved here so each line is paid for once, not once per server run.
+# Files are keyed by voice settings + text, so changing speaker/pace/model makes new ones.
+INDICTTS_DIR = os.getenv("LELA_INDICTTS_DIR", os.path.join(BASE_DIR, "models", "indictts", "kn"))
+INDICTTS_SPEAKER = os.getenv("LELA_INDICTTS_SPEAKER", "female")
+SARVAM_CACHE_DIR = os.getenv("LELA_TTS_CACHE_DIR", os.path.join(BASE_DIR, "tts_cache"))
 
 LESSONS = load_lessons(os.getenv("LELA_LESSONS_DIR", os.path.join(BASE_DIR, "lessons")))
 LESSONS_BY_ID = {l["id"]: l for l in LESSONS}
@@ -165,6 +176,13 @@ def load_tts() -> None:
             print("[Init] !!! LELA_TTS=sarvam but SARVAM_API_KEY is not set: every line will use MMS")
         else:
             print(f"[Init] Sarvam TTS: {SARVAM_MODEL}, speaker {SARVAM_SPEAKER}, pace {SARVAM_PACE}")
+    elif TTS_BACKEND == "indictts":
+        # Free, offline AI4Bharat Kannada voice on the CPU (no GPU memory). Setup steps: indictts.py
+        from indictts import IndicTTS
+
+        M["tts"] = IndicTTS(INDICTTS_DIR, INDICTTS_SPEAKER)
+        TTS_SAMPLE_RATE = M["tts"].sample_rate
+        print(f"[Init] Indic-TTS Kannada ({M['tts'].speaker} voice) on CPU from {INDICTTS_DIR}")
     else:
         from transformers import AutoModel
 
@@ -256,6 +274,7 @@ def transcribe(audio_bytes: bytes, lang: str) -> str:
 
 SENTENCE_GAP = np.zeros(int(0.25 * TTS_SAMPLE_RATE), dtype=np.float32)  # rebuilt in load_tts()
 SENT_CACHE: dict[str, np.ndarray] = {}
+TAIL_PAD_SECS = float(os.getenv("LELA_TTS_PAD", "0.4"))  # silence after each line (half as much before)
 
 
 def split_sentences(text: str) -> list[str]:
@@ -274,6 +293,8 @@ def _run_tts(sentence: str):
         )
     if TTS_BACKEND == "mms":
         return _run_mms(sentence)
+    if TTS_BACKEND == "indictts":
+        return M["tts"](sentence)
     if TTS_BACKEND == "sarvam":
         return _run_sarvam(sentence)
     return M["tts"](sentence, ref_audio_path=REF_AUDIO_PATH, ref_text=REF_AUDIO_TEXT)
@@ -317,6 +338,31 @@ def _run_sarvam(sentence: str) -> np.ndarray:
     return _resample(audio, rate, SARVAM_RATE)
 
 
+def _sarvam_cache_path(sentence: str) -> str:
+    key = f"{SARVAM_MODEL}|{SARVAM_SPEAKER}|{SARVAM_PACE}|{SARVAM_RATE}|{sentence}"
+    return os.path.join(SARVAM_CACHE_DIR, hashlib.sha256(key.encode("utf-8")).hexdigest()[:24] + ".wav")
+
+
+def _sarvam_cached(sentence: str) -> np.ndarray:
+    """Sarvam audio from the disk cache, or from the API (then saved). A bad cache file is ignored."""
+    path = _sarvam_cache_path(sentence)
+    if os.path.exists(path):
+        try:
+            audio, _ = sf.read(path, dtype="float32")
+            return audio
+        except Exception as e:
+            print(f"[TTS] unreadable cache file {path} ({e}); asking Sarvam again")
+    audio = _run_sarvam(sentence)
+    try:
+        os.makedirs(SARVAM_CACHE_DIR, exist_ok=True)
+        tmp = path + ".tmp"
+        sf.write(tmp, audio, SARVAM_RATE, format="WAV", subtype="FLOAT")
+        os.replace(tmp, path)  # never leave a half-written file behind
+    except Exception as e:
+        print(f"[TTS] could not save Sarvam audio to {SARVAM_CACHE_DIR}: {e}")
+    return audio
+
+
 def _resample(audio: np.ndarray, orig: int, new: int) -> np.ndarray:
     if orig == new:
         return audio
@@ -347,7 +393,7 @@ def _tts_one(sentence: str) -> tuple[np.ndarray, bool]:
     cacheable = True
     if TTS_BACKEND == "sarvam":
         try:
-            audio = _run_sarvam(sentence)
+            audio = _sarvam_cached(sentence)
         except Exception as e:
             print(f"[TTS] Sarvam failed ({type(e).__name__}: {e}); using MMS for this line")
             audio = _run_local(_run_mms, sentence)
@@ -375,8 +421,10 @@ def _tts_one(sentence: str) -> tuple[np.ndarray, bool]:
 
 
 def synthesize(text: str) -> bytes:
-    """Kannada text -> WAV bytes. Each sentence is synthesized separately and joined with a short
-    pause: given several sentences at once, F5-style TTS can drop or reorder them."""
+    """Kannada text -> WAV bytes. Sarvam, MMS and Indic-TTS get the whole line in one call: cut into
+    one-word pieces like 'ನಮಸ್ಕಾರ!', they clip the last syllable and lose the sentence's
+    intonation. IndicF5 / Parler still get one sentence at a time (joined with a short pause),
+    because given several sentences at once F5-style TTS can drop or reorder them."""
     text = kannada_only(text)
     if not text:
         return b""
@@ -386,14 +434,18 @@ def synthesize(text: str) -> bytes:
         parts = []
         cacheable = True
         with TTS_LOCK:
-            for sentence in split_sentences(text):
+            pieces = [text] if TTS_BACKEND in ("sarvam", "mms", "indictts") else split_sentences(text)
+            for sentence in pieces:
                 if parts:
                     parts.append(SENTENCE_GAP)
                 audio, ok = _tts_one(sentence)
                 parts.append(audio)
                 cacheable = cacheable and ok
+        # Quiet padding at both ends: some speakers / Bluetooth outputs cut the first and last
+        # ~0.2 s of a clip, which swallows a final syllable like the ಕಿ of ಶಿಕ್ಷಕಿ.
+        pad = np.zeros(int(TAIL_PAD_SECS * TTS_SAMPLE_RATE), dtype=np.float32)
         buf = io.BytesIO()
-        sf.write(buf, np.concatenate(parts), TTS_SAMPLE_RATE, format="WAV")
+        sf.write(buf, np.concatenate([pad[: len(pad) // 2], *parts, pad]), TTS_SAMPLE_RATE, format="WAV")
         wav = buf.getvalue()
     except Exception as e:
         TTS_LAST_ERROR["error"] = f"{type(e).__name__}: {e}"

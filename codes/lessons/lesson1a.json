@@ -1,0 +1,111 @@
+{
+  "id": "lesson_01a_introduction",
+  "title": "Introducing yourself (class practice)",
+  "summary_en": "Greet everyone, wish good morning, then ask and tell names and where your home is. Practise ನನ್ನ (nanna, my) vs ನಿಮ್ಮ (nimma, your).",
+  "steps": [
+    {
+      "id": "greet_all",
+      "tutor_kn": "ಎಲ್ಲರಿಗೂ ನಮಸ್ಕಾರ! ಇವತ್ತು ನಾವು ಪರಿಚಯ ಮಾಡಿಕೊಳ್ಳೋಣ.",
+      "tutor_en": "Hello everyone! Today let's introduce ourselves.",
+      "goal_en": "The student greets the teacher back. ನಮಸ್ಕಾರ or any time-of-day greeting (ಶುಭೋದಯ, ಶುಭ ಮಧ್ಯಾಹ್ನ, ಶುಭ ಸಂಜೆ) is fine.",
+      "expected_kn": [
+        "ನಮಸ್ಕಾರ",
+        "ನಮಸ್ಕಾರಗಳು",
+        "ನಮಸ್ತೆ",
+        "ಶುಭೋದಯ",
+        "ಶುಭ ಮಧ್ಯಾಹ್ನ",
+        "ಶುಭ ಸಂಜೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನೀವೂ ನನಗೆ ನಮಸ್ಕಾರ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮಸ್ಕಾರ (namaskāra), 'hello'. ಎಲ್ಲರಿಗೂ ನಮಸ್ಕಾರ (ellarigū namaskāra) means 'hello to all': ಎಲ್ಲ (ella) is 'all'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "time_greeting",
+      "tutor_kn": "ಬೆಳಿಗ್ಗೆ ಶುಭೋದಯ, ಮಧ್ಯಾಹ್ನ ಶುಭ ಮಧ್ಯಾಹ್ನ, ಸಂಜೆ ಶುಭ ಸಂಜೆ ಎಂದು ಹೇಳುತ್ತೇವೆ. ಈಗ ನನಗೆ ಶುಭೋದಯ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "In the morning we say ಶುಭೋದಯ (shubhōdaya), in the afternoon ಶುಭ ಮಧ್ಯಾಹ್ನ (shubha madhyāhna), in the evening ಶುಭ ಸಂಜೆ (shubha sanje). Now wish me good morning.",
+      "goal_en": "The student says good morning (ಶುಭೋದಯ). Good afternoon or good evening is also fine, since the real time of day may differ.",
+      "expected_kn": [
+        "ಶುಭೋದಯ",
+        "ಶುಭ ಮಧ್ಯಾಹ್ನ",
+        "ಶುಭ ಸಂಜೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಶುಭೋದಯ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಶುಭೋದಯ (shubhōdaya), meaning 'good morning'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "my_name",
+      "tutor_kn": "ನನ್ನ ಹೆಸರು ಲೆಲಾ. ನಿಮ್ಮ ಹೆಸರು ಏನು?",
+      "tutor_en": "My name is LeLa. What is your name?",
+      "goal_en": "The student says 'my name is <name>': ನನ್ನ ಹೆಸರು <name>. Any name is fine.",
+      "expected_kn": [
+        "ನನ್ನ ಹೆಸರು"
+      ],
+      "match": "prefix",
+      "hint_kn": "ನನ್ನ ಹೆಸರು, ನಂತರ ನಿಮ್ಮ ಹೆಸರು ಹೇಳಿ.",
+      "hint_en": "Say ನನ್ನ ಹೆಸರು (nanna hesaru) followed by your name, e.g. ನನ್ನ ಹೆಸರು ರಾಜ (nanna hesaru Rāja), 'my name is Raja'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ask_name",
+      "tutor_kn": "ಚೆನ್ನಾಗಿದೆ! ಈಗ ನೀವು ನನ್ನ ಹೆಸರು ಏನು ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "Well done! Now you ask me what my name is.",
+      "goal_en": "The student asks the teacher's name: ನಿಮ್ಮ ಹೆಸರು ಏನು? (what is your name?). It must use ನಿಮ್ಮ (your) or ನಿನ್ನ, not ನನ್ನ (my); if they say ನನ್ನ ಹೆಸರು ಏನು, retry and remind them that ನಿ- words mean 'you'.",
+      "expected_kn": [
+        "ನಿಮ್ಮ ಹೆಸರು"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಿಮ್ಮ ಹೆಸರು ಏನು ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Thumb rule: words starting with ನ (na) are about me or us, like ನನ್ನ (nanna, my) and ನಮ್ಮ (namma, our); words starting with ನಿ (ni) are about you, like ನಿಮ್ಮ (nimma, your). So ask ನಿಮ್ಮ ಹೆಸರು ಏನು? (nimma hesaru ēnu?), 'what is your name?'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "my_house",
+      "tutor_kn": "ನನ್ನ ಹೆಸರು ಲೆಲಾ. ನಿಮ್ಮ ಮನೆ ಎಲ್ಲಿದೆ?",
+      "tutor_en": "My name is LeLa. Where is your house?",
+      "goal_en": "The student says where their house is: ನನ್ನ ಮನೆ <place>ಅಲ್ಲಿದೆ (my house is in <place>). Any place is fine, and so is a slightly wrong case ending on the place name; accept it and praise.",
+      "expected_kn": [
+        "ನನ್ನ ಮನೆ",
+        "ನಮ್ಮ ಮನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಉದಾಹರಣೆಗೆ, ನನ್ನ ಮನೆ ಬೆಂಗಳೂರಿನಲ್ಲಿದೆ.",
+      "hint_en": "Say ನನ್ನ ಮನೆ (nanna mane, 'my house') + place + ಅಲ್ಲಿದೆ (-allide, 'is in'). For example ನನ್ನ ಮನೆ ಬೆಂಗಳೂರಿನಲ್ಲಿದೆ (nanna mane bengaḷūrinallide), 'my house is in Bengaluru', or ನನ್ನ ಮನೆ ಟವರ್ ಒಂದರಲ್ಲಿದೆ (nanna mane ṭavar ondarallide), 'my house is in tower one'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ask_house",
+      "tutor_kn": "ತುಂಬಾ ಚೆನ್ನಾಗಿದೆ! ಈಗ ನನ್ನ ಮನೆ ಎಲ್ಲಿದೆ ಎಂದು ನನ್ನನ್ನು ಕೇಳಿ.",
+      "tutor_en": "Very good! Now ask me where my house is.",
+      "goal_en": "The student asks where the teacher's house is: ನಿಮ್ಮ ಮನೆ ಎಲ್ಲಿದೆ? (where is your house?). It must use ನಿಮ್ಮ (your), not ನನ್ನ (my); if they say ನನ್ನ ಮನೆ ಎಲ್ಲಿದೆ, retry and remind them that ನಿ- words mean 'you'.",
+      "expected_kn": [
+        "ನಿಮ್ಮ ಮನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಿಮ್ಮ ಮನೆ ಎಲ್ಲಿದೆ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ನಿಮ್ಮ ಮನೆ ಎಲ್ಲಿದೆ? (nimma mane ellide?), 'where is your house?'. ಎಲ್ಲಿ (elli) is 'where' and ಇದೆ (ide) is 'is'; together ಎಲ್ಲಿದೆ (ellide).",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ನನ್ನ ಮನೆ ಇಲ್ಲೇ, ಈ ಪಾಠದಲ್ಲಿ ಇದೆ! ತುಂಬಾ ಚೆನ್ನಾಗಿ ಮಾಡಿದ್ದೀರಿ. ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "My house is right here, in this lesson! You did very well. Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

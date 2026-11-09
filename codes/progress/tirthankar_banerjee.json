@@ -1,22 +1,79 @@
 {
  "lessons": {
   "lesson_02_numbers": {
-   "status": "in_progress",
+   "status": "completed",
    "step": 5,
    "total": 6,
    "results": {
     "one": "first_try",
     "two": "first_try",
     "three": "first_try",
-    "four": "passed",
-    "five": "passed"
+    "four": "first_try",
+    "five": "first_try",
+    "goodbye": "first_try"
+   },
+   "first_try": 6,
+   "best_first_try": 6,
+   "completions": 2,
+   "started_at": "2026-11-09T14:23:47+00:00",
+   "last_played": "2026-11-09T14:26:10+00:00",
+   "completed_at": "2026-11-09T14:26:10+00:00"
+  },
+  "lesson_01a_introduction": {
+   "status": "completed",
+   "step": 6,
+   "total": 7,
+   "results": {
+    "greet_all": "first_try",
+    "time_greeting": "first_try",
+    "my_name": "first_try",
+    "ask_name": "first_try",
+    "my_house": "first_try",
+    "ask_house": "first_try",
+    "goodbye": "first_try"
+   },
+   "first_try": 7,
+   "best_first_try": 7,
+   "completions": 2,
+   "started_at": "2026-11-09T14:20:34+00:00",
+   "last_played": "2026-11-09T14:23:39+00:00",
+   "completed_at": "2026-11-09T14:23:39+00:00"
+  },
+  "lesson_03_food": {
+   "status": "completed",
+   "step": 4,
+   "total": 5,
+   "results": {
+    "coffee_or_tea": "first_try",
+    "water": "first_try",
+    "eaten": "first_try",
+    "how_was_it": "passed",
+    "goodbye": "shown"
    },
    "first_try": 3,
-   "best_first_try": 0,
-   "completions": 0,
-   "started_at": "2026-11-06T06:55:54+00:00",
-   "last_played": "2026-11-06T06:59:48+00:00",
-   "completed_at": null
+   "best_first_try": 4,
+   "completions": 2,
+   "started_at": "2026-11-09T14:26:17+00:00",
+   "last_played": "2026-11-09T14:29:55+00:00",
+   "completed_at": "2026-11-09T14:29:31+00:00"
+  },
+  "lesson_01_greetings": {
+   "status": "completed",
+   "step": 4,
+   "total": 5,
+   "results": {
+    "greet": "first_try",
+    "how_are_you": "first_try",
+    "name": "first_try",
+    "where_from": "first_try",
+    "goodbye": "first_try"
+   },
+   "first_try": 5,
+   "best_first_try": 5,
+   "completions": 3,
+   "started_at": "2026-11-09T14:13:28+00:00",
+   "last_played": "2026-11-09T14:20:06+00:00",
+   "completed_at": "2026-11-09T14:15:12+00:00"
   }
  },
  "name": "Tirthankar Banerjee"
