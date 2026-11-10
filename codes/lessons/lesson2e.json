@@ -1,0 +1,151 @@
+{
+  "id": "lesson_02e_learn_teach",
+  "title": "Is it right? Learning and teaching",
+  "summary_en": "Ask what happened, judge a sentence right or wrong (ಸರಿ, ತಪ್ಪು), use ಕಲಿ (learn) and ಕಲಿಸು (teach), and talk about far and near (ದೂರ, ಹತ್ತಿರ).",
+  "steps": [
+    {
+      "id": "what_happened",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ನೋಡಿ ಇಲ್ಲಿ! ಈಗ ನನ್ನನ್ನು ಕೇಳಿ, ಹೇಳಿ, ಏನಾಯ್ತು?",
+      "tutor_en": "Hello! Look here! Now ask me: tell me, what happened?",
+      "goal_en": "The student asks ಹೇಳಿ, ಏನಾಯ್ತು? (tell me, what happened?). Either word is fine.",
+      "expected_kn": [
+        "ಹೇಳಿ, ಏನಾಯ್ತು",
+        "ಏನಾಯ್ತು",
+        "ಏನಾಯಿತು",
+        "ಹೇಳಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೇಳಿ, ಏನಾಯ್ತು ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಹೇಳಿ, ಏನಾಯ್ತು? (hēḷi, ēnāytu?), 'tell me, what happened?'. ನೋಡಿ (nōḍi) is 'see', ಹೇಳಿ (hēḷi) is 'tell'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "is_it_right",
+      "tutor_kn": "ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತೇನೆ. ಇದು ಸರಿನಾ? ತಪ್ಪಾ?",
+      "tutor_en": "'I will learn Kannada'. Is that right or wrong?",
+      "goal_en": "The student says it is right: ಸರಿ ಇದೆ. (ನಾನು with -ತೇನೆ is correct.)",
+      "expected_kn": [
+        "ಸರಿ ಇದೆ",
+        "ಸರಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಸರಿ ಇದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "It is correct, so say ಸರಿ ಇದೆ (sari ide), 'it's right'. ತಪ್ಪು (tappu) is 'wrong'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "is_it_wrong",
+      "tutor_kn": "ಈಗ ಇದು, ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತಾನೆ. ಇದು ಸರಿನಾ? ತಪ್ಪಾ?",
+      "tutor_en": "Now this one: 'ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತಾನೆ'. Is it right or wrong?",
+      "goal_en": "The student says it is wrong: ತಪ್ಪು. ನಾನು (I) needs -ತೇನೆ, not -ತಾನೆ (the 'he' ending). Bonus if they give the correct ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತೇನೆ. Do not accept ಸರಿ.",
+      "expected_kn": [
+        "ತಪ್ಪು",
+        "ತಪ್ಪಿದೆ",
+        "ತಪ್ಪು ಇದೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇದು ತಪ್ಪು. ತಪ್ಪು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "It's wrong: say ತಪ್ಪು (tappu). With ನಾನು (I) the verb ends -ತೇನೆ (-tēne); -ತಾನೆ (-tāne) is for ಅವನು (he). Correct: ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತೇನೆ.",
+      "max_attempts": 3
+    },
+    {
+      "id": "you_learn",
+      "tutor_kn": "ಸರಿ! ಈಗ ನೀವು ಹೇಳಿ, ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತೇನೆ.",
+      "tutor_en": "Right! Now you say: I will learn Kannada.",
+      "goal_en": "The student says ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತೇನೆ (I will learn Kannada). Colloquial ಕಲೀತೀನಿ is fine.",
+      "expected_kn": [
+        "ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತೇನೆ",
+        "ಕಲಿಯುತ್ತೇನೆ",
+        "ಕಲೀತೀನಿ",
+        "ಕಲಿತೀನಿ",
+        "ಕಲಿಯುತ್ತಿದ್ದೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತೇನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತೇನೆ (nānu kannaḍa kaliyuttēne), 'I will learn Kannada'. ಕಲಿ (kali) is 'learn'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "who_teaches",
+      "tutor_kn": "ನಿಮಗೆ ಯಾರು ಕನ್ನಡ ಕಲಿಸುತ್ತಾರೆ?",
+      "tutor_en": "Who teaches you Kannada?",
+      "goal_en": "The student says who teaches them, with ಕಲಿಸು (teach): ಲೆಲಾ ಕನ್ನಡ ಕಲಿಸುತ್ತಾರೆ or ನೀವು ಕಲಿಸುತ್ತೀರಿ. Any teacher is fine.",
+      "expected_kn": [
+        "ಲೆಲಾ ಕನ್ನಡ ಕಲಿಸುತ್ತಾರೆ",
+        "ಕಲಿಸುತ್ತಾರೆ",
+        "ಕಲಿಸ್ತಾರೆ",
+        "ಕಲಿಸುತ್ತೀರಿ",
+        "ಕಲಿಸ್ತೀರಿ",
+        "ಕಲಿಸುತ್ತಾಳೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಲೆಲಾ ಕನ್ನಡ ಕಲಿಸುತ್ತಾರೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಲೆಲಾ ಕನ್ನಡ ಕಲಿಸುತ್ತಾರೆ (lelā kannaḍa kalisuttāre), 'LeLa teaches Kannada'. ಕಲಿ (kali) is 'learn', ಕಲಿಸು (kalisu) is 'teach'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "friend_house",
+      "tutor_kn": "ನನ್ನ ಸ್ನೇಹಿತೆಗೂ ಕನ್ನಡ ಕಲಿಯಬೇಕು. ಅವರ ಮನೆ ಎಲ್ಲಿ ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "My friend also wants to learn Kannada. Ask where her house is.",
+      "goal_en": "The student asks ಅವರ ಮನೆ ಎಲ್ಲಿ? or ಇವರ ಮನೆ ಎಲ್ಲಿ? (where is their house?).",
+      "expected_kn": [
+        "ಅವರ ಮನೆ ಎಲ್ಲಿ",
+        "ಇವರ ಮನೆ ಎಲ್ಲಿ",
+        "ಮನೆ ಎಲ್ಲಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅವರ ಮನೆ ಎಲ್ಲಿ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಅವರ ಮನೆ ಎಲ್ಲಿ? (avara mane elli?), 'where is her house?'. ಅವರ (avara) is the respectful 'her/his/their'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "far_or_near",
+      "tutor_kn": "ದೂರ ಇಲ್ಲ. ನಮ್ಮ ಮನೆ ಹತ್ತಿರ ಅವರ ಮನೆ. ನಿಮ್ಮ ಮನೆ ಇಲ್ಲಿಂದ ದೂರನಾ, ಹತ್ತಿರನಾ?",
+      "tutor_en": "Not far. Her house is near our house. Is your house far from here, or near?",
+      "goal_en": "The student says their house is far or near: ನಮ್ಮ ಮನೆ ಹತ್ತಿರ (near) or ನಮ್ಮ ಮನೆ ದೂರ (far). Either is fine.",
+      "expected_kn": [
+        "ನಮ್ಮ ಮನೆ ಹತ್ತಿರ",
+        "ಹತ್ತಿರ",
+        "ದೂರ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮ್ಮ ಮನೆ ಹತ್ತಿರ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮ್ಮ ಮನೆ ಹತ್ತಿರ (namma mane hattira), 'our house is near', or ನಮ್ಮ ಮನೆ ದೂರ (namma mane dūra), 'our house is far'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "send_her",
+      "tutor_kn": "ಸರಿ, ನಾನು ಅವರಿಗೆ ಹೇಳ್ತೀನಿ. ಈಗ ನನಗೆ ಹೇಳಿ, ಕನ್ನಡ ತರಗತಿಗೆ ಅವರನ್ನ ಕಳಿಸಿ.",
+      "tutor_en": "OK, I'll tell her. Now tell me: send her to the Kannada class.",
+      "goal_en": "The student says ಕನ್ನಡ ತರಗತಿಗೆ ಅವರನ್ನ ಕಳಿಸಿ (send her to the Kannada class).",
+      "expected_kn": [
+        "ಕನ್ನಡ ತರಗತಿಗೆ ಅವರನ್ನ ಕಳಿಸಿ",
+        "ಅವರನ್ನ ಕಳಿಸಿ",
+        "ಕಳಿಸಿ",
+        "ಕಳುಹಿಸಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಕನ್ನಡ ತರಗತಿಗೆ ಅವರನ್ನ ಕಳಿಸಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಕನ್ನಡ ತರಗತಿಗೆ ಅವರನ್ನ ಕಳಿಸಿ (kannaḍa taragatige avaranna kaḷisi), 'send her to the Kannada class'. ಕಳಿಸು (kaḷisu) is 'send'; careful, ಕಲಿಸು (kalisu) is 'teach'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ತುಂಬಾ ಚೆನ್ನಾಗಿ ಮಾಡಿದ್ದೀರಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "You did very well! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

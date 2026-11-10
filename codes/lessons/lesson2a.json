@@ -1,0 +1,149 @@
+{
+  "id": "lesson_02a_pronouns",
+  "title": "I speak, give me: pronouns",
+  "summary_en": "Use ಮಾತಾಡು (speak) with I, we, he and she, ask for something with ನನಗೆ ಕೊಡಿ (give me), and say whose book it is (ನನ್ನ, ಅವಳ).",
+  "steps": [
+    {
+      "id": "i_speak",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಇವತ್ತು ಮಾತಾಡು ಮತ್ತು ಕೊಡು ಕಲಿಯೋಣ. ನಾನು ಕನ್ನಡ ಮಾತಾಡುತ್ತೇನೆ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Hello! Today let's learn 'speak' and 'give'. Say 'I will speak Kannada'.",
+      "goal_en": "The student says ನಾನು ಕನ್ನಡ ಮಾತಾಡುತ್ತೇನೆ (I will speak Kannada). Colloquial ಮಾತಾಡ್ತೀನಿ / ಮಾತಾಡ್ತೇನೆ is fine.",
+      "expected_kn": [
+        "ನಾನು ಕನ್ನಡ ಮಾತಾಡುತ್ತೇನೆ",
+        "ಮಾತಾಡುತ್ತೇನೆ",
+        "ಮಾತಾಡ್ತೀನಿ",
+        "ಮಾತಾಡ್ತೇನೆ",
+        "ಮಾತನಾಡುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ಕನ್ನಡ ಮಾತಾಡುತ್ತೇನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ಕನ್ನಡ ಮಾತಾಡುತ್ತೇನೆ (nānu kannaḍa mātāḍuttēne), 'I will speak Kannada'. In everyday speech: ಮಾತಾಡ್ತೀನಿ (mātāḍtīni).",
+      "max_attempts": 3
+    },
+    {
+      "id": "we_speak",
+      "tutor_kn": "ಚೆನ್ನಾಗಿದೆ! ನಾನು ಮಾತಾಡುತ್ತೇನೆ, ಆದರೆ ನಾವು ಮಾತಾಡುತ್ತೇವೆ. ಈಗ ನಾವು ಕನ್ನಡ ಮಾತಾಡುತ್ತೇವೆ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Good! 'I' takes ಮಾತಾಡುತ್ತೇನೆ, but 'we' takes ಮಾತಾಡುತ್ತೇವೆ. Now say 'we will speak Kannada'.",
+      "goal_en": "The student says ನಾವು ಕನ್ನಡ ಮಾತಾಡುತ್ತೇವೆ (we will speak Kannada). The verb must end in -ತೇವೆ (or colloquial ಮಾತಾಡ್ತೀವಿ), not -ತೇನೆ; if they say ಮಾತಾಡುತ್ತೇನೆ, retry and point out the ending.",
+      "expected_kn": [
+        "ನಾವು ಕನ್ನಡ ಮಾತಾಡುತ್ತೇವೆ",
+        "ಮಾತಾಡುತ್ತೇವೆ",
+        "ಮಾತಾಡ್ತೀವಿ",
+        "ಮಾತಾಡ್ತೇವೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾವು ಕನ್ನಡ ಮಾತಾಡುತ್ತೇವೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾವು ಕನ್ನಡ ಮಾತಾಡುತ್ತೇವೆ (nāvu kannaḍa mātāḍuttēve), 'we will speak Kannada'. With ನಾನು (I) the verb ends -ತೇನೆ (-tēne); with ನಾವು (we) it ends -ತೇವೆ (-tēve).",
+      "max_attempts": 3
+    },
+    {
+      "id": "she_speaks",
+      "tutor_kn": "ನಿಮ್ಮ ಅಕ್ಕ ಕನ್ನಡ ಮಾತಾಡುತ್ತಾಳಾ?",
+      "tutor_en": "Does your elder sister speak Kannada?",
+      "goal_en": "The student answers about their sister with the 'she' ending -ತಾಳೆ: ಹೌದು, ಅವಳು ಕನ್ನಡ ಮಾತಾಡುತ್ತಾಳೆ. A 'no' answer (ಮಾತಾಡಲ್ಲ) is fine too.",
+      "expected_kn": [
+        "ಅವಳು ಕನ್ನಡ ಮಾತಾಡುತ್ತಾಳೆ",
+        "ಮಾತಾಡುತ್ತಾಳೆ",
+        "ಮಾತಾಡ್ತಾಳೆ",
+        "ಮಾತಾಡಲ್ಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಅವಳು ಕನ್ನಡ ಮಾತಾಡುತ್ತಾಳೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಅವಳು ಕನ್ನಡ ಮಾತಾಡುತ್ತಾಳೆ (haudu, avaḷu kannaḍa mātāḍuttāḷe), 'yes, she speaks Kannada'. For 'she' (ಅವಳು, avaḷu) the verb ends -ತಾಳೆ (-tāḷe).",
+      "max_attempts": 3
+    },
+    {
+      "id": "he_speaks",
+      "tutor_kn": "ನಿಮ್ಮ ತಮ್ಮ ಕನ್ನಡ ಮಾತಾಡುತ್ತಾನಾ?",
+      "tutor_en": "Does your younger brother speak Kannada?",
+      "goal_en": "The student answers with the 'he' ending -ತಾನೆ: ಹೌದು, ಅವನು ಕನ್ನಡ ಮಾತಾಡುತ್ತಾನೆ. A 'no' answer (ಮಾತಾಡಲ್ಲ) is fine too.",
+      "expected_kn": [
+        "ಅವನು ಕನ್ನಡ ಮಾತಾಡುತ್ತಾನೆ",
+        "ಮಾತಾಡುತ್ತಾನೆ",
+        "ಮಾತಾಡ್ತಾನೆ",
+        "ಮಾತಾಡಲ್ಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಅವನು ಕನ್ನಡ ಮಾತಾಡುತ್ತಾನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಅವನು ಕನ್ನಡ ಮಾತಾಡುತ್ತಾನೆ (haudu, avanu kannaḍa mātāḍuttāne), 'yes, he speaks Kannada'. For 'he' (ಅವನು) it ends -ತಾನೆ (-tāne); for 'they' (ಅವರು) -ತಾರೆ (-tāre).",
+      "max_attempts": 3
+    },
+    {
+      "id": "give_me",
+      "tutor_kn": "ನನ್ನ ಹತ್ತಿರ ಒಂದು ಪುಸ್ತಕ ಇದೆ. ಆ ಪುಸ್ತಕ ನಿಮಗೆ ಬೇಕು. ನನ್ನನ್ನು ಕೇಳಿ.",
+      "tutor_en": "I have a book. You want that book. Ask me for it.",
+      "goal_en": "The student asks for the book: ಪುಸ್ತಕ ನನಗೆ ಕೊಡಿ or ನನಗೆ ಕೊಡಿ (give it to me).",
+      "expected_kn": [
+        "ಪುಸ್ತಕ ನನಗೆ ಕೊಡಿ",
+        "ನನಗೆ ಕೊಡಿ",
+        "ಪುಸ್ತಕ ಕೊಡಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಪುಸ್ತಕ ನನಗೆ ಕೊಡಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಪುಸ್ತಕ ನನಗೆ ಕೊಡಿ (pustaka nanage koḍi), 'please give me the book'. ನನಗೆ (nanage) is 'to me', ನಮಗೆ (namage) 'to us', ಅವರಿಗೆ (avarige) 'to them'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "my_book",
+      "tutor_kn": "ತಗೊಳ್ಳಿ. ಇದು ನಿಮ್ಮ ಪುಸ್ತಕನಾ?",
+      "tutor_en": "Here you are. Is this your book?",
+      "goal_en": "The student says it is their book: ಹೌದು, ಇದು ನನ್ನ ಪುಸ್ತಕ.",
+      "expected_kn": [
+        "ಇದು ನನ್ನ ಪುಸ್ತಕ",
+        "ನನ್ನ ಪುಸ್ತಕ",
+        "ನಮ್ಮ ಪುಸ್ತಕ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಇದು ನನ್ನ ಪುಸ್ತಕ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಇದು ನನ್ನ ಪುಸ್ತಕ (haudu, idu nanna pustaka), 'yes, this is my book'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "her_book",
+      "tutor_kn": "ಈ ಇನ್ನೊಂದು ಪುಸ್ತಕ ನಿಮ್ಮ ತಂಗಿಯದು. ಇದು ಅವಳ ಪುಸ್ತಕ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "This other book belongs to your younger sister. Say 'this is her book'.",
+      "goal_en": "The student says ಇದು ಅವಳ ಪುಸ್ತಕ (this is her book). ಅವಳ (her), not ಅವಳು (she) or ಅವಳಿಗೆ (to her).",
+      "expected_kn": [
+        "ಇದು ಅವಳ ಪುಸ್ತಕ",
+        "ಅವಳ ಪುಸ್ತಕ",
+        "ಇವಳ ಪುಸ್ತಕ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇದು ಅವಳ ಪುಸ್ತಕ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಇದು ಅವಳ ಪುಸ್ತಕ (idu avaḷa pustaka), 'this is her book'. Also: ಅವನ ಪುಸ್ತಕ (avana, his), ಅವರ ಪುಸ್ತಕ (avara, their), ನಮ್ಮ ಪುಸ್ತಕ (namma, our).",
+      "max_attempts": 3
+    },
+    {
+      "id": "give_her",
+      "tutor_kn": "ಈ ಪುಸ್ತಕ ಅವಳಿಗೆ ಕೊಡಬೇಕು. ನಿಮ್ಮ ತಮ್ಮನಿಗೆ ಹೇಳಿ, ಅವಳಿಗೆ ಕೊಡು.",
+      "tutor_en": "This book must go to her. Tell your younger brother: give it to her.",
+      "goal_en": "The student tells a younger person 'give it to her': ಅವಳಿಗೆ ಕೊಡು. ಕೊಡು (informal) is right for a younger brother; ಕೊಡಿ is also accepted.",
+      "expected_kn": [
+        "ಅವಳಿಗೆ ಕೊಡು",
+        "ಅವಳಿಗೆ ಕೊಡಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅವಳಿಗೆ ಕೊಡು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅವಳಿಗೆ ಕೊಡು (avaḷige koḍu), 'give it to her'. ಕೊಡು (koḍu) is for someone younger or close; ಕೊಡಿ (koḍi) is polite. 'To him' is ಅವನಿಗೆ (avanige).",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ತುಂಬಾ ಚೆನ್ನಾಗಿ ಮಾಡಿದ್ದೀರಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "You did very well! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

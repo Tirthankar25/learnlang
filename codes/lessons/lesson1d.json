@@ -1,0 +1,116 @@
+{
+  "id": "lesson_01d_shopping",
+  "title": "At the shop: milk and curd",
+  "summary_en": "Ask whether that is a shop, whether milk is available, ask for curd, say how much you want, ask the price and pay.",
+  "steps": [
+    {
+      "id": "is_that_shop",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಇವತ್ತು ಅಂಗಡಿಗೆ ಹೋಗೋಣ. ದೂರದಲ್ಲಿ ಒಂದು ಕಟ್ಟಡ ಇದೆ. ಅದು ಅಂಗಡಿನಾ ಎಂದು ನನ್ನನ್ನು ಕೇಳಿ.",
+      "tutor_en": "Hello! Today let's go to the shop. There is a building far away. Ask me whether that is a shop.",
+      "goal_en": "The student asks 'is that a shop?': ಅದು ಅಂಗಡಿನಾ? It is far, so ಅದು (that).",
+      "expected_kn": [
+        "ಅದು ಅಂಗಡಿನಾ",
+        "ಅಂಗಡಿನಾ",
+        "ಅಂಗಡಿಯಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅದು ಅಂಗಡಿನಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಅದು ಅಂಗಡಿನಾ? (adu angaḍinā?), 'is that a shop?'. ಅಂಗಡಿ (angaḍi) is 'shop'; ಅದು (adu) is 'that', ಇದು (idu) is 'this'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "milk_available",
+      "tutor_kn": "ಅಲ್ಲ, ಅದು ಕ್ಲಬ್ ಹೌಸ್. ಇದು ಅಂಗಡಿ. ಈಗ ಹಾಲು ಇದೆಯಾ ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "No, that is the clubhouse. This is the shop. Now ask whether milk is available.",
+      "goal_en": "The student asks 'is there milk?': ಹಾಲು ಇದೆಯಾ?",
+      "expected_kn": [
+        "ಹಾಲು ಇದೆಯಾ",
+        "ಹಾಲಿದೆಯಾ",
+        "ಹಾಲು ಇದೆಯ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹಾಲು ಇದೆಯಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಹಾಲು ಇದೆಯಾ? (hālu ideyā?), 'is milk available?'. ಹಾಲು (hālu) is 'milk', ಇದೆ (ide) is 'is there'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ask_curd",
+      "tutor_kn": "ಹಾಲು ಇಲ್ಲ, ಮೊಸರು ಇದೆ.",
+      "tutor_en": "There is no milk, but there is curd.",
+      "goal_en": "The student asks for curd: ಮೊಸರು ಕೊಡಿ (give me curd) or ಮೊಸರು ಬೇಕು (I want curd).",
+      "expected_kn": [
+        "ಮೊಸರು ಕೊಡಿ",
+        "ಮೊಸರು ಬೇಕು",
+        "ಕೊಡಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಮೊಸರು ಕೊಡಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಮೊಸರು ಕೊಡಿ (mosaru koḍi), 'please give me curd'. ಮೊಸರು (mosaru) is 'curd', ಕೊಡಿ (koḍi) is 'please give'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "how_much_curd",
+      "tutor_kn": "ಒಂದು ಲೀಟರ್ ಬೇಕಾ? ಅರ್ಧ ಲೀಟರ್ ಬೇಕಾ?",
+      "tutor_en": "Do you want one litre, or half a litre?",
+      "goal_en": "The student says what they want: ಅರ್ಧ ಲೀಟರ್ ಬೇಕು (I want half a litre) or ಒಂದು ಲೀಟರ್ ಬೇಕು. Adding ... ಬೇಡ (don't want) is a bonus.",
+      "expected_kn": [
+        "ಅರ್ಧ ಲೀಟರ್ ಬೇಕು",
+        "ಲೀಟರ್ ಬೇಕು",
+        "ಬೇಕು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅರ್ಧ ಲೀಟರ್ ಬೇಕು, ಒಂದು ಲೀಟರ್ ಬೇಡ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅರ್ಧ ಲೀಟರ್ ಬೇಕು, ಒಂದು ಲೀಟರ್ ಬೇಡ (ardha līṭar bēku, ondu līṭar bēḍa), 'I want half a litre, not one litre'. ಬೇಕು (bēku) is 'want', ಬೇಡ (bēḍa) is 'don't want', and ಬೇಕಾ (bēkā) asks 'do you want?'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ask_price",
+      "tutor_kn": "ಸರಿ, ತಗೊಳ್ಳಿ. ಈಗ ಎಷ್ಟು ಆಯ್ತು ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "OK, here you are. Now ask how much it is.",
+      "goal_en": "The student asks the price: ಎಷ್ಟು ಆಯ್ತು? or ಎಷ್ಟಾಯ್ತು?",
+      "expected_kn": [
+        "ಎಷ್ಟು ಆಯ್ತು",
+        "ಎಷ್ಟಾಯ್ತು",
+        "ಎಷ್ಟು ಆಯಿತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಎಷ್ಟು ಆಯ್ತು ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಎಷ್ಟು ಆಯ್ತು? (eshṭu āytu?), 'how much is it?'. ಎಷ್ಟು (eshṭu) is 'how much'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "pay",
+      "tutor_kn": "ಇಪ್ಪತ್ತು ರೂಪಾಯಿ ಕೊಡಿ.",
+      "tutor_en": "Please give twenty rupees.",
+      "goal_en": "The student hands over the money: ಇಪ್ಪತ್ತು ರೂಪಾಯಿ ತಗೊಳ್ಳಿ (take twenty rupees), or just ತಗೊಳ್ಳಿ.",
+      "expected_kn": [
+        "ಇಪ್ಪತ್ತು ರೂಪಾಯಿ ತಗೊಳ್ಳಿ",
+        "ತಗೊಳ್ಳಿ",
+        "ತಗೋಳಿ",
+        "ತೆಗೆದುಕೊಳ್ಳಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇಪ್ಪತ್ತು ರೂಪಾಯಿ ತಗೊಳ್ಳಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಇಪ್ಪತ್ತು ರೂಪಾಯಿ ತಗೊಳ್ಳಿ (ippattu rūpāyi tagoḷḷi), 'take twenty rupees'. ಕೊಡಿ (koḍi) is 'give', ತಗೊಳ್ಳಿ (tagoḷḷi) is 'take'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಸರಿ, ಧನ್ಯವಾದಗಳು! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "OK, thank you! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

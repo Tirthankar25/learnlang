@@ -1,0 +1,127 @@
+{
+  "id": "lesson_04a_colours",
+  "title": "Colours and the Karnataka flag",
+  "summary_en": "A mother quizzes her daughter: how many colours are on the Kannada flag and which ones, and the colours of the sky, leaves and milk.",
+  "steps": [
+    {
+      "id": "come_here",
+      "tutor_kn": "ಮಗಳೇ, ಬಾ ಇಲ್ಲಿ!",
+      "tutor_en": "(I am the mother, you are my daughter.) Come here, daughter!",
+      "goal_en": "The student answers ಏನು ಅಮ್ಮ? (what is it, mummy?).",
+      "expected_kn": [
+        "ಏನು ಅಮ್ಮ",
+        "ಏನಮ್ಮ",
+        "ಏನು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಏನು ಅಮ್ಮ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Answer ಏನು ಅಮ್ಮ? (ēnu amma?), 'what is it, mummy?'. ಬಾ (bā) is the informal 'come'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ok_mummy",
+      "tutor_kn": "ನಿನಗೆ ಕೆಲವು ಪ್ರಶ್ನೆ ಕೇಳುತ್ತೇನೆ. ನೀನು ಉತ್ತರ ಕೊಡಬೇಕು.",
+      "tutor_en": "I will ask you a few questions. You have to give the answers.",
+      "goal_en": "The student agrees: ಆಯ್ತು ಅಮ್ಮ (OK, mummy).",
+      "expected_kn": [
+        "ಆಯ್ತು ಅಮ್ಮ",
+        "ಆಯ್ತು",
+        "ಆಯಿತು",
+        "ಸರಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆಯ್ತು ಅಮ್ಮ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಆಯ್ತು ಅಮ್ಮ (āytu amma), 'OK, mummy'. ಪ್ರಶ್ನೆ (prashne) is 'question', ಉತ್ತರ (uttara) is 'answer'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "how_many_colours",
+      "tutor_kn": "ನಮ್ಮ ಕನ್ನಡದ ಬಾವುಟದಲ್ಲಿ ಎಷ್ಟು ಬಣ್ಣಗಳಿವೆ?",
+      "tutor_en": "How many colours does our Kannada flag have?",
+      "goal_en": "The student says two: ಎರಡು.",
+      "expected_kn": [
+        "ಎರಡು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಎರಡು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಎರಡು (eraḍu), 'two'. ಬಾವುಟ (bāvuṭa) is 'flag', ಬಣ್ಣ (baṇṇa) is 'colour'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "which_colours",
+      "tutor_kn": "ಅವು ಯಾವ್ಯಾವು?",
+      "tutor_en": "Which ones are they?",
+      "goal_en": "The student names the colours: ಮೊದಲನೆಯದು ಹಳದಿ, ಎರಡನೆಯದು ಕೆಂಪು (the first is yellow, the second is red). Saying ಹಳದಿ ಮತ್ತು ಕೆಂಪು is fine. Both colours should be named.",
+      "expected_kn": [
+        "ಮೊದಲನೆಯದು ಹಳದಿ, ಎರಡನೆಯದು ಕೆಂಪು",
+        "ಹಳದಿ ಮತ್ತು ಕೆಂಪು",
+        "ಹಳದಿ",
+        "ಕೆಂಪು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಮೊದಲನೆಯದು ಹಳದಿ, ಎರಡನೆಯದು ಕೆಂಪು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಮೊದಲನೆಯದು ಹಳದಿ, ಎರಡನೆಯದು ಕೆಂಪು (modalaneyadu haḷadi, eraḍaneyadu kempu), 'the first is yellow, the second is red'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "sky_colour",
+      "tutor_kn": "ಆಕಾಶದ ಬಣ್ಣ ಯಾವುದು?",
+      "tutor_en": "What is the colour of the sky?",
+      "goal_en": "The student says blue: ನೀಲಿ (or ನೀಲಿ ಬಣ್ಣ).",
+      "expected_kn": [
+        "ನೀಲಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನೀಲಿ ಬಣ್ಣ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನೀಲಿ ಬಣ್ಣ (nīli baṇṇa), 'blue'. ಆಕಾಶ (ākāsha) is 'sky'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "leaf_colour",
+      "tutor_kn": "ಎಲೆಯ ಬಣ್ಣ ಯಾವುದು?",
+      "tutor_en": "What is the colour of a leaf?",
+      "goal_en": "The student says green: ಎಲೆಯ ಬಣ್ಣ ಹಸಿರು, or just ಹಸಿರು.",
+      "expected_kn": [
+        "ಎಲೆಯ ಬಣ್ಣ ಹಸಿರು",
+        "ಹಸಿರು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಎಲೆಯ ಬಣ್ಣ ಹಸಿರು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಎಲೆಯ ಬಣ್ಣ ಹಸಿರು (eleya baṇṇa hasiru), 'the colour of a leaf is green'. ಎಲೆ (ele) is 'leaf'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "milk_colour",
+      "tutor_kn": "ಕೊನೆಯ ಪ್ರಶ್ನೆ. ಹಾಲಿನ ಬಣ್ಣ ಯಾವುದು?",
+      "tutor_en": "Last question. What is the colour of milk?",
+      "goal_en": "The student says white: ಬಿಳಿ.",
+      "expected_kn": [
+        "ಬಿಳಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹಾಲಿನ ಬಣ್ಣ ಬಿಳಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹಾಲಿನ ಬಣ್ಣ ಬಿಳಿ (hālina baṇṇa biḷi), 'the colour of milk is white'. Black is ಕಪ್ಪು (kappu).",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಭೇಷ್ ಮಗಳೇ! ಎಲ್ಲಾ ಸರಿಯಾಗಿ ಹೇಳಿದೆ. ಓದ್ಕೊ ಹೋಗು.",
+      "tutor_en": "Well done, daughter! You got everything right. Now go and study.",
+      "goal_en": "The student says ಆಯ್ತು ಅಮ್ಮ (OK, mummy) or thanks the teacher.",
+      "expected_kn": [
+        "ಆಯ್ತು ಅಮ್ಮ",
+        "ಆಯ್ತು",
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆಯ್ತು ಅಮ್ಮ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಆಯ್ತು ಅಮ್ಮ (āytu amma), 'OK, mummy'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "id": "lesson_04d_house_help",
+  "title": "Giving instructions at home",
+  "summary_en": "Ask why someone is late, tell them not to be late again, and give household instructions in order: clean, sweep (ಗುಡಿಸು), mop (ಒರೆಸು), wash the dishes (ತೊಳಿ), that's enough (ಸಾಕು).",
+  "steps": [
+    {
+      "id": "why_late",
+      "tutor_kn": "ನಮಸ್ಕಾರ ಅಕ್ಕ! ನಾನು ತಡವಾಗಿ ಬಂದೆ. ಯಾಕೆ ತಡ ಎಂದು ನನ್ನನ್ನು ಕೇಳಿ.",
+      "tutor_en": "(I am the house help.) Hello, sister! I came late. Ask me why I'm late.",
+      "goal_en": "The student asks ಯಾಕಮ್ಮ ತಡ? or ಯಾಕೆ ತಡ? (why are you late?).",
+      "expected_kn": [
+        "ಯಾಕಮ್ಮ ತಡ",
+        "ಯಾಕೆ ತಡ",
+        "ತಡ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮಸ್ಕಾರ, ಯಾಕಮ್ಮ ತಡ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ನಮಸ್ಕಾರ, ಯಾಕಮ್ಮ ತಡ? (namaskāra, yākamma taḍa?), 'hello, why are you late?'. ಯಾಕೆ (yāke) is 'why', ತಡ (taḍa) is 'late'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "what_time",
+      "tutor_kn": "ಕ್ಷಮಿಸಿ ಅಕ್ಕ. ಈಗ ಎಷ್ಟು ಗಂಟೆ ಆಗ್ತಾ ಇದೆ?",
+      "tutor_en": "Sorry, sister. What time is it now? (It's almost twelve.)",
+      "goal_en": "The student says the time, ideally ಹನ್ನೆರಡು ಗಂಟೆ ಆಗ್ತಾ ಇದೆ (it's nearly twelve). Any time with ಗಂಟೆ is fine.",
+      "expected_kn": [
+        "ಹನ್ನೆರಡು ಗಂಟೆ ಆಗ್ತಾ ಇದೆ",
+        "ಗಂಟೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹನ್ನೆರಡು ಗಂಟೆ ಆಗ್ತಾ ಇದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹನ್ನೆರಡು ಗಂಟೆ ಆಗ್ತಾ ಇದೆ (hanneraḍu gaṇṭe āgtā ide), 'it's nearly twelve o'clock'. Eleven is ಹನ್ನೊಂದು (hannondu), twelve is ಹನ್ನೆರಡು (hanneraḍu).",
+      "max_attempts": 3
+    },
+    {
+      "id": "dont_be_late",
+      "tutor_kn": "ನಾನು ಹನ್ನೊಂದು ಗಂಟೆಗೆ ಬರ್ತೀನಿ ಅಂತ ಹೇಳಿದ್ದೆ. ಆದರೆ ಮಕ್ಕಳ ಶಾಲೆಗೆ ಹೋಗಿದ್ದೆ, ತಡ ಆಯ್ತು.",
+      "tutor_en": "I had said I'd come at eleven. But I went to the children's school and got late. (Tell me not to be late again.)",
+      "goal_en": "The student says ಸರಿ, ಇನ್ನೊಮ್ಮೆ ಈ ತರ ತಡ ಮಾಡಬೇಡ (OK, don't be late like this again). ತಡ ಮಾಡಬೇಡ is the key part.",
+      "expected_kn": [
+        "ಇನ್ನೊಮ್ಮೆ ಈ ತರ ತಡ ಮಾಡಬೇಡ",
+        "ತಡ ಮಾಡಬೇಡ",
+        "ತಡ ಮಾಡಬೇಡಿ",
+        "ಮಾಡಬೇಡ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಸರಿ, ಇನ್ನೊಮ್ಮೆ ಈ ತರ ತಡ ಮಾಡಬೇಡ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಸರಿ, ಇನ್ನೊಮ್ಮೆ ಈ ತರ ತಡ ಮಾಡಬೇಡ (sari, innomme ī tara taḍa māḍabēḍa), 'OK, don't be late like this again'. ಮಾಡಬೇಡ (māḍabēḍa) is 'don't do'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "what_first",
+      "tutor_kn": "ಸರಿ ಅಕ್ಕ. ಇವತ್ತು ತುಂಬಾ ಕೆಲಸ ಇದೆ. ಮೊದಲು ಕಸ ಗುಡಿಸೋದಾ?",
+      "tutor_en": "OK, sister. There's a lot of work today. Shall I sweep the floor first?",
+      "goal_en": "The student says to clean the bathroom first: ಮೊದಲು ಸ್ನಾನದ ಕೋಣೆ ಸ್ವಚ್ಛ ಮಾಡು. Saying yes, sweep first (ಹೌದು, ಕಸ ಗುಡಿಸು) is fine too.",
+      "expected_kn": [
+        "ಮೊದಲು ಸ್ನಾನದ ಕೋಣೆ ಸ್ವಚ್ಛ ಮಾಡು",
+        "ಸ್ವಚ್ಛ ಮಾಡು",
+        "ಸ್ನಾನದ ಕೋಣೆ",
+        "ಕಸ ಗುಡಿಸು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಮೊದಲು ಸ್ನಾನದ ಕೋಣೆ ಸ್ವಚ್ಛ ಮಾಡು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಮೊದಲು ಸ್ನಾನದ ಕೋಣೆ ಸ್ವಚ್ಛ ಮಾಡು (modalu snānada kōṇe swachchha māḍu), 'first clean the bathroom'. Instructions to someone younger use the short form: ಮಾಡು (māḍu, do), ಗುಡಿಸು (guḍisu, sweep).",
+      "max_attempts": 3
+    },
+    {
+      "id": "and_then",
+      "tutor_kn": "ಆಮೇಲೆ?",
+      "tutor_en": "And then?",
+      "goal_en": "The student gives the next tasks: ಕಸ ಗುಡಿಸು, ನಂತರ ನೆಲ ಒರೆಸು (sweep, then mop the floor). Either task is fine.",
+      "expected_kn": [
+        "ಕಸ ಗುಡಿಸು, ನಂತರ ನೆಲ ಒರೆಸು",
+        "ಕಸ ಗುಡಿಸು",
+        "ನೆಲ ಒರೆಸು",
+        "ಗುಡಿಸು",
+        "ಒರೆಸು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಕಸ ಗುಡಿಸು, ನಂತರ ನೆಲ ಒರೆಸು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಕಸ ಗುಡಿಸು, ನಂತರ ನೆಲ ಒರೆಸು (kasa guḍisu, nantara nela oresu), 'sweep, then mop the floor'. ಕಸ (kasa) is 'dirt', ನೆಲ (nela) is 'floor'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "dishes",
+      "tutor_kn": "ಸರಿ. ಆಮೇಲೆ ಏನು ಮಾಡಲಿ?",
+      "tutor_en": "OK. What shall I do after that?",
+      "goal_en": "The student says ಆಮೇಲೆ ಪಾತ್ರೆ ತೊಳಿ (then wash the dishes).",
+      "expected_kn": [
+        "ಆಮೇಲೆ ಪಾತ್ರೆ ತೊಳಿ",
+        "ಪಾತ್ರೆ ತೊಳಿ",
+        "ತೊಳಿ",
+        "ಪಾತ್ರೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆಮೇಲೆ ಪಾತ್ರೆ ತೊಳಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಆಮೇಲೆ ಪಾತ್ರೆ ತೊಳಿ (āmēle pātre toḷi), 'then wash the dishes'. ಪಾತ್ರೆ (pātre) is 'vessels, dishes'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "enough",
+      "tutor_kn": "ಇನ್ನೂ ಏನಾದರೂ ಇದೆಯಾ?",
+      "tutor_en": "Is there anything else?",
+      "goal_en": "The student says that's enough for today: ಇವತ್ತು ಇಷ್ಟು ಸಾಕು.",
+      "expected_kn": [
+        "ಇವತ್ತು ಇಷ್ಟು ಸಾಕು",
+        "ಸಾಕು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇವತ್ತು ಇಷ್ಟು ಸಾಕು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಇವತ್ತು ಇಷ್ಟು ಸಾಕು (ivattu ishṭu sāku), 'this much is enough for today'. ಸಾಕು (sāku) is 'enough'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಸರಿ ಅಕ್ಕ, ಮಾಡ್ತೀನಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು.",
+      "tutor_en": "OK sister, I'll do it! Today's lesson is over.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

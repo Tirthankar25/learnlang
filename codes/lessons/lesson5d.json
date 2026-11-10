@@ -1,0 +1,145 @@
+{
+  "id": "lesson_05d_sentences",
+  "title": "Grammar: statements, questions, commands",
+  "summary_en": "Build simple sentences (subject, object, verb: ನಾನು ಹಾಡು ಹಾಡುತ್ತೇನೆ), questions with ಯಾವಾಗ / ಎಲ್ಲಿಂದ, commands like ಬಾ ಇಲ್ಲಿ, and exclamations like ಅಯ್ಯೋ! and ಸಕತ್ತಾಗಿದೆ!",
+  "steps": [
+    {
+      "id": "simple",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಸರಳ ವಾಕ್ಯ, ಕರ್ತೃ, ಕರ್ಮ, ಕ್ರಿಯಾಪದ. ನಾನು ಹಾಡು ಹಾಡುತ್ತೇನೆ. ನೀವೂ ಹೇಳಿ.",
+      "tutor_en": "Hello! A simple sentence is subject, object, verb: ನಾನು (I) ಹಾಡು (a song) ಹಾಡುತ್ತೇನೆ (will sing). You say it.",
+      "goal_en": "The student says ನಾನು ಹಾಡು ಹಾಡುತ್ತೇನೆ (I sing a song). Colloquial ಹಾಡ್ತೀನಿ is fine.",
+      "expected_kn": [
+        "ನಾನು ಹಾಡು ಹಾಡುತ್ತೇನೆ",
+        "ಹಾಡುತ್ತೇನೆ",
+        "ಹಾಡ್ತೀನಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ಹಾಡು ಹಾಡುತ್ತೇನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ಹಾಡು ಹಾಡುತ್ತೇನೆ (nānu hāḍu hāḍuttēne), 'I sing a song'. Order: ಕರ್ತೃ (kartṛu, subject) + ಕರ್ಮ (karma, object) + ಕ್ರಿಯಾಪದ (kriyāpada, verb).",
+      "max_attempts": 3
+    },
+    {
+      "id": "story",
+      "tutor_kn": "ಈಗ ಕಥೆ ಮತ್ತು ಹೇಳು ಬಳಸಿ, ನಿಮಗಾಗಿ ಒಂದು ಕಥೆ ಹೇಳುತ್ತೇನೆ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Now use ಕಥೆ (story) and ಹೇಳು (tell): say 'I will tell a story just for you'.",
+      "goal_en": "The student says ನಿಮಗಾಗಿ ಒಂದು ಕಥೆ ಹೇಳುತ್ತೇನೆ (I will tell a story for you).",
+      "expected_kn": [
+        "ನಿಮಗಾಗಿ ಒಂದು ಕಥೆ ಹೇಳುತ್ತೇನೆ",
+        "ಕಥೆ ಹೇಳುತ್ತೇನೆ",
+        "ಹೇಳುತ್ತೇನೆ",
+        "ಹೇಳ್ತೀನಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಿಮಗಾಗಿ ಒಂದು ಕಥೆ ಹೇಳುತ್ತೇನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಿಮಗಾಗಿ ಒಂದು ಕಥೆ ಹೇಳುತ್ತೇನೆ (nimagāgi ondu kathe hēḷuttēne), 'I will tell a story for you'. ನಿಮಗಾಗಿ (nimagāgi) is 'for you'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "he_sings",
+      "tutor_kn": "ನಿಮ್ಮ ತಮ್ಮ ಹಾಡು ಹಾಡುತ್ತಾನಾ?",
+      "tutor_en": "Does your younger brother sing songs?",
+      "goal_en": "The student answers with the 'he' ending: ಹೌದು, ಅವನು ಹಾಡು ಹಾಡುತ್ತಾನೆ. A 'no' answer (ಹಾಡಲ್ಲ) is fine too.",
+      "expected_kn": [
+        "ಅವನು ಹಾಡು ಹಾಡುತ್ತಾನೆ",
+        "ಹಾಡುತ್ತಾನೆ",
+        "ಹಾಡ್ತಾನೆ",
+        "ಹಾಡಲ್ಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಅವನು ಹಾಡು ಹಾಡುತ್ತಾನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಅವನು ಹಾಡು ಹಾಡುತ್ತಾನೆ (haudu, avanu hāḍu hāḍuttāne), 'yes, he sings songs'. She: ಹಾಡುತ್ತಾಳೆ (-tāḷe); they: ಹಾಡುತ್ತಾರೆ (-tāre).",
+      "max_attempts": 3
+    },
+    {
+      "id": "ask_when",
+      "tutor_kn": "ಪ್ರಶ್ನೆ ವಾಕ್ಯ, ನೀನು ಎಲ್ಲಿಗೆ ಹೋಗಿದ್ದೆ? ಈಗ ಯಾವಾಗ ಬಳಸಿ ನನಗೆ ಒಂದು ಪ್ರಶ್ನೆ ಕೇಳಿ.",
+      "tutor_en": "A question: ನೀನು ಎಲ್ಲಿಗೆ ಹೋಗಿದ್ದೆ? (where did you go?). Now ask me any question using ಯಾವಾಗ (when).",
+      "goal_en": "The student asks any question with ಯಾವಾಗ (when), e.g. ನೀವು ಯಾವಾಗ ಬಂದ್ರಿ? (when did you come?).",
+      "expected_kn": [
+        "ನೀವು ಯಾವಾಗ ಬಂದ್ರಿ",
+        "ಯಾವಾಗ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನೀವು ಯಾವಾಗ ಬಂದ್ರಿ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask e.g. ನೀವು ಯಾವಾಗ ಬಂದ್ರಿ? (nīvu yāvāga bandri?), 'when did you come?'. ಯಾವಾಗ (yāvāga) is 'when'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ask_from_where",
+      "tutor_kn": "ಚೆನ್ನಾಗಿದೆ! ಈಗ ಎಲ್ಲಿಂದ ಬಳಸಿ ಕೇಳಿ.",
+      "tutor_en": "Good! Now ask a question using ಎಲ್ಲಿಂದ (from where).",
+      "goal_en": "The student asks any question with ಎಲ್ಲಿಂದ (from where), e.g. ನೀವು ಎಲ್ಲಿಂದ ಬಂದಿದ್ದೀರಿ? (where have you come from?).",
+      "expected_kn": [
+        "ನೀವು ಎಲ್ಲಿಂದ ಬಂದಿದ್ದೀರಿ",
+        "ಎಲ್ಲಿಂದ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನೀವು ಎಲ್ಲಿಂದ ಬಂದಿದ್ದೀರಿ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask e.g. ನೀವು ಎಲ್ಲಿಂದ ಬಂದಿದ್ದೀರಿ? (nīvu ellinda bandiddīri?), 'where have you come from?'. ಎಲ್ಲಿ (elli) + ಇಂದ (inda, from) = ಎಲ್ಲಿಂದ.",
+      "max_attempts": 3
+    },
+    {
+      "id": "command",
+      "tutor_kn": "ಆಜ್ಞೆ ವಾಕ್ಯದಲ್ಲಿ ಕ್ರಿಯಾಪದ ಕರ್ಮಕ್ಕಿಂತ ಮೊದಲು ಬರುತ್ತದೆ. ಒಂದು ಮಗುವನ್ನು ಕರೆಯಿರಿ, ಬಾ ಇಲ್ಲಿ.",
+      "tutor_en": "In a command the verb comes before the object: ಬಾ ಇಲ್ಲಿ (come here). Call a child over: come here!",
+      "goal_en": "The student says ಬಾ ಇಲ್ಲಿ (come here!), or ನೀನು ಬಾ ಇಲ್ಲಿ. ಇಲ್ಲಿ ಬಾ is fine too.",
+      "expected_kn": [
+        "ಬಾ ಇಲ್ಲಿ",
+        "ಇಲ್ಲಿ ಬಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಬಾ ಇಲ್ಲಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಬಾ ಇಲ್ಲಿ (bā illi), 'come here!'. For an adult, politely: ಬನ್ನಿ ಇಲ್ಲಿ (banni illi). ಬರಬೇಡ (barabēḍa) is 'don't come'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ayyo",
+      "tutor_kn": "ಉದ್ಗಾರ ವಾಕ್ಯ. ಅಯ್ಯೋ, ಹಾಲು ಚೆಲ್ಲಿ ಹೋಯ್ತು! ಈಗ ನಿಮ್ಮ ಹಾಲು ಚೆಲ್ಲಿತು. ನೀವು ಏನು ಹೇಳುತ್ತೀರಿ?",
+      "tutor_en": "An exclamation: ಅಯ್ಯೋ, ಹಾಲು ಚೆಲ್ಲಿ ಹೋಯ್ತು! (oh no, the milk spilled!). Now your milk has spilled. What do you say?",
+      "goal_en": "The student exclaims with ಅಯ್ಯೋ or ಅಯ್ಯಯ್ಯೋ, e.g. ಅಯ್ಯೋ, ಹಾಲು ಚೆಲ್ಲಿ ಹೋಯ್ತು!",
+      "expected_kn": [
+        "ಅಯ್ಯೋ, ಹಾಲು ಚೆಲ್ಲಿ ಹೋಯ್ತು",
+        "ಅಯ್ಯೋ",
+        "ಅಯ್ಯಯ್ಯೋ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅಯ್ಯೋ, ಹಾಲು ಚೆಲ್ಲಿ ಹೋಯ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅಯ್ಯೋ, ಹಾಲು ಚೆಲ್ಲಿ ಹೋಯ್ತು! (ayyō, hālu chelli hōytu!), 'oh no, the milk spilled!'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "super",
+      "tutor_kn": "ಆಹಾ, ಚಹಾ ತುಂಬಾ ರುಚಿಯಾಗಿದೆ! ಈಗ ಖುಷಿಯಿಂದ ಹೇಳಿ, ಕನ್ನಡ ಸಕತ್ತಾಗಿದೆ!",
+      "tutor_en": "ಆಹಾ, ಚಹಾ ತುಂಬಾ ರುಚಿಯಾಗಿದೆ! (aha, the tea is so tasty!). Now say happily: Kannada is super!",
+      "goal_en": "The student says ಕನ್ನಡ ಸಕತ್ತಾಗಿದೆ! (Kannada is super!). Any exclamation with ಆಹಾ or ಸಕತ್ತಾಗಿದೆ is fine.",
+      "expected_kn": [
+        "ಕನ್ನಡ ಸಕತ್ತಾಗಿದೆ",
+        "ಸಕತ್ತಾಗಿದೆ",
+        "ಸಕತ್ತಾಗಿ",
+        "ಆಹಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಕನ್ನಡ ಸಕತ್ತಾಗಿದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಕನ್ನಡ ಸಕತ್ತಾಗಿದೆ! (kannaḍa sakattāgide!), 'Kannada is super!'. ಸಕತ್ (sakat) is slang for 'awesome'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಸಕತ್! ತುಂಬಾ ಚೆನ್ನಾಗಿ ಮಾಡಿದ್ದೀರಿ. ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "Awesome! You did very well. Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

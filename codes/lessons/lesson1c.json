@@ -1,0 +1,133 @@
+{
+  "id": "lesson_01c_family_more",
+  "title": "Brothers, sisters and lunch",
+  "summary_en": "Name elder and younger brothers and sisters, say whose name is what (ತಂದೆಯ, ಗಂಡನ), how many children you have, and ask if someone has had lunch.",
+  "steps": [
+    {
+      "id": "elder_brother",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ನಿಮ್ಮ ಅಣ್ಣ ಸ್ವಲ್ಪ ದೂರ ಇದ್ದಾರೆ. ಅವರು ಯಾರು?",
+      "tutor_en": "Hello! Your elder brother is a little far away. Who is that?",
+      "goal_en": "The student says 'he is my elder brother': ಅವರು ನನ್ನ ಅಣ್ಣ, or just ನನ್ನ ಅಣ್ಣ.",
+      "expected_kn": [
+        "ಅವರು ನನ್ನ ಅಣ್ಣ",
+        "ನನ್ನ ಅಣ್ಣ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅವರು ನನ್ನ ಅಣ್ಣ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅವರು ನನ್ನ ಅಣ್ಣ (avaru nanna aṇṇa), 'he is my elder brother'. A younger brother is ತಮ್ಮ (tamma).",
+      "max_attempts": 3
+    },
+    {
+      "id": "younger_sister",
+      "tutor_kn": "ನಿಮ್ಮ ತಂಗಿ ನಿಮ್ಮ ಪಕ್ಕದಲ್ಲಿ ಇದ್ದಾಳೆ. ಇವಳು ಯಾರು?",
+      "tutor_en": "Your younger sister is next to you. Who is she?",
+      "goal_en": "The student says 'she is my younger sister': ಇವಳು ನನ್ನ ತಂಗಿ, or just ನನ್ನ ತಂಗಿ.",
+      "expected_kn": [
+        "ಇವಳು ನನ್ನ ತಂಗಿ",
+        "ನನ್ನ ತಂಗಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇವಳು ನನ್ನ ತಂಗಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಇವಳು ನನ್ನ ತಂಗಿ (ivaḷu nanna tangi), 'she is my younger sister'. An elder sister is ಅಕ್ಕ (akka).",
+      "max_attempts": 3
+    },
+    {
+      "id": "fathers_name",
+      "tutor_kn": "ನನ್ನ ಗಂಡನ ಹೆಸರು ಕೃಷ್ಣ. ನಿಮ್ಮ ತಂದೆಯ ಹೆಸರು ಏನು?",
+      "tutor_en": "My husband's name is Krishna. What is your father's name?",
+      "goal_en": "The student says 'my father's name is <name>': ನನ್ನ ತಂದೆಯ ಹೆಸರು <name> or ನನ್ನ ಅಪ್ಪನ ಹೆಸರು <name>. Any name is fine.",
+      "expected_kn": [
+        "ನನ್ನ ತಂದೆಯ ಹೆಸರು",
+        "ನನ್ನ ಅಪ್ಪನ ಹೆಸರು",
+        "ತಂದೆಯ ಹೆಸರು",
+        "ಅಪ್ಪನ ಹೆಸರು"
+      ],
+      "match": "contains",
+      "hint_kn": "ನನ್ನ ತಂದೆಯ ಹೆಸರು, ನಂತರ ಅವರ ಹೆಸರು ಹೇಳಿ.",
+      "hint_en": "Say ನನ್ನ ತಂದೆಯ ಹೆಸರು (nanna tandeya hesaru) + the name, 'my father's name is ...'. 'Of' is added to the word: ತಂದೆ → ತಂದೆಯ (tandeya), ಗಂಡ → ಗಂಡನ (gaṇḍana, husband's), ಹೆಂಡತಿ → ಹೆಂಡತಿಯ (heṇḍatiya, wife's).",
+      "max_attempts": 3
+    },
+    {
+      "id": "how_many_children",
+      "tutor_kn": "ನಮಗೆ ಇಬ್ಬರು ಮಕ್ಕಳು. ನಿಮಗೆ ಎಷ್ಟು ಮಕ್ಕಳು?",
+      "tutor_en": "We have two children. How many children do you have?",
+      "goal_en": "The student says how many children they have, e.g. ನಮಗೆ ಇಬ್ಬರು ಮಕ್ಕಳು or ನಮಗೆ ಎರಡು ಮಕ್ಕಳು, ಒಬ್ಬ ಮಗ, ಒಬ್ಬ ಮಗಳು, or ಮಕ್ಕಳು ಇಲ್ಲ (no children). Any true answer is fine.",
+      "expected_kn": [
+        "ನಮಗೆ ಇಬ್ಬರು ಮಕ್ಕಳು",
+        "ಮಕ್ಕಳು",
+        "ಮಗ",
+        "ಮಗಳು",
+        "ಇಲ್ಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮಗೆ ಇಬ್ಬರು ಮಕ್ಕಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮಗೆ ಇಬ್ಬರು ಮಕ್ಕಳು (namage ibbaru makkaḷu), 'we have two children'. ಎಷ್ಟು (eshṭu) means 'how many', ಮಕ್ಕಳು (makkaḷu) means 'children'. If you have none, say ಮಕ್ಕಳು ಇಲ್ಲ (makkaḷu illa).",
+      "max_attempts": 3
+    },
+    {
+      "id": "grandpa_age",
+      "tutor_kn": "ನನ್ನ ಅಜ್ಜಿಯ ವಯಸ್ಸು ತೊಂಬತ್ತು. ನಿಮ್ಮ ಅಜ್ಜನ ವಯಸ್ಸು ಎಷ್ಟು?",
+      "tutor_en": "My grandmother's age is ninety. How old is your grandfather?",
+      "goal_en": "The student says their grandfather's age: ನನ್ನ ಅಜ್ಜನ ವಯಸ್ಸು <number>. The number can be in English or Kannada; any answer with ವಯಸ್ಸು (age) is fine.",
+      "expected_kn": [
+        "ನನ್ನ ಅಜ್ಜನ ವಯಸ್ಸು",
+        "ಅಜ್ಜನ ವಯಸ್ಸು",
+        "ವಯಸ್ಸು"
+      ],
+      "match": "contains",
+      "hint_kn": "ನನ್ನ ಅಜ್ಜನ ವಯಸ್ಸು ಎಂಬತ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನನ್ನ ಅಜ್ಜನ ವಯಸ್ಸು (nanna ajjana vayassu) + the age, e.g. ನನ್ನ ಅಜ್ಜನ ವಯಸ್ಸು ಎಂಬತ್ತು (embattu), 'my grandfather is eighty'. ಅಜ್ಜ (ajja) is grandfather, ಅಜ್ಜಿ (ajji) is grandmother.",
+      "max_attempts": 3
+    },
+    {
+      "id": "had_lunch",
+      "tutor_kn": "ಊಟ ಆಯ್ತಾ?",
+      "tutor_en": "Have you had lunch?",
+      "goal_en": "The student says whether they have eaten: ಆಯ್ತು (done), or ತಿಂಡಿ ಆಯ್ತು, ಊಟ ಮಾಡಬೇಕು (had breakfast, still need lunch). Either is fine.",
+      "expected_kn": [
+        "ಆಯ್ತು",
+        "ಆಯಿತು",
+        "ಊಟ ಮಾಡಬೇಕು",
+        "ಇನ್ನೂ ಇಲ್ಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆಯ್ತು ಎಂದು ಹೇಳಿ. ಅಥವಾ ತಿಂಡಿ ಆಯ್ತು, ಊಟ ಮಾಡಬೇಕು.",
+      "hint_en": "Say ಆಯ್ತು (āytu), 'done, yes I have'. Or ತಿಂಡಿ ಆಯ್ತು, ಊಟ ಮಾಡಬೇಕು (tiṇḍi āytu, ūṭa māḍabēku), 'I had breakfast, I still need to have lunch'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ask_lunch",
+      "tutor_kn": "ಈಗ ನೀವು ನನ್ನನ್ನು ಕೇಳಿ, ನಿಮ್ಮದು ಊಟ ಆಯ್ತಾ?",
+      "tutor_en": "Now you ask me: have you had lunch?",
+      "goal_en": "The student asks the teacher if she has had lunch: ನಿಮ್ಮದು ಊಟ ಆಯ್ತಾ? or ಊಟ ಆಯ್ತಾ?",
+      "expected_kn": [
+        "ನಿಮ್ಮದು ಊಟ ಆಯ್ತಾ",
+        "ಊಟ ಆಯ್ತಾ",
+        "ಊಟ ಆಯಿತಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಿಮ್ಮದು ಊಟ ಆಯ್ತಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ನಿಮ್ಮದು ಊಟ ಆಯ್ತಾ? (nimmadu ūṭa āytā?), 'have you had lunch?'. ಆಯ್ತು (āytu) is 'done'; ಆಯ್ತಾ (āytā) turns it into a question.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಆಯ್ತು, ಧನ್ಯವಾದಗಳು! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಶುಭ ರಾತ್ರಿ.",
+      "tutor_en": "Yes I have, thank you! Today's lesson is over. Good night.",
+      "goal_en": "The student thanks the teacher or says good night (ಶುಭ ರಾತ್ರಿ).",
+      "expected_kn": [
+        "ಶುಭ ರಾತ್ರಿ",
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), 'thank you', or ಶುಭ ರಾತ್ರಿ (shubha rātri), 'good night'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "id": "lesson_02d_week",
+  "title": "Days of the week and Kannada class",
+  "summary_en": "Talk about Sunday's Kannada meet-up, name the days of the week, count six to ten and ask for a date.",
+  "steps": [
+    {
+      "id": "went_milana",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಭಾನುವಾರ ಕನ್ನಡ ಮಿಲನಕ್ಕೆ ಹೋಗಿದ್ರಾ?",
+      "tutor_en": "Hello! Did you go to the Kannada meet-up on Sunday?",
+      "goal_en": "The student answers yes or no: ಹೌದು, ಹೋಗಿದ್ದೆ (yes, I went) or ಇಲ್ಲ, ಹೋಗಿಲ್ಲ. Either is fine.",
+      "expected_kn": [
+        "ಹೌದು, ಹೋಗಿದ್ದೆ",
+        "ಹೋಗಿದ್ದೆ",
+        "ಹೌದು",
+        "ಇಲ್ಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಹೋಗಿದ್ದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಹೋಗಿದ್ದೆ (haudu, hōgidde), 'yes, I went'. ಭಾನುವಾರ (bhānuvāra) is Sunday.",
+      "max_attempts": 3
+    },
+    {
+      "id": "how_was_it",
+      "tutor_kn": "ಕನ್ನಡ ಮಿಲನ ಹೇಗಿತ್ತು?",
+      "tutor_en": "How was the Kannada meet-up?",
+      "goal_en": "The student says it was very good: ತುಂಬಾ ಚೆನ್ನಾಗಿತ್ತು.",
+      "expected_kn": [
+        "ತುಂಬಾ ಚೆನ್ನಾಗಿತ್ತು",
+        "ಚೆನ್ನಾಗಿತ್ತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ತುಂಬಾ ಚೆನ್ನಾಗಿತ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ತುಂಬಾ ಚೆನ್ನಾಗಿತ್ತು (tumbā chennāgittu), 'it was very good'. ಹೇಗಿತ್ತು (hēgittu) asks 'how was it?'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "monday_class",
+      "tutor_kn": "ಈಗ ನೀವು ನನ್ನನ್ನು ಕೇಳಿ, ಸೋಮವಾರ ತರಗತಿ ಇದೆಯಾ?",
+      "tutor_en": "Now you ask me: is there a class on Monday?",
+      "goal_en": "The student asks ಸೋಮವಾರ ತರಗತಿ ಇದೆಯಾ? (is there class on Monday?).",
+      "expected_kn": [
+        "ಸೋಮವಾರ ತರಗತಿ ಇದೆಯಾ",
+        "ತರಗತಿ ಇದೆಯಾ",
+        "ಇದೆಯಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಸೋಮವಾರ ತರಗತಿ ಇದೆಯಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಸೋಮವಾರ ತರಗತಿ ಇದೆಯಾ? (sōmavāra taragati ideyā?), 'is there class on Monday?'. ಸೋಮವಾರ (sōmavāra) is Monday, ತರಗತಿ (taragati) is 'class'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "today_day",
+      "tutor_kn": "ಇದೆ. ವಾರದ ದಿನಗಳು, ಸೋಮವಾರ, ಮಂಗಳವಾರ, ಬುಧವಾರ, ಗುರುವಾರ, ಶುಕ್ರವಾರ, ಶನಿವಾರ, ಭಾನುವಾರ. ಇವತ್ತು ಯಾವ ವಾರ?",
+      "tutor_en": "Yes, there is. The days of the week: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. What day is it today?",
+      "goal_en": "The student names any day of the week, ideally today: ಇವತ್ತು <day>. Any day name is accepted.",
+      "expected_kn": [
+        "ಸೋಮವಾರ",
+        "ಮಂಗಳವಾರ",
+        "ಬುಧವಾರ",
+        "ಗುರುವಾರ",
+        "ಶುಕ್ರವಾರ",
+        "ಶನಿವಾರ",
+        "ಭಾನುವಾರ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇವತ್ತು ಸೋಮವಾರ ಎಂದು ಹೇಳಿ, ಅಥವಾ ಇವತ್ತಿನ ವಾರ ಹೇಳಿ.",
+      "hint_en": "Say ಇವತ್ತು (ivattu, 'today') + the day: ಸೋಮವಾರ (sōmavāra) Mon, ಮಂಗಳವಾರ (mangaḷavāra) Tue, ಬುಧವಾರ (budhavāra) Wed, ಗುರುವಾರ (guruvāra) Thu, ಶುಕ್ರವಾರ (shukravāra) Fri, ಶನಿವಾರ (shanivāra) Sat, ಭಾನುವಾರ (bhānuvāra) Sun.",
+      "max_attempts": 3
+    },
+    {
+      "id": "after_thursday",
+      "tutor_kn": "ಗುರುವಾರ ಆದ ಮೇಲೆ ಯಾವ ವಾರ?",
+      "tutor_en": "Which day comes after Thursday?",
+      "goal_en": "The student says ಶುಕ್ರವಾರ (Friday).",
+      "expected_kn": [
+        "ಶುಕ್ರವಾರ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಗುರುವಾರ ಆದ ಮೇಲೆ ಶುಕ್ರವಾರ. ಶುಕ್ರವಾರ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "After ಗುರುವಾರ (guruvāra, Thursday) comes ಶುಕ್ರವಾರ (shukravāra), Friday. Say ಶುಕ್ರವಾರ.",
+      "max_attempts": 3
+    },
+    {
+      "id": "join_class",
+      "tutor_kn": "ಮಂಗಳವಾರ, ಬುಧವಾರ, ಗುರುವಾರ ಆನ್ ಲೈನ್. ಶುಕ್ರವಾರ, ಶನಿವಾರ, ಭಾನುವಾರ ಮುಖಾಮುಖಿ. ನೀವೂ ಕನ್ನಡ ತರಗತಿಗೆ ಸೇರಬೇಕು ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Tuesday, Wednesday, Thursday are online. Friday, Saturday, Sunday are face to face. Say that you too want to join the Kannada class.",
+      "goal_en": "The student says ನಾನೂ ಸಹ ಕನ್ನಡ ತರಗತಿಗೆ ಸೇರಬೇಕು (I too want to join the Kannada class). ಸೇರುತ್ತೇನೆ (I will join) is fine too.",
+      "expected_kn": [
+        "ನಾನೂ ಸಹ ಕನ್ನಡ ತರಗತಿಗೆ ಸೇರಬೇಕು",
+        "ಸೇರಬೇಕು",
+        "ಸೇರುತ್ತೇನೆ",
+        "ಸೇರ್ತೀನಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನೂ ಸಹ ಕನ್ನಡ ತರಗತಿಗೆ ಸೇರಬೇಕು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನೂ ಸಹ ಕನ್ನಡ ತರಗತಿಗೆ ಸೇರಬೇಕು (nānū saha kannaḍa taragatige sērabēku), 'I too want to join the Kannada class'. ಸೇರು (sēru) is 'join', ಸಹ (saha) is 'also'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "after_eight",
+      "tutor_kn": "ಖಂಡಿತ, ಸೇರಿಕೊಳ್ಳಿ! ಈಗ ಸಂಖ್ಯೆಗಳು, ಆರು, ಏಳು, ಎಂಟು, ಒಂಬತ್ತು, ಹತ್ತು. ಎಂಟು ಆದ ಮೇಲೆ ಯಾವ ಸಂಖ್ಯೆ?",
+      "tutor_en": "Sure, please join! Now numbers: six, seven, eight, nine, ten. Which number comes after eight?",
+      "goal_en": "The student says ಒಂಬತ್ತು (nine).",
+      "expected_kn": [
+        "ಒಂಬತ್ತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಎಂಟು ಆದ ಮೇಲೆ ಒಂಬತ್ತು. ಒಂಬತ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "After ಎಂಟು (eṇṭu, eight) comes ಒಂಬತ್ತು (ombattu), nine. Six to ten: ಆರು (āru), ಏಳು (ēḷu), ಎಂಟು (eṇṭu), ಒಂಬತ್ತು (ombattu), ಹತ್ತು (hattu).",
+      "max_attempts": 3
+    },
+    {
+      "id": "which_date",
+      "tutor_kn": "ನಾನು ಮೊನ್ನೆ ಊರಿಗೆ ಬಂದೆ. ಎಂಟು ಒಂಬತ್ತು ದಿನ ಬಿಟ್ಟು ವಾಪಸ್ ಬರುತ್ತೇನೆ. ಈಗ ನನ್ನನ್ನು ಕೇಳಿ, ಎಷ್ಟನೇ ತಾರೀಖು?",
+      "tutor_en": "I came to town the day before yesterday. I will be back after eight or nine days. Now ask me: which date?",
+      "goal_en": "The student asks ಎಷ್ಟನೇ ತಾರೀಖು? (which date?).",
+      "expected_kn": [
+        "ಎಷ್ಟನೇ ತಾರೀಖು",
+        "ಎಷ್ಟನೆ ತಾರೀಖು",
+        "ತಾರೀಖು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಎಷ್ಟನೇ ತಾರೀಖು ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಎಷ್ಟನೇ ತಾರೀಖು? (eshṭanē tārīkhu?), 'which date?'. ಮೊನ್ನೆ (monne) is 'the day before yesterday'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಹತ್ತನೇ ಏಪ್ರಿಲ್. ಸರಿ, ಬಂದ ಮೇಲೆ ಮಾತಾಡೋಣ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು.",
+      "tutor_en": "The tenth of April. OK, we'll talk once I'm back! Today's lesson is over.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಮಾತಾಡೋಣ",
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

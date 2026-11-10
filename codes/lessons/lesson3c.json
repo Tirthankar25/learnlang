@@ -1,0 +1,128 @@
+{
+  "id": "lesson_03c_way_back",
+  "title": "Tasty prasada and a wide road",
+  "summary_en": "Agree with ಅಲ್ವಾ? (isn't it?), say something was tasty (ರುಚಿ), long (ಉದ್ದ) or wide (ಅಗಲ), and say whether you know the way (ಗೊತ್ತು, ಗೊತ್ತಿಲ್ಲ).",
+  "steps": [
+    {
+      "id": "pooja_good",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಪೂಜೆ ಚೆನ್ನಾಗಿ ಆಯ್ತು ಅಲ್ವಾ?",
+      "tutor_en": "Hello! The pooja went really well, didn't it?",
+      "goal_en": "The student agrees: ಹೌದು (yes), or ಹೌದು, ಪೂಜೆ ಚೆನ್ನಾಗಿ ಆಯ್ತು.",
+      "expected_kn": [
+        "ಹೌದು",
+        "ಚೆನ್ನಾಗಿ ಆಯ್ತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು (haudu), 'yes'. ಅಲ್ವಾ? (alvā?) at the end means 'isn't it?'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "prasada_tasty",
+      "tutor_kn": "ಪ್ರಸಾದ ಹೇಗಿತ್ತು?",
+      "tutor_en": "How was the prasada?",
+      "goal_en": "The student says it was tasty: ರುಚಿಯಾಗಿತ್ತು, or ಚೆನ್ನಾಗಿತ್ತು (it was good).",
+      "expected_kn": [
+        "ರುಚಿಯಾಗಿತ್ತು",
+        "ಚೆನ್ನಾಗಿತ್ತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಪ್ರಸಾದ ರುಚಿಯಾಗಿತ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಪ್ರಸಾದ ರುಚಿಯಾಗಿತ್ತು (prasāda ruchiyāgittu), 'the prasada was tasty'. ಚೆನ್ನಾಗಿತ್ತು, ರುಚಿಯಾಗಿತ್ತು ಸಹ (chennāgittu, ruchiyāgittu saha) means 'it was good, and tasty too'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "long_queue",
+      "tutor_kn": "ಪ್ರಸಾದಕ್ಕೆ ಸಾಲು ಉದ್ದ ಇತ್ತಾ?",
+      "tutor_en": "Was the queue for the prasada long?",
+      "goal_en": "The student says yes, a long queue: ಹೌದು, ಉದ್ದದ ಸಾಲು ಇತ್ತು. Just ಹೌದು is fine.",
+      "expected_kn": [
+        "ಹೌದು, ಉದ್ದದ ಸಾಲು ಇತ್ತು",
+        "ಉದ್ದ",
+        "ಹೌದು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಉದ್ದದ ಸಾಲು ಇತ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಉದ್ದದ ಸಾಲು ಇತ್ತು (haudu, uddada sālu ittu), 'yes, there was a long queue'. ಸಾಲು (sālu) is 'queue', ಉದ್ದ (udda) is 'long'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "school_holiday",
+      "tutor_kn": "ಈಗ ಶಾಲೆಗೆ ರಜೆ ಅಲ್ವಾ?",
+      "tutor_en": "The school holidays are on now, aren't they?",
+      "goal_en": "The student answers yes or no: ಹೌದು, ರಜೆ (yes, holidays) or ಇಲ್ಲ. Either is fine.",
+      "expected_kn": [
+        "ಹೌದು, ರಜೆ",
+        "ಹೌದು",
+        "ರಜೆ",
+        "ಇಲ್ಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ರಜೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ರಜೆ (haudu, raje), 'yes, it's the holidays'. ಶಾಲೆ (shāle) is 'school', ರಜೆ (raje) is 'holiday'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "wide_road",
+      "tutor_kn": "ಬನ್ನಿ, ಈ ರಸ್ತೆಯಲ್ಲಿ ಹೋಗೋಣ. ಈ ರಸ್ತೆ ಹೇಗಿದೆ? ಅಗಲ ಇದೆಯಾ?",
+      "tutor_en": "Come, let's take this road. How is this road? Is it wide?",
+      "goal_en": "The student says the road is wide: ಹೌದು, ಈ ರಸ್ತೆ ತುಂಬಾ ಅಗಲ ಇದೆ.",
+      "expected_kn": [
+        "ಈ ರಸ್ತೆ ತುಂಬಾ ಅಗಲ ಇದೆ",
+        "ಅಗಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಈ ರಸ್ತೆ ತುಂಬಾ ಅಗಲ ಇದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಈ ರಸ್ತೆ ತುಂಬಾ ಅಗಲ ಇದೆ (haudu, ī raste tumbā agala ide), 'yes, this road is very wide'. ರಸ್ತೆ (raste) is 'road', ತುಂಬಾ (tumbā) is 'very'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ask_know_way",
+      "tutor_kn": "ಈಗ ನನ್ನನ್ನು ಕೇಳಿ, ದಾರಿ ಗೊತ್ತಾ ನಿಮಗೆ?",
+      "tutor_en": "Now ask me: do you know the way?",
+      "goal_en": "The student asks ದಾರಿ ಗೊತ್ತಾ ನಿಮಗೆ? (do you know the way?).",
+      "expected_kn": [
+        "ದಾರಿ ಗೊತ್ತಾ ನಿಮಗೆ",
+        "ದಾರಿ ಗೊತ್ತಾ",
+        "ಗೊತ್ತಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ದಾರಿ ಗೊತ್ತಾ ನಿಮಗೆ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ದಾರಿ ಗೊತ್ತಾ ನಿಮಗೆ? (dāri gottā nimage?), 'do you know the way?'. ದಾರಿ (dāri) is 'way', ಗೊತ್ತು (gottu) is 'know'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "do_you_know",
+      "tutor_kn": "ನನಗೆ ಗೊತ್ತು. ನಿಮಗೆ ದಾರಿ ಗೊತ್ತಾ?",
+      "tutor_en": "I know it. Do you know the way?",
+      "goal_en": "The student says ನನಗೆ ಗೊತ್ತಿಲ್ಲ (I don't know) or ನನಗೆ ಗೊತ್ತು (I know). Either is fine.",
+      "expected_kn": [
+        "ನನಗೆ ಗೊತ್ತಿಲ್ಲ",
+        "ಗೊತ್ತಿಲ್ಲ",
+        "ಗೊತ್ತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ನನಗೆ ಗೊತ್ತಿಲ್ಲ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನನಗೆ ಗೊತ್ತಿಲ್ಲ (nanage gottilla), 'I don't know', or ನನಗೆ ಗೊತ್ತು (nanage gottu), 'I know'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಪರವಾಗಿಲ್ಲ, ಬನ್ನಿ, ನಾನು ನಿಮಗೆ ತೋರಿಸ್ತೀನಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು.",
+      "tutor_en": "No problem, come, I'll show you! Today's lesson is over.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

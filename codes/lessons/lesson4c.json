@@ -1,0 +1,176 @@
+{
+  "id": "lesson_04c_cab",
+  "title": "Taking a cab to the airport",
+  "summary_en": "Talk to a cab driver: confirm the cab, say where to, ask where they are, give directions (ಎಡಕ್ಕೆ, ಬಲಕ್ಕೆ, ಸೀದಾ), hurry them up (ಬೇಗ), read out the OTP and pay.",
+  "steps": [
+    {
+      "id": "is_it_ola",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ನಾನು ಕ್ಯಾಬ್ ಡ್ರೈವರ್. ನೀವು ನನಗೆ ಫೋನ್ ಮಾಡಿದ್ದೀರಿ. ಓಲಾ ನಾ ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "Hello! I'm the cab driver. You have called me. Ask whether this is the Ola cab.",
+      "goal_en": "The student asks ನಮಸ್ಕಾರ, ಓಲಾ ನಾ? (hello, is this Ola?). ಓಲಾ ಅಲ್ವಾ? is fine too.",
+      "expected_kn": [
+        "ಓಲಾ ನಾ",
+        "ಓಲಾನಾ",
+        "ಓಲಾ ಅಲ್ವಾ",
+        "ಓಲಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮಸ್ಕಾರ, ಓಲಾ ನಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ನಮಸ್ಕಾರ, ಓಲಾ ನಾ? (namaskāra, ōlā nā?), 'hello, is this Ola?'. Adding ನಾ (nā) or ಆ (ā) to a word turns it into a question.",
+      "max_attempts": 3
+    },
+    {
+      "id": "where_to",
+      "tutor_kn": "ಹೌದು, ಎಲ್ಲಿಗೆ ಸಾರ್?",
+      "tutor_en": "Yes. Where to, sir?",
+      "goal_en": "The student says ಏರ್ಪೋರ್ಟ್ಗೆ (to the airport). Any destination with -ಗೆ is fine.",
+      "expected_kn": [
+        "ಏರ್ಪೋರ್ಟ್ಗೆ",
+        "ಏರ್ಪೋರ್ಟ್",
+        "ವಿಮಾನ ನಿಲ್ದಾಣಕ್ಕೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಏರ್ಪೋರ್ಟ್ಗೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಏರ್ಪೋರ್ಟ್ಗೆ (ērpōrṭge), 'to the airport'. ಎಲ್ಲಿಗೆ (ellige) is 'to where'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "where_are_you",
+      "tutor_kn": "ಸರಿ. ಈಗ ನನ್ನನ್ನು ಕೇಳಿ, ಈಗ ಎಲ್ಲಿದ್ದೀರಾ?",
+      "tutor_en": "OK. Now ask me: where are you now?",
+      "goal_en": "The student asks ಈಗ ಎಲ್ಲಿದ್ದೀರಾ? (where are you now?).",
+      "expected_kn": [
+        "ಈಗ ಎಲ್ಲಿದ್ದೀರಾ",
+        "ಎಲ್ಲಿದ್ದೀರಾ",
+        "ಎಲ್ಲಿದ್ದೀರಿ",
+        "ಎಲ್ಲಿದ್ದೀರ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಈಗ ಎಲ್ಲಿದ್ದೀರಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಈಗ ಎಲ್ಲಿದ್ದೀರಾ? (īga elliddīrā?), 'where are you now?'. ಈಗ (īga) is 'now'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "directions",
+      "tutor_kn": "ಸಾರ್, ರೀಗಲ್ ಹತ್ತಿರ. ಹೇಗೆ ಬರಬೇಕು?",
+      "tutor_en": "Sir, I'm near Regal. How should I come?",
+      "goal_en": "The student gives a direction: ಸಿಗ್ನಲ್ನಲ್ಲಿ ಎಡಕ್ಕೆ ತಿರುಗಿ (turn left at the signal), ಬಲಕ್ಕೆ ತಿರುಗಿ (turn right) or ಸೀದಾ ಬನ್ನಿ (come straight). Any of these is fine.",
+      "expected_kn": [
+        "ಸಿಗ್ನಲ್ನಲ್ಲಿ ಎಡಕ್ಕೆ ತಿರುಗಿ",
+        "ಎಡಕ್ಕೆ ತಿರುಗಿ",
+        "ಬಲಕ್ಕೆ ತಿರುಗಿ",
+        "ಸೀದಾ ಬನ್ನಿ",
+        "ಎಡಕ್ಕೆ",
+        "ಬಲಕ್ಕೆ",
+        "ಸೀದಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಸಿಗ್ನಲ್ನಲ್ಲಿ ಎಡಕ್ಕೆ ತಿರುಗಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಸಿಗ್ನಲ್ನಲ್ಲಿ ಎಡಕ್ಕೆ ತಿರುಗಿ (signalnalli eḍakke tirugi), 'turn left at the signal'. ಬಲಕ್ಕೆ (balakke) is 'to the right', ಸೀದಾ ಬನ್ನಿ (sīdā banni) is 'come straight'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "come_quickly",
+      "tutor_kn": "ಸರಿ, ಎಡಕ್ಕೆ ತಗೊಂಡೆ. ಹತ್ತು ನಿಮಿಷ ಆಗುತ್ತೆ. ನನ್ನನ್ನು ಕೇಳಿ, ಬೇಗ ಬರ್ತೀರಾ?",
+      "tutor_en": "OK, I took the left. It will take ten minutes. Ask me: will you come quickly?",
+      "goal_en": "The student asks ಬೇಗ ಬರ್ತೀರಾ? (will you come quickly?). ಬೇಗ ಬನ್ನಿ (come quickly) is fine too.",
+      "expected_kn": [
+        "ಬೇಗ ಬರ್ತೀರಾ",
+        "ಬೇಗ ಬರುತ್ತೀರಾ",
+        "ಬೇಗ ಬನ್ನಿ",
+        "ಬೇಗ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಬೇಗ ಬರ್ತೀರಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಬೇಗ ಬರ್ತೀರಾ? (bēga bartīrā?), 'will you come quickly?'. ಬೇಗ (bēga) is 'quickly', ತಡ (taḍa) is 'late'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "otp",
+      "tutor_kn": "ಆಯ್ತು ಸಾರ್. ನಾನು ಬಂದೆ. ಓಟಿಪಿ ಹೇಳಿ.",
+      "tutor_en": "OK, sir. I have arrived. Please tell me the OTP.",
+      "goal_en": "The student reads out four digits in Kannada, e.g. ಒಂದು, ಎರಡು, ಮೂರು, ನಾಲ್ಕು. Any Kannada numbers are fine.",
+      "expected_kn": [
+        "ಒಂದು ಎರಡು ಮೂರು ನಾಲ್ಕು",
+        "ಒಂದು",
+        "ಎರಡು",
+        "ಮೂರು",
+        "ನಾಲ್ಕು",
+        "ಐದು",
+        "ಆರು",
+        "ಏಳು",
+        "ಎಂಟು",
+        "ಒಂಬತ್ತು",
+        "ಸೊನ್ನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಒಂದು, ಎರಡು, ಮೂರು, ನಾಲ್ಕು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Read the OTP in Kannada, e.g. ಒಂದು, ಎರಡು, ಮೂರು, ನಾಲ್ಕು (ondu, eraḍu, mūru, nālku), 'one, two, three, four'. Zero is ಸೊನ್ನೆ (sonne).",
+      "max_attempts": 3
+    },
+    {
+      "id": "go_quickly",
+      "tutor_kn": "ಸರಿ. ತುಂಬಾ ಟ್ರಾಫಿಕ್ ಇದೆ, ನಾನು ಶಾರ್ಟ್ ಕಟ್ ತಗೋತೀನಿ. ನಿಮಗೆ ತಡ ಆಗಿದೆ. ನನಗೆ ಬೇಗ ಹೋಗಿ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "OK. There's a lot of traffic, I'll take a shortcut. You are running late. Tell me to go quickly.",
+      "goal_en": "The student says ಬೇಗ ಹೋಗಿ, ತಡ ಆಯ್ತು (go quickly, I'm late).",
+      "expected_kn": [
+        "ಬೇಗ ಹೋಗಿ, ತಡ ಆಯ್ತು",
+        "ಬೇಗ ಹೋಗಿ",
+        "ತಡ ಆಯ್ತು",
+        "ತಡ ಆಯಿತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಬೇಗ ಹೋಗಿ, ತಡ ಆಯ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಬೇಗ ಹೋಗಿ, ತಡ ಆಯ್ತು (bēga hōgi, taḍa āytu), 'go quickly, I'm running late'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "fare",
+      "tutor_kn": "ಏರ್ಪೋರ್ಟ್ ಬಂತು! ಈಗ ಎಷ್ಟು ಆಯ್ತು ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "We've reached the airport! Now ask how much it is.",
+      "goal_en": "The student asks ಎಷ್ಟು ಆಯ್ತು? (how much is it?).",
+      "expected_kn": [
+        "ಎಷ್ಟು ಆಯ್ತು",
+        "ಎಷ್ಟಾಯ್ತು",
+        "ಎಷ್ಟು ಆಯಿತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಎಷ್ಟು ಆಯ್ತು ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಎಷ್ಟು ಆಯ್ತು? (eshṭu āytu?), 'how much is it?'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "phonepe",
+      "tutor_kn": "ಮುನ್ನೂರ ಐವತ್ತು ರೂಪಾಯಿ. ಈಗ ಕೇಳಿ, ಫೋನ್ ಪೇ ಇದೆಯಾ?",
+      "tutor_en": "Three hundred and fifty rupees. Now ask: do you have PhonePe?",
+      "goal_en": "The student asks ಫೋನ್ ಪೇ ಇದೆಯಾ? (do you have PhonePe?).",
+      "expected_kn": [
+        "ಫೋನ್ ಪೇ ಇದೆಯಾ",
+        "ಇದೆಯಾ",
+        "ಫೋನ್ ಪೇ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಫೋನ್ ಪೇ ಇದೆಯಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಫೋನ್ ಪೇ ಇದೆಯಾ? (phōn pē ideyā?), 'do you have PhonePe?'. ಮುನ್ನೂರ ಐವತ್ತು (munnūra aivattu) is three hundred and fifty.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಇದೆ, ಮಾಡಿ. ಹಣ ಬಂತು, ಧನ್ಯವಾದಗಳು! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು.",
+      "tutor_en": "Yes, go ahead. The money has come, thank you! Today's lesson is over.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

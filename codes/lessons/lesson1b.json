@@ -1,0 +1,120 @@
+{
+  "id": "lesson_01b_family",
+  "title": "Who is this? Meeting the family",
+  "summary_en": "Ask and answer how you are, then introduce family members near you (ಇವರು, ivaru) and far away (ಅವರು, avaru).",
+  "steps": [
+    {
+      "id": "how_are_you",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಹೇಗಿದ್ದೀರಾ?",
+      "tutor_en": "Hello! How are you?",
+      "goal_en": "The student says they are fine: ನಾನು ಚೆನ್ನಾಗಿದ್ದೀನಿ or ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ.",
+      "expected_kn": [
+        "ನಾನು ಚೆನ್ನಾಗಿದ್ದೀನಿ",
+        "ಚೆನ್ನಾಗಿದ್ದೀನಿ",
+        "ಚೆನ್ನಾಗಿದ್ದೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ಚೆನ್ನಾಗಿದ್ದೀನಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ಚೆನ್ನಾಗಿದ್ದೀನಿ (nānu chennāgiddīni), 'I am fine'. ಚೆನ್ನಾಗಿ (chennāgi) means 'well'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "and_you",
+      "tutor_kn": "ಈಗ ನೀವು ನನ್ನನ್ನು ಕೇಳಿ, ನೀವು ಹೇಗಿದ್ದೀರಾ?",
+      "tutor_en": "Now you ask me back: and how are you?",
+      "goal_en": "The student asks the teacher how she is: ನೀವು ಹೇಗಿದ್ದೀರಾ? Just ನೀವು? (and you?) is fine too.",
+      "expected_kn": [
+        "ನೀವು ಹೇಗಿದ್ದೀರಾ",
+        "ಹೇಗಿದ್ದೀರಾ",
+        "ಹೇಗಿದ್ದೀರಿ",
+        "ನೀವು"
+      ],
+      "match": "contains",
+      "hint_kn": "ನೀವು ಹೇಗಿದ್ದೀರಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ನೀವು ಹೇಗಿದ್ದೀರಾ? (nīvu hēgiddīrā?), 'how about you?'. ನೀವು (nīvu) is the polite 'you'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "father_near",
+      "tutor_kn": "ನಾನೂ ಚೆನ್ನಾಗಿದ್ದೀನಿ. ನಿಮ್ಮ ಪಕ್ಕದಲ್ಲಿ ನಿಮ್ಮ ತಂದೆ ಇದ್ದಾರೆ. ಇವರು ಯಾರು?",
+      "tutor_en": "I am fine too. Your father is right next to you. Who is this?",
+      "goal_en": "The student says 'this is my father': ಇವರು ನನ್ನ ತಂದೆ or ಇವರು ನನ್ನ ಅಪ್ಪ. ಇವರು (this person, near) is right because he is close.",
+      "expected_kn": [
+        "ಇವರು ನನ್ನ ತಂದೆ",
+        "ಇವರು ನನ್ನ ಅಪ್ಪ",
+        "ನನ್ನ ತಂದೆ",
+        "ನನ್ನ ಅಪ್ಪ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇವರು ನನ್ನ ತಂದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಇವರು ನನ್ನ ತಂದೆ (ivaru nanna tande) or ಇವರು ನನ್ನ ಅಪ್ಪ (ivaru nanna appa), 'he is my father'. ಯಾರು (yāru) means 'who'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "mother_far",
+      "tutor_kn": "ನಿಮ್ಮ ತಾಯಿ ಸ್ವಲ್ಪ ದೂರ ಇದ್ದಾರೆ. ಅವರು ಯಾರು?",
+      "tutor_en": "Your mother is a little far away. Who is that?",
+      "goal_en": "The student says 'that is my mother': ಅವರು ನನ್ನ ತಾಯಿ or ಅವರು ನನ್ನ ಅಮ್ಮ. She is far, so ಅವರು (avaru) fits; if they say ಇವರು, accept it but remind them: i- words are near, a- words are far.",
+      "expected_kn": [
+        "ಅವರು ನನ್ನ ತಾಯಿ",
+        "ಅವರು ನನ್ನ ಅಮ್ಮ",
+        "ನನ್ನ ತಾಯಿ",
+        "ನನ್ನ ಅಮ್ಮ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅವರು ನನ್ನ ತಾಯಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Thumb rule: words starting with ಇ (i) are about someone near, words starting with ಅ (a) are about someone far. So say ಅವರು ನನ್ನ ತಾಯಿ (avaru nanna tāyi) or ಅವರು ನನ್ನ ಅಮ್ಮ (avaru nanna amma), 'she is my mother'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "daughter_near",
+      "tutor_kn": "ನಿಮ್ಮ ಮಗಳು ನಿಮ್ಮ ಪಕ್ಕದಲ್ಲಿ ಇದ್ದಾಳೆ. ಈ ಹುಡುಗಿ ಯಾರು?",
+      "tutor_en": "Your daughter is next to you. Who is this girl?",
+      "goal_en": "The student says 'this girl is my daughter': ಈ ಹುಡುಗಿ ನನ್ನ ಮಗಳು, or just ನನ್ನ ಮಗಳು.",
+      "expected_kn": [
+        "ಈ ಹುಡುಗಿ ನನ್ನ ಮಗಳು",
+        "ನನ್ನ ಮಗಳು",
+        "ಇವಳು ನನ್ನ ಮಗಳು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಈ ಹುಡುಗಿ ನನ್ನ ಮಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಈ ಹುಡುಗಿ ನನ್ನ ಮಗಳು (ī huḍugi nanna magaḷu), 'this girl is my daughter'. ಈ (ī) is 'this', ಹುಡುಗಿ (huḍugi) is 'girl', ಮಗಳು (magaḷu) is 'daughter'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "son_far",
+      "tutor_kn": "ನಿಮ್ಮ ಮಗ ಸ್ವಲ್ಪ ದೂರ ಇದ್ದಾನೆ. ಆ ಹುಡುಗ ಯಾರು?",
+      "tutor_en": "Your son is a little far away. Who is that boy?",
+      "goal_en": "The student says 'that boy is my son': ಆ ಹುಡುಗ ನನ್ನ ಮಗ, or just ನನ್ನ ಮಗ.",
+      "expected_kn": [
+        "ಆ ಹುಡುಗ ನನ್ನ ಮಗ",
+        "ನನ್ನ ಮಗ",
+        "ಅವನು ನನ್ನ ಮಗ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆ ಹುಡುಗ ನನ್ನ ಮಗ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಆ ಹುಡುಗ ನನ್ನ ಮಗ (ā huḍuga nanna maga), 'that boy is my son'. ಆ (ā) is 'that', ಹುಡುಗ (huḍuga) is 'boy', ಮಗ (maga) is 'son'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ತುಂಬಾ ಚೆನ್ನಾಗಿ ಮಾಡಿದ್ದೀರಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಭೇಟಿಯಾಗೋಣ.",
+      "tutor_en": "You did very well! Today's lesson is over. Let's meet again.",
+      "goal_en": "The student thanks the teacher or says 'let's meet again' (ಮತ್ತೆ ಭೇಟಿಯಾಗೋಣ).",
+      "expected_kn": [
+        "ಮತ್ತೆ ಭೇಟಿಯಾಗೋಣ",
+        "ಭೇಟಿಯಾಗೋಣ",
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), 'thank you', or ಮತ್ತೆ ಭೇಟಿಯಾಗೋಣ (matte bhēṭiyāgōṇa), 'let's meet again'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

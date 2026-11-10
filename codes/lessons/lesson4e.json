@@ -1,0 +1,151 @@
+{
+  "id": "lesson_04e_house_help_more",
+  "title": "More jobs around the house",
+  "summary_en": "Ask if the work is done (ಮುಗೀತಾ?), and give more instructions: wipe the dust, remove the cobweb, what to cook, don't throw it away (ಚೆಲ್ಲಬೇಡ), wash and dry the clothes, water the plants.",
+  "steps": [
+    {
+      "id": "work_done",
+      "tutor_kn": "ಅಕ್ಕ ಅವರೇ! ಈಗ ನನ್ನನ್ನು ಕೇಳಿ, ಎಲ್ಲಾ ಕೆಲಸ ಮುಗೀತಾ?",
+      "tutor_en": "(I am the house help.) Sister! Now ask me: is all the work done?",
+      "goal_en": "The student asks ಎಲ್ಲಾ ಕೆಲಸ ಮುಗೀತಾ? (is all the work finished?).",
+      "expected_kn": [
+        "ಎಲ್ಲಾ ಕೆಲಸ ಮುಗೀತಾ",
+        "ಕೆಲಸ ಮುಗೀತಾ",
+        "ಮುಗೀತಾ",
+        "ಮುಗಿಯಿತಾ",
+        "ಮುಗಿತಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಎಲ್ಲಾ ಕೆಲಸ ಮುಗೀತಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಎಲ್ಲಾ ಕೆಲಸ ಮುಗೀತಾ? (ellā kelasa mugītā?), 'is all the work done?'. ಕೆಲಸ (kelasa) is 'work', ಮುಗೀತು (mugītu) is 'finished'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "wipe_dust",
+      "tutor_kn": "ಹೌದು, ಮುಗೀತು. ಈಗ ನನ್ನನ್ನು ಇಲ್ಲಿ ಕರೆದು, ಈ ಧೂಳು ಒರೆಸು ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Yes, it's done. Now call me over and tell me to wipe this dust.",
+      "goal_en": "The student says ಇಲ್ಲಿ ಬಾ, ಈ ಧೂಳು ಒರೆಸು (come here, wipe this dust).",
+      "expected_kn": [
+        "ಇಲ್ಲಿ ಬಾ, ಈ ಧೂಳು ಒರೆಸು",
+        "ಧೂಳು ಒರೆಸು",
+        "ಒರೆಸು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇಲ್ಲಿ ಬಾ, ಈ ಧೂಳು ಒರೆಸು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಇಲ್ಲಿ ಬಾ, ಈ ಧೂಳು ಒರೆಸು (illi bā, ī dhūḷu oresu), 'come here, wipe this dust'. ಧೂಳು (dhūḷu) is 'dust'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "cobweb",
+      "tutor_kn": "ಸರಿ. ಇನ್ನೇನು?",
+      "tutor_en": "OK. What else? (There's a cobweb over there.)",
+      "goal_en": "The student says ಅಲ್ಲಿ ಬಲೆ ಇದೆ, ಅದನ್ನು ತೆಗಿ (there's a cobweb there, remove it).",
+      "expected_kn": [
+        "ಅಲ್ಲಿ ಬಲೆ ಇದೆ, ಅದನ್ನು ತೆಗಿ",
+        "ಬಲೆ",
+        "ತೆಗಿ",
+        "ತೆಗೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅಲ್ಲಿ ಬಲೆ ಇದೆ, ಅದನ್ನು ತೆಗಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅಲ್ಲಿ ಬಲೆ ಇದೆ, ಅದನ್ನು ತೆಗಿ (alli bale ide, adannu tegi), 'there's a cobweb there, remove it'. ಬಲೆ (bale) is 'cobweb'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "what_to_cook",
+      "tutor_kn": "ಆಯ್ತು. ಅಡುಗೆ ಏನು ಮಾಡೋದು?",
+      "tutor_en": "OK. What should I cook?",
+      "goal_en": "The student says what to cook, e.g. ಅನ್ನ, ಸಾರು, ಪಲ್ಯ ಮಾಡು (make rice, sambar and a vegetable dish). Any dish with ಮಾಡು is fine.",
+      "expected_kn": [
+        "ಅನ್ನ ಸಾರು ಪಲ್ಯ ಮಾಡು",
+        "ಮಾಡು",
+        "ಅನ್ನ",
+        "ಸಾರು",
+        "ಪಲ್ಯ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅನ್ನ, ಸಾರು, ಪಲ್ಯ ಮಾಡು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅನ್ನ, ಸಾರು, ಪಲ್ಯ ಮಾಡು (anna, sāru, palya māḍu), 'make rice, sambar and palya'. ಅಡುಗೆ (aḍuge) is 'cooking'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "dont_throw",
+      "tutor_kn": "ನಿನ್ನೆಯ ಸಾರು ಇದೆ. ಅದನ್ನು ಚೆಲ್ಲಲಾ?",
+      "tutor_en": "There's yesterday's sambar. Shall I throw it away?",
+      "goal_en": "The student says don't throw it away: ಚೆಲ್ಲಬೇಡ.",
+      "expected_kn": [
+        "ಸಾರು ಚೆಲ್ಲಬೇಡ",
+        "ಚೆಲ್ಲಬೇಡ",
+        "ಬೇಡ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಬೇಡ, ಸಾರು ಚೆಲ್ಲಬೇಡ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಬೇಡ, ಸಾರು ಚೆಲ್ಲಬೇಡ (bēḍa, sāru chellabēḍa), 'no, don't throw the sambar away'. ಚೆಲ್ಲು (chellu) is 'spill, throw away'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "clothes",
+      "tutor_kn": "ಆಗಲಿ ಅಕ್ಕ. ಆಮೇಲೆ?",
+      "tutor_en": "Alright, sister. And then? (The clothes need washing.)",
+      "goal_en": "The student says ಆಮೇಲೆ ಬಟ್ಟೆ ಒಗೆದು ಒಣಗಿಸು (then wash the clothes and dry them).",
+      "expected_kn": [
+        "ಆಮೇಲೆ ಬಟ್ಟೆ ಒಗೆದು ಒಣಗಿಸು",
+        "ಬಟ್ಟೆ ಒಗೆದು",
+        "ಒಣಗಿಸು",
+        "ಬಟ್ಟೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆಮೇಲೆ ಬಟ್ಟೆ ಒಗೆದು ಒಣಗಿಸು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಆಮೇಲೆ ಬಟ್ಟೆ ಒಗೆದು ಒಣಗಿಸು (āmēle baṭṭe ogedu oṇagisu), 'then wash the clothes and put them to dry'. ಬಟ್ಟೆ (baṭṭe) is 'clothes'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "backyard",
+      "tutor_kn": "ಹಿತ್ತಲಲ್ಲಿ ಒಣಗಿಸಲಾ?",
+      "tutor_en": "Shall I dry them in the backyard?",
+      "goal_en": "The student says yes: ಹೌದು, or ಹೌದು, ಹಿತ್ತಲಲ್ಲಿ ಒಣಗಿಸು.",
+      "expected_kn": [
+        "ಹೌದು, ಹಿತ್ತಲಲ್ಲಿ ಒಣಗಿಸು",
+        "ಹೌದು",
+        "ಒಣಗಿಸು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಹಿತ್ತಲಲ್ಲಿ ಒಣಗಿಸು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಹಿತ್ತಲಲ್ಲಿ ಒಣಗಿಸು (haudu, hittalalli oṇagisu), 'yes, dry them in the backyard'. ಹಿತ್ತಲು (hittalu) is 'backyard'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "water_plants",
+      "tutor_kn": "ಸರಿ. ಆಮೇಲೆ ನಾನು ಮನೆಗೆ ಹೋಗ್ತೀನಿ.",
+      "tutor_en": "OK. After that I'll go home. (Ask me to water the plants on my way out.)",
+      "goal_en": "The student says ಹೋಗ್ತಾ ಗಿಡಕ್ಕೆ ನೀರು ಹಾಕಿ ಹೋಗು (water the plants on your way out).",
+      "expected_kn": [
+        "ಹೋಗ್ತಾ ಗಿಡಕ್ಕೆ ನೀರು ಹಾಕಿ ಹೋಗು",
+        "ಗಿಡಕ್ಕೆ ನೀರು",
+        "ನೀರು ಹಾಕಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೋಗ್ತಾ ಗಿಡಕ್ಕೆ ನೀರು ಹಾಕಿ ಹೋಗು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೋಗ್ತಾ ಗಿಡಕ್ಕೆ ನೀರು ಹಾಕಿ ಹೋಗು (hōgtā giḍakke nīru hāki hōgu), 'on your way out, water the plants'. ಗಿಡ (giḍa) is 'plant', ನೀರು ಹಾಕು (nīru hāku) is 'water'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಸರಿ ಅಕ್ಕ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "OK, sister! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

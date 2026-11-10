@@ -1,0 +1,132 @@
+{
+  "id": "lesson_05c_suffixes",
+  "title": "Grammar: in, to and of",
+  "summary_en": "Join endings to nouns: -ಅಲ್ಲಿ (in) after -ಇ/-ಎ becomes -ಯಲ್ಲಿ, after -ಅ becomes -ದಲ್ಲಿ, after a number -ರಲ್ಲಿ; plus ಮನೆಗೆ (to the house), ಮನೆಯಲ್ಲಿ (in the house) and ಮನೆಯ (of the house).",
+  "steps": [
+    {
+      "id": "house_where",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ನಮ್ಮ ಮನೆ ರಾಜಾಜಿನಗರದಲ್ಲಿದೆ. ನಿಮ್ಮ ಮನೆ ಎಲ್ಲಿದೆ?",
+      "tutor_en": "Hello! Our house is in Rajajinagar. Where is your house?",
+      "goal_en": "The student says where their house is: ನಮ್ಮ ಮನೆ <place>-ಅಲ್ಲಿದೆ. Any place is fine; a slightly wrong ending is OK here, the next steps practise it.",
+      "expected_kn": [
+        "ನಮ್ಮ ಮನೆ ಬೆಂಗಳೂರಿನಲ್ಲಿದೆ",
+        "ಲ್ಲಿದೆ",
+        "ನಮ್ಮ ಮನೆ",
+        "ನನ್ನ ಮನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮ್ಮ ಮನೆ ಬೆಂಗಳೂರಿನಲ್ಲಿದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮ್ಮ ಮನೆ (namma mane) + place + ಅಲ್ಲಿದೆ (-allide, 'is in'), e.g. ನಮ್ಮ ಮನೆ ಬೆಂಗಳೂರಿನಲ್ಲಿದೆ (namma mane bengaḷūrinallide). ಅಲ್ಲಿ (alli, in) + ಇದೆ (ide, is) = ಅಲ್ಲಿದೆ.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ends_in_e",
+      "tutor_kn": "ಹೆಸರಿನ ಕೊನೆಯಲ್ಲಿ ಇ ಅಥವಾ ಎ ಇದ್ದರೆ, ಯಲ್ಲಿದೆ. ಚೊಕ್ಕನಹಳ್ಳಿ, ಚೊಕ್ಕನಹಳ್ಳಿಯಲ್ಲಿದೆ. ಈಗ ಲಗ್ಗೆರೆ ಬಳಸಿ, ನಮ್ಮ ಮನೆ ಲಗ್ಗೆರೆಯಲ್ಲಿದೆ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "If a name ends in -i or -e, add -yallide: Chokkanahalli becomes Chokkanahalliyallide. Now with Laggere, say 'our house is in Laggere'.",
+      "goal_en": "The student says ನಮ್ಮ ಮನೆ ಲಗ್ಗೆರೆಯಲ್ಲಿದೆ (our house is in Laggere), with -ಯಲ್ಲಿದೆ.",
+      "expected_kn": [
+        "ನಮ್ಮ ಮನೆ ಲಗ್ಗೆರೆಯಲ್ಲಿದೆ",
+        "ಲಗ್ಗೆರೆಯಲ್ಲಿದೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮ್ಮ ಮನೆ ಲಗ್ಗೆರೆಯಲ್ಲಿದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮ್ಮ ಮನೆ ಲಗ್ಗೆರೆಯಲ್ಲಿದೆ (namma mane laggereyallide). Names ending in -i or -e take ಯ (ya): ಲಗ್ಗೆರೆ + ಯ + ಅಲ್ಲಿ + ಇದೆ.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ends_in_a",
+      "tutor_kn": "ಕೊನೆಯಲ್ಲಿ ಅ ಇದ್ದರೆ, ದಲ್ಲಿದೆ. ರಾಜಾಜಿನಗರ, ರಾಜಾಜಿನಗರದಲ್ಲಿದೆ. ಈಗ ಜಯನಗರ ಬಳಸಿ ಹೇಳಿ.",
+      "tutor_en": "If it ends in -a, add -dallide: Rajajinagara becomes Rajajinagaradallide. Now say it with Jayanagara.",
+      "goal_en": "The student says ನಮ್ಮ ಮನೆ ಜಯನಗರದಲ್ಲಿದೆ (our house is in Jayanagar), with -ದಲ್ಲಿದೆ.",
+      "expected_kn": [
+        "ನಮ್ಮ ಮನೆ ಜಯನಗರದಲ್ಲಿದೆ",
+        "ಜಯನಗರದಲ್ಲಿದೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮ್ಮ ಮನೆ ಜಯನಗರದಲ್ಲಿದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮ್ಮ ಮನೆ ಜಯನಗರದಲ್ಲಿದೆ (namma mane jayanagaradallide). Names ending in -a or -o take ದ (da): ಜಯನಗರ + ದ + ಅಲ್ಲಿ + ಇದೆ.",
+      "max_attempts": 3
+    },
+    {
+      "id": "number",
+      "tutor_kn": "ಸಂಖ್ಯೆ ಇದ್ದರೆ, ರಲ್ಲಿದೆ. ಟವರ್ ನಾಲ್ಕು, ಟವರ್ ನಾಲ್ಕರಲ್ಲಿದೆ. ಈಗ ನಮ್ಮ ಮನೆ ಟವರ್ ಎರಡರಲ್ಲಿದೆ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "After a number, add -rallide: tower four becomes ṭavar nālkarallide. Now say 'our house is in tower two'.",
+      "goal_en": "The student says ನಮ್ಮ ಮನೆ ಟವರ್ ಎರಡರಲ್ಲಿದೆ (our house is in tower two), with -ರಲ್ಲಿದೆ.",
+      "expected_kn": [
+        "ನಮ್ಮ ಮನೆ ಟವರ್ ಎರಡರಲ್ಲಿದೆ",
+        "ಎರಡರಲ್ಲಿದೆ",
+        "ರಲ್ಲಿದೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮ್ಮ ಮನೆ ಟವರ್ ಎರಡರಲ್ಲಿದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮ್ಮ ಮನೆ ಟವರ್ ಎರಡರಲ್ಲಿದೆ (namma mane ṭavar eraḍarallide). Numbers take ರ (ra): ಎರಡು → ಎರಡರಲ್ಲಿ (eraḍaralli).",
+      "max_attempts": 3
+    },
+    {
+      "id": "to_house",
+      "tutor_kn": "ಗೆ ಅಂದರೆ ಕಡೆಗೆ. ಮನೆ ಮತ್ತು ಗೆ, ಮನೆಗೆ. ನಿಮ್ಮ ಮನೆಗೆ ಯಾರು ಬಂದಿದ್ದಾರೆ?",
+      "tutor_en": "ಗೆ (-ge) means 'to': mane + ge = manege, 'to the house'. Who has come to your house?",
+      "goal_en": "The student says who has come, with ಮನೆಗೆ: ನಮ್ಮ ಮನೆಗೆ ನೆಂಟರು ಬಂದಿದ್ದಾರೆ (relatives have come to our house). Any visitor is fine.",
+      "expected_kn": [
+        "ನಮ್ಮ ಮನೆಗೆ ನೆಂಟರು ಬಂದಿದ್ದಾರೆ",
+        "ಮನೆಗೆ",
+        "ಬಂದಿದ್ದಾರೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮ್ಮ ಮನೆಗೆ ನೆಂಟರು ಬಂದಿದ್ದಾರೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮ್ಮ ಮನೆಗೆ ನೆಂಟರು ಬಂದಿದ್ದಾರೆ (namma manege neṇṭaru bandiddāre), 'relatives have come to our house'. The same ಗೆ is in ಎಲ್ಲಿಗೆ (ellige, to where?).",
+      "max_attempts": 3
+    },
+    {
+      "id": "in_house",
+      "tutor_kn": "ಅಲ್ಲಿ ಅಂದರೆ ಒಳಗೆ. ಮನೆ ಮತ್ತು ಅಲ್ಲಿ, ಮನೆಯಲ್ಲಿ. ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ನಾಯಿ ಇದೆಯಾ, ಬೆಕ್ಕು ಇದೆಯಾ?",
+      "tutor_en": "ಅಲ್ಲಿ (-alli) means 'in': mane + alli = maneyalli, 'in the house'. Is there a dog or a cat in your house?",
+      "goal_en": "The student answers with ಮನೆಯಲ್ಲಿ: ನಮ್ಮ ಮನೆಯಲ್ಲಿ ನಾಯಿ ಇದೆ (there's a dog in our house), ಬೆಕ್ಕು ಇದೆ (a cat), or ಏನೂ ಇಲ್ಲ (nothing). Any true answer is fine.",
+      "expected_kn": [
+        "ನಮ್ಮ ಮನೆಯಲ್ಲಿ ನಾಯಿ ಇದೆ",
+        "ಮನೆಯಲ್ಲಿ",
+        "ನಾಯಿ",
+        "ಬೆಕ್ಕು",
+        "ಇಲ್ಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮ್ಮ ಮನೆಯಲ್ಲಿ ನಾಯಿ ಇದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮ್ಮ ಮನೆಯಲ್ಲಿ ನಾಯಿ ಇದೆ (namma maneyalli nāyi ide), 'there is a dog in our house'. ನಾಯಿ (nāyi) is dog, ಬೆಕ್ಕು (bekku) is cat. ಮನೆ + ಅಲ್ಲಿ gets a ಯ (ya) in between: ಮನೆಯಲ್ಲಿ.",
+      "max_attempts": 3
+    },
+    {
+      "id": "of_house",
+      "tutor_kn": "ಅ ಅಂದರೆ ಸಂಬಂಧ. ಮನೆ ಮತ್ತು ಅ, ಮನೆಯ. ಮನೆಯ ಬಾಗಿಲು. ನಿಮ್ಮ ಮನೆಯ ಬಾಗಿಲು ದೊಡ್ಡದಾ, ಚಿಕ್ಕದಾ?",
+      "tutor_en": "ಅ (-a) means 'of': mane + a = maneya, as in maneya bāgilu, 'the door of the house'. Is your house's door big or small?",
+      "goal_en": "The student answers with ಮನೆಯ: ನಮ್ಮ ಮನೆಯ ಬಾಗಿಲು ದೊಡ್ಡದು (our house's door is big) or ಚಿಕ್ಕದು (small). Either is fine.",
+      "expected_kn": [
+        "ನಮ್ಮ ಮನೆಯ ಬಾಗಿಲು ದೊಡ್ಡದು",
+        "ಮನೆಯ ಬಾಗಿಲು",
+        "ದೊಡ್ಡದು",
+        "ಚಿಕ್ಕದು"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮ್ಮ ಮನೆಯ ಬಾಗಿಲು ದೊಡ್ಡದು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮ್ಮ ಮನೆಯ ಬಾಗಿಲು ದೊಡ್ಡದು (namma maneya bāgilu doḍḍadu), 'our house's door is big', or ಚಿಕ್ಕದು (chikkadu), 'small'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ತುಂಬಾ ಚೆನ್ನಾಗಿ ಮಾಡಿದ್ದೀರಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "You did very well! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "id": "lesson_03a_temple",
+  "title": "Off to the temple: slow and fast",
+  "summary_en": "Say where you are heading, invite someone along, talk about walking slowly or fast (ನಿಧಾನ, ವೇಗ), ahead or behind (ಮುಂದೆ, ಹಿಂದೆ), and ask who has come home.",
+  "steps": [
+    {
+      "id": "where_heading",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಎಲ್ಲಿಗೆ ಹೊರಟಿದ್ದೀರಿ?",
+      "tutor_en": "Hello! Where are you heading? (You are going to the temple.)",
+      "goal_en": "The student says where they are going, ideally ದೇವಸ್ಥಾನಕ್ಕೆ (to the temple). Any place with -ಗೆ/-ಕ್ಕೆ (to) is fine.",
+      "expected_kn": [
+        "ದೇವಸ್ಥಾನಕ್ಕೆ",
+        "ಹೊರಟಿದ್ದೀನಿ",
+        "ಹೊರಟಿದ್ದೇನೆ",
+        "ಹೋಗ್ತಾ ಇದ್ದೀನಿ",
+        "ಹೋಗುತ್ತಿದ್ದೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ದೇವಸ್ಥಾನಕ್ಕೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ದೇವಸ್ಥಾನಕ್ಕೆ (dēvasthānakke), 'to the temple'. ಎಲ್ಲಿಗೆ ಹೊರಟಿದ್ದೀರಿ (ellige horaṭiddīri) means 'where are you heading?'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "are_you_coming",
+      "tutor_kn": "ಓ ಒಳ್ಳೆಯದು! ಈಗ ನನ್ನನ್ನು ಕೇಳಿ, ಬರ್ತೀರಾ?",
+      "tutor_en": "Oh, good! Now ask me: are you coming?",
+      "goal_en": "The student asks ಬರ್ತೀರಾ? (are you coming?). Formal ಬರುತ್ತೀರಾ is fine.",
+      "expected_kn": [
+        "ಬರ್ತೀರಾ",
+        "ಬರುತ್ತೀರಾ",
+        "ಬರ್ತೀರ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಬರ್ತೀರಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಬರ್ತೀರಾ? (bartīrā?), 'are you coming?'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "slow_or_fast",
+      "tutor_kn": "ನಾನು ನಡೆಯೋದು ನಿಧಾನವಾಗಿ. ನೀವು ಹೇಗೆ ನಡೆಯುತ್ತೀರಿ? ನಿಧಾನವಾಗಿನಾ, ವೇಗವಾಗಿನಾ?",
+      "tutor_en": "I walk slowly. How do you walk, slowly or fast?",
+      "goal_en": "The student says how they walk: ನಾನು ನಡೆಯೋದು ವೇಗವಾಗಿ (I walk fast) or ನಿಧಾನವಾಗಿ (slowly). Either is fine.",
+      "expected_kn": [
+        "ನಾನು ನಡೆಯೋದು ವೇಗವಾಗಿ",
+        "ವೇಗವಾಗಿ",
+        "ನಿಧಾನವಾಗಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ನಡೆಯೋದು ವೇಗವಾಗಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ನಡೆಯೋದು ವೇಗವಾಗಿ (nānu naḍeyōdu vēgavāgi), 'I walk fast', or ನಿಧಾನವಾಗಿ (nidhānavāgi), 'slowly'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "ahead_or_behind",
+      "tutor_kn": "ನೀವು ಮುಂದೆ ಹೋಗ್ತೀರಾ, ಹಿಂದೆ ಬರ್ತೀರಾ?",
+      "tutor_en": "Will you go ahead, or come behind?",
+      "goal_en": "The student answers with ಮುಂದೆ (ahead) or ಹಿಂದೆ (behind): ನಾನು ಮುಂದೆ ಹೋಗ್ತೀನಿ or ನಾನು ಹಿಂದೆ ಬರ್ತೀನಿ. Either is fine.",
+      "expected_kn": [
+        "ನಾನು ಮುಂದೆ ಹೋಗ್ತೀನಿ",
+        "ಮುಂದೆ",
+        "ಹಿಂದೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ಮುಂದೆ ಹೋಗ್ತೀನಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ಮುಂದೆ ಹೋಗ್ತೀನಿ (nānu munde hōgtīni), 'I will go ahead', or ನಾನು ಹಿಂದೆ ಬರ್ತೀನಿ (nānu hinde bartīni), 'I will come behind'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "who_came_home",
+      "tutor_kn": "ನನ್ನ ಮನೆಯಲ್ಲಿ ಜನ ಇದ್ದಾರೆ. ಮನೆಗೆ ಯಾರು ಬಂದಿದ್ದಾರೆ ಎಂದು ನನ್ನನ್ನು ಕೇಳಿ.",
+      "tutor_en": "There are people at my house. Ask me who has come home.",
+      "goal_en": "The student asks ಮನೆಗೆ ಯಾರು ಬಂದಿದ್ದಾರೆ? (who has come home?).",
+      "expected_kn": [
+        "ಮನೆಗೆ ಯಾರು ಬಂದಿದ್ದಾರೆ",
+        "ಯಾರು ಬಂದಿದ್ದಾರೆ",
+        "ಯಾರು ಬಂದವರು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಮನೆಗೆ ಯಾರು ಬಂದಿದ್ದಾರೆ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಮನೆಗೆ ಯಾರು ಬಂದಿದ್ದಾರೆ? (manege yāru bandiddāre?), 'who has come home?'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "dont_delay",
+      "tutor_kn": "ಮನೆಗೆ ನೆಂಟರು ಬಂದಿದ್ದಾರೆ. ನಾನು ಅವರನ್ನು ಕರ್ಕೊಂಡು ಬರ್ತೀನಿ. ನನಗೆ ಹೇಳಿ, ತಡ ಮಾಡಬೇಡಿ.",
+      "tutor_en": "Relatives have come home. I will bring them along. Tell me: don't be late.",
+      "goal_en": "The student says ಸರಿ, ತಡ ಮಾಡಬೇಡಿ (OK, don't delay).",
+      "expected_kn": [
+        "ತಡ ಮಾಡಬೇಡಿ",
+        "ತಡ ಮಾಡ್ಬೇಡಿ",
+        "ಮಾಡಬೇಡಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಸರಿ, ತಡ ಮಾಡಬೇಡಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಸರಿ, ತಡ ಮಾಡಬೇಡಿ (sari, taḍa māḍabēḍi), 'OK, don't be late'. ನೆಂಟರು (neṇṭaru) or ಸಂಬಂಧಿಕರು (sambandhikaru) are 'relatives'; ತಡ (taḍa) is 'delay'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಆಯ್ತು, ಬೇಗ ಬರ್ತೀನಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "OK, I'll come soon! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "id": "lesson_01e_neighbour",
+  "title": "Meeting a neighbour",
+  "summary_en": "Say where you went, what you got, invite a neighbour home, tell them to sit, say where your family is, offer tea and accept an invitation.",
+  "steps": [
+    {
+      "id": "where_went",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಒಂದು ನಿಮಿಷ ನಿಲ್ಲಿ. ನೀವು ಎಲ್ಲಿಗೆ ಹೋಗಿದ್ರಿ?",
+      "tutor_en": "Hello! Stop for a minute. Where did you go?",
+      "goal_en": "The student says where they went, e.g. ಹಾಲು ತರಲು ಅಂಗಡಿಗೆ ಹೋಗಿದ್ದೆ (I had gone to the shop to bring milk). Any place is fine, as long as they use ಹೋಗಿದ್ದೆ (had gone).",
+      "expected_kn": [
+        "ಹಾಲು ತರಲು ಅಂಗಡಿಗೆ ಹೋಗಿದ್ದೆ",
+        "ಹೋಗಿದ್ದೆ",
+        "ಹೋಗಿದ್ದೀನಿ",
+        "ಹೋಗಿದ್ದೆನು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹಾಲು ತರಲು ಅಂಗಡಿಗೆ ಹೋಗಿದ್ದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹಾಲು ತರಲು ಅಂಗಡಿಗೆ ಹೋಗಿದ್ದೆ (hālu taralu angaḍige hōgidde), 'I had gone to the shop to bring milk'. ಎಲ್ಲಿಗೆ (ellige) means 'to where'; the answer takes ಗೆ (-ge, 'to'): ಅಂಗಡಿಗೆ.",
+      "max_attempts": 3
+    },
+    {
+      "id": "got_milk",
+      "tutor_kn": "ಹೌದಾ? ಹಾಲು ಸಿಕ್ತಾ?",
+      "tutor_en": "Is it? Did you get milk?",
+      "goal_en": "The student says they didn't get milk but got curd: ಹಾಲು ಸಿಗಲಿಲ್ಲ, ಮೊಸರು ಸಿಕ್ತು. Either half is fine.",
+      "expected_kn": [
+        "ಹಾಲು ಸಿಗಲಿಲ್ಲ, ಮೊಸರು ಸಿಕ್ತು",
+        "ಸಿಗಲಿಲ್ಲ",
+        "ಸಿಕ್ತು",
+        "ಸಿಕ್ಕಿತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹಾಲು ಸಿಗಲಿಲ್ಲ, ಮೊಸರು ಸಿಕ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹಾಲು ಸಿಗಲಿಲ್ಲ, ಮೊಸರು ಸಿಕ್ತು (hālu sigalilla, mosaru siktu), 'I didn't get milk, I got curd'. ಸಿಕ್ತು (siktu) is 'got', ಸಿಗಲಿಲ್ಲ (sigalilla) is 'didn't get'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "invite_home",
+      "tutor_kn": "ಸರಿ. ಈಗ ನನ್ನನ್ನು ನಿಮ್ಮ ಮನೆಗೆ ಕರೆಯಿರಿ.",
+      "tutor_en": "OK. Now invite me to your house.",
+      "goal_en": "The student invites the teacher home: ಬನ್ನಿ ನಮ್ಮ ಮನೆಗೆ (come to our house).",
+      "expected_kn": [
+        "ಬನ್ನಿ ನಮ್ಮ ಮನೆಗೆ",
+        "ನಮ್ಮ ಮನೆಗೆ ಬನ್ನಿ",
+        "ಬನ್ನಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಬನ್ನಿ ನಮ್ಮ ಮನೆಗೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಬನ್ನಿ ನಮ್ಮ ಮನೆಗೆ (banni namma manege), 'come to our house'. ಬನ್ನಿ (banni) is the polite 'come'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "where_house",
+      "tutor_kn": "ಎಲ್ಲಿ ನಿಮ್ಮ ಮನೆ?",
+      "tutor_en": "Where is your house?",
+      "goal_en": "The student says where their house is, e.g. ಟವರ್ ನಾಲ್ಕರಲ್ಲಿ ನಮ್ಮ ಮನೆ (our house is in tower four). Any place is fine.",
+      "expected_kn": [
+        "ಟವರ್ ನಾಲ್ಕರಲ್ಲಿ ನಮ್ಮ ಮನೆ",
+        "ನಮ್ಮ ಮನೆ",
+        "ನನ್ನ ಮನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಟವರ್ ನಾಲ್ಕರಲ್ಲಿ ನಮ್ಮ ಮನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಟವರ್ ನಾಲ್ಕರಲ್ಲಿ ನಮ್ಮ ಮನೆ (ṭavar nālkaralli namma mane), 'our house is in tower four', or use your own place.",
+      "max_attempts": 3
+    },
+    {
+      "id": "sit_down",
+      "tutor_kn": "ಸರಿ, ಬಂದೆ. ಆದರೆ ನಾನು ನಿಂತಿದ್ದೀನಿ. ನನಗೆ ಕೂತುಕೊಳ್ಳಿ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "OK, I've come in. But I am standing. Tell me to sit down.",
+      "goal_en": "The student asks the guest to sit: ಯಾಕೆ ನಿಂತಿದ್ದೀರಿ? ಕೂತುಕೊಳ್ಳಿ (why are you standing? please sit).",
+      "expected_kn": [
+        "ಕೂತುಕೊಳ್ಳಿ",
+        "ಕೂತ್ಕೊಳ್ಳಿ",
+        "ಕುಳಿತುಕೊಳ್ಳಿ",
+        "ಕೂರಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಯಾಕೆ ನಿಂತಿದ್ದೀರಿ? ಕೂತುಕೊಳ್ಳಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಯಾಕೆ ನಿಂತಿದ್ದೀರಿ? ಕೂತುಕೊಳ್ಳಿ (yāke nintiddīri? kūtukoḷḷi), 'why are you standing? please sit'. ನಿಲ್ಲಿ (nilli) is 'stop/stand', ಕೂತುಕೊಳ್ಳಿ (kūtukoḷḷi) is 'sit down'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "where_family",
+      "tutor_kn": "ಎಲ್ಲಿ ನಿಮ್ಮ ಯಜಮಾನರು, ಮಗ, ಮಗಳು?",
+      "tutor_en": "Where are your husband, son and daughter?",
+      "goal_en": "The student says where at least one family member is, e.g. ಯಜಮಾನರು ನಡೆಯಲಿಕ್ಕೆ ಹೋಗಿದ್ದಾರೆ (husband has gone for a walk), ಮಗ ಓಡಲಿಕ್ಕೆ ಹೋಗಿದ್ದಾನೆ (son has gone running), ಮಗಳು ಮಲಗಿದ್ದಾಳೆ (daughter is sleeping). Any family member and activity is fine.",
+      "expected_kn": [
+        "ಮಗಳು ಮಲಗಿದ್ದಾಳೆ",
+        "ಹೋಗಿದ್ದಾರೆ",
+        "ಹೋಗಿದ್ದಾನೆ",
+        "ಹೋಗಿದ್ದಾಳೆ",
+        "ಮಲಗಿದ್ದಾಳೆ",
+        "ಮಲಗಿದ್ದಾನೆ",
+        "ಮಲಗಿದ್ದಾರೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಮಗಳು ಮಲಗಿದ್ದಾಳೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಮಗಳು ಮಲಗಿದ್ದಾಳೆ (magaḷu malagiddāḷe), 'daughter is sleeping', or ಯಜಮಾನರು ನಡೆಯಲಿಕ್ಕೆ ಹೋಗಿದ್ದಾರೆ (yajamānaru naḍeyalikke hōgiddāre), 'husband has gone for a walk', or ಮಗ ಓಡಲಿಕ್ಕೆ ಹೋಗಿದ್ದಾನೆ (maga ōḍalikke hōgiddāne), 'son has gone for a run'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "offer_tea",
+      "tutor_kn": "ಓ ಸರಿ. ಈಗ ನನಗೆ ಚಹಾ ಕೊಡಿ, ಚಹಾ ತಗೊಳ್ಳಿ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Oh OK. Now offer me tea: say 'please have some tea'.",
+      "goal_en": "The student offers tea: ಚಹಾ ತಗೊಳ್ಳಿ (take tea).",
+      "expected_kn": [
+        "ಚಹಾ ತಗೊಳ್ಳಿ",
+        "ತಗೊಳ್ಳಿ",
+        "ಚಹಾ ತೆಗೆದುಕೊಳ್ಳಿ",
+        "ಟೀ ತಗೊಳ್ಳಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಚಹಾ ತಗೊಳ್ಳಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಚಹಾ ತಗೊಳ್ಳಿ (chahā tagoḷḷi), 'please have some tea'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಚಹಾ ಚೆನ್ನಾಗಿದೆ, ಧನ್ಯವಾದಗಳು! ಹೊರಡುತ್ತೇನೆ, ಮತ್ತೆ ಸಿಗ್ತೀನಿ. ನೀವು ನಮ್ಮ ಮನೆಗೆ ಬನ್ನಿ.",
+      "tutor_en": "The tea is good, thank you! I'll take my leave, see you again. Do come to our house.",
+      "goal_en": "The student accepts the invitation: ಆಯ್ತು, ಖಂಡಿತ ಬರುತ್ತೇನೆ (OK, I will surely come), or thanks the teacher.",
+      "expected_kn": [
+        "ಖಂಡಿತ ಬರುತ್ತೇನೆ",
+        "ಬರುತ್ತೇನೆ",
+        "ಬರ್ತೀನಿ",
+        "ಖಂಡಿತ",
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆಯ್ತು, ಖಂಡಿತ ಬರುತ್ತೇನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಆಯ್ತು, ಖಂಡಿತ ಬರುತ್ತೇನೆ (āytu, khaṇḍita baruttēne), 'OK, I will surely come'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

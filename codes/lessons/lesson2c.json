@@ -1,0 +1,131 @@
+{
+  "id": "lesson_02c_festival",
+  "title": "Back from home: a festival trip",
+  "summary_en": "Say you had gone to your home town and when you came back, ask what's special and when, wish someone a happy festival.",
+  "steps": [
+    {
+      "id": "where_were_you",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಏನು ಸಮಾಚಾರ? ಒಂದು ವಾರದಿಂದ ಕಾಣಿಸ್ತಾ ಇಲ್ಲ. ಎಲ್ಲಿ ಹೋಗಿದ್ರಿ?",
+      "tutor_en": "Hello! What's the news? I haven't seen you for a week. Where had you gone?",
+      "goal_en": "The student says they had gone to their home town: ನಾನು ಊರಿಗೆ ಹೋಗಿದ್ದೆ. Adding ಅದಕ್ಕೆ ಕಾಣಿಸಲಿಲ್ಲ (that's why you didn't see me) is a bonus. Any place is fine.",
+      "expected_kn": [
+        "ನಾನು ಊರಿಗೆ ಹೋಗಿದ್ದೆ",
+        "ಊರಿಗೆ ಹೋಗಿದ್ದೆ",
+        "ಹೋಗಿದ್ದೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ಊರಿಗೆ ಹೋಗಿದ್ದೆ, ಅದಕ್ಕೆ ಕಾಣಿಸಲಿಲ್ಲ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ಊರಿಗೆ ಹೋಗಿದ್ದೆ, ಅದಕ್ಕೆ ಕಾಣಿಸಲಿಲ್ಲ (nānu ūrige hōgidde, adakke kāṇisalilla), 'I had gone to my home town, that's why you didn't see me'. ಸಮಾಚಾರ (samāchāra) is 'news'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "when_came",
+      "tutor_kn": "ಹೌದಾ? ಯಾವಾಗ ಬಂದ್ರಿ?",
+      "tutor_en": "Oh is it? When did you come back?",
+      "goal_en": "The student says when they came, e.g. ಇವತ್ತು ಬೆಳಿಗ್ಗೆ ಬಂದೆ (I came this morning) or ನಿನ್ನೆ ರಾತ್ರಿ ಬಂದೆ (I came last night). Any time is fine, as long as they use ಬಂದೆ (came).",
+      "expected_kn": [
+        "ಇವತ್ತು ಬೆಳಿಗ್ಗೆ ಬಂದೆ",
+        "ಬಂದೆ",
+        "ಬಂದಿದ್ದೀನಿ",
+        "ಬಂದಿದ್ದೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇವತ್ತು ಬೆಳಿಗ್ಗೆ ಎಂಟು ಗಂಟೆಗೆ ಬಂದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಇವತ್ತು ಬೆಳಿಗ್ಗೆ ಎಂಟು ಗಂಟೆಗೆ ಬಂದೆ (ivattu beḷigge eṇṭu gaṇṭege bande), 'I came this morning at eight'. ನಿನ್ನೆ (ninne) is yesterday, ರಾತ್ರಿ (rātri) is night, ಯಾವಾಗ (yāvāga) is 'when'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "whats_special",
+      "tutor_kn": "ಓ ಸರಿ. ನಾನು ಸಹ ಎರಡು ಮೂರು ದಿನ ರಜೆಗೆ ಊರಿಗೆ ಹೋಗ್ತಾ ಇದ್ದೀನಿ. ಈಗ ನನ್ನನ್ನು ಕೇಳಿ, ಯಾಕೆ? ಏನು ವಿಶೇಷ?",
+      "tutor_en": "Oh OK. I am also going to my home town for two or three days of holiday. Now ask me: why? what's special?",
+      "goal_en": "The student asks ಯಾಕೆ? ಏನು ವಿಶೇಷ? (why? what's special?). Either question is fine.",
+      "expected_kn": [
+        "ಏನು ವಿಶೇಷ",
+        "ವಿಶೇಷ",
+        "ಯಾಕೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಯಾಕೆ? ಏನು ವಿಶೇಷ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಯಾಕೆ? ಏನು ವಿಶೇಷ? (yāke? ēnu vishēsha?), 'why? what's special?'. ಯಾಕೆ (yāke) is 'why'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "when_festival",
+      "tutor_kn": "ಯುಗಾದಿ ಹಬ್ಬಕ್ಕೆ. ಈಗ ಹಬ್ಬ ಯಾವಾಗ ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "For the Yugadi festival. Now ask when the festival is.",
+      "goal_en": "The student asks ಹಬ್ಬ ಯಾವಾಗ? (when is the festival?).",
+      "expected_kn": [
+        "ಹಬ್ಬ ಯಾವಾಗ",
+        "ಯಾವಾಗ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹಬ್ಬ ಯಾವಾಗ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಹಬ್ಬ ಯಾವಾಗ? (habba yāvāga?), 'when is the festival?'. ಹಬ್ಬ (habba) is 'festival'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "when_back",
+      "tutor_kn": "ಏಪ್ರಿಲ್ ನಾಲ್ಕು ಮತ್ತು ಐದು. ಈಗ ಯಾವಾಗ ವಾಪಸ್ ಬರ್ತೀರಿ ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "April four and five. Now ask when I will be back.",
+      "goal_en": "The student asks ಯಾವಾಗ ವಾಪಸ್ ಬರ್ತೀರಿ? (when will you be back?).",
+      "expected_kn": [
+        "ಯಾವಾಗ ವಾಪಸ್ ಬರ್ತೀರಿ",
+        "ವಾಪಸ್ ಬರ್ತೀರಿ",
+        "ವಾಪಸ್ ಬರುತ್ತೀರಿ",
+        "ಯಾವಾಗ ವಾಪಸ್"
+      ],
+      "match": "contains",
+      "hint_kn": "ಯಾವಾಗ ವಾಪಸ್ ಬರ್ತೀರಿ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಯಾವಾಗ ವಾಪಸ್ ಬರ್ತೀರಿ? (yāvāga vāpas bartīri?), 'when will you be back?'. ವಾಪಸ್ (vāpas) is 'back', ಬರ್ತೀರಿ (bartīri) is 'you will come'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "go_and_come",
+      "tutor_kn": "ನಾಳೆ ಹೊರಟು, ನಾಲ್ಕು ಐದು ದಿವಸ ಬಿಟ್ಟು ಬರ್ತೀನಿ. ಈಗ ನನಗೆ ಹೋಗಿ ಬನ್ನಿ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "I leave tomorrow and will be back after four or five days. Now send me off: say 'go and come back'.",
+      "goal_en": "The student says ಆಯ್ತು, ಹೋಗಿ ಬನ್ನಿ (OK, go and come back), the usual Kannada way to say goodbye to someone leaving.",
+      "expected_kn": [
+        "ಆಯ್ತು, ಹೋಗಿ ಬನ್ನಿ",
+        "ಹೋಗಿ ಬನ್ನಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆಯ್ತು, ಹೋಗಿ ಬನ್ನಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಆಯ್ತು, ಹೋಗಿ ಬನ್ನಿ (āytu, hōgi banni), 'OK, go and come back'. ನಾಳೆ (nāḷe) is tomorrow.",
+      "max_attempts": 3
+    },
+    {
+      "id": "festival_wishes",
+      "tutor_kn": "ಧನ್ಯವಾದಗಳು! ಈಗ ನನಗೆ ಯುಗಾದಿ ಹಬ್ಬದ ಶುಭಾಶಯಗಳು ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Thank you! Now wish me a happy Yugadi festival.",
+      "goal_en": "The student says ಯುಗಾದಿ ಹಬ್ಬದ ಶುಭಾಶಯಗಳು (happy Yugadi festival). Wishes for another festival are fine too.",
+      "expected_kn": [
+        "ಯುಗಾದಿ ಹಬ್ಬದ ಶುಭಾಶಯಗಳು",
+        "ಹಬ್ಬದ ಶುಭಾಶಯಗಳು",
+        "ಶುಭಾಶಯಗಳು",
+        "ಶುಭಾಶಯ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಯುಗಾದಿ ಹಬ್ಬದ ಶುಭಾಶಯಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಯುಗಾದಿ ಹಬ್ಬದ ಶುಭಾಶಯಗಳು (yugādi habbada shubhāshayagaḷu), 'best wishes for the Yugadi festival'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ನಿಮಗೂ ಯುಗಾದಿ ಹಬ್ಬದ ಶುಭಾಶಯಗಳು! ನಾಡಿದ್ದು ಕರೆ ಮಾಡ್ತೀನಿ. ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು.",
+      "tutor_en": "Happy Yugadi to you too! I will call you the day after tomorrow. Today's lesson is over.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

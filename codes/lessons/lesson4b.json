@@ -1,0 +1,118 @@
+{
+  "id": "lesson_04b_festive_meal",
+  "title": "A festive meal on a banana leaf",
+  "summary_en": "Accept a lunch invitation, ask what's special, and learn the dishes of a banana-leaf meal in order: first (ಮೊದಲು), then (ನಂತರ, ಆಮೇಲೆ), last (ಕೊನೆಗೆ).",
+  "steps": [
+    {
+      "id": "whats_special",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ನಾಳೆ ನಮ್ಮ ಮನೆಗೆ ಊಟಕ್ಕೆ ಬನ್ನಿ.",
+      "tutor_en": "Hello! Come to our house for lunch tomorrow.",
+      "goal_en": "The student asks ಏನು ವಿಶೇಷ? (what's special?).",
+      "expected_kn": [
+        "ಏನು ವಿಶೇಷ",
+        "ವಿಶೇಷ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಏನು ವಿಶೇಷ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಏನು ವಿಶೇಷ? (ēnu vishēsha?), 'what's the special occasion?'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "banana_leaf",
+      "tutor_kn": "ನಾಳೆ ನಮ್ಮ ಮನೆಯಲ್ಲಿ ಸತ್ಯನಾರಾಯಣ ಪೂಜೆ ಇದೆ. ಈಗ ನನ್ನನ್ನು ಕೇಳಿ, ಬಾಳೆ ಎಲೆ ಊಟ ಅಲ್ವಾ?",
+      "tutor_en": "Tomorrow there's a Satyanarayana pooja at our house. Now ask me: it's a banana-leaf meal, right?",
+      "goal_en": "The student says ಒಳ್ಳೆಯದು, ಬಾಳೆ ಎಲೆ ಊಟ ಅಲ್ವಾ? (good, a meal on a banana leaf, right?).",
+      "expected_kn": [
+        "ಬಾಳೆ ಎಲೆ ಊಟ ಅಲ್ವಾ",
+        "ಬಾಳೆ ಎಲೆ",
+        "ಎಲೆ ಊಟ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಬಾಳೆ ಎಲೆ ಊಟ ಅಲ್ವಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಒಳ್ಳೆಯದು, ಬಾಳೆ ಎಲೆ ಊಟ ಅಲ್ವಾ? (oḷḷeyadu, bāḷe ele ūṭa alvā?), 'good, the meal is on a banana leaf, right?'. ಬಾಳೆ (bāḷe) is 'banana', ಎಲೆ (ele) is 'leaf'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "first_items",
+      "tutor_kn": "ಹೌದು. ಎಲೆಯಲ್ಲಿ ಮೊದಲು ಉಪ್ಪು, ಕೋಸಂಬರಿ, ಉಪ್ಪಿನಕಾಯಿ, ಮತ್ತೆ ಹಪ್ಪಳ. ಎಲೆಯಲ್ಲಿ ಮೊದಲು ಏನು?",
+      "tutor_en": "Yes. On the leaf, first salt, kosambari salad, pickle, and papad. What comes first on the leaf?",
+      "goal_en": "The student says ಉಪ್ಪು (salt), or any of the first items: ಕೋಸಂಬರಿ, ಉಪ್ಪಿನಕಾಯಿ, ಹಪ್ಪಳ.",
+      "expected_kn": [
+        "ಮೊದಲು ಉಪ್ಪು",
+        "ಉಪ್ಪು",
+        "ಕೋಸಂಬರಿ",
+        "ಉಪ್ಪಿನಕಾಯಿ",
+        "ಹಪ್ಪಳ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಮೊದಲು ಉಪ್ಪು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಮೊದಲು ಉಪ್ಪು (modalu uppu), 'first, salt'. ಉಪ್ಪಿನಕಾಯಿ (uppinakāyi) is pickle, ಹಪ್ಪಳ (happaḷa) is papad.",
+      "max_attempts": 3
+    },
+    {
+      "id": "and_then",
+      "tutor_kn": "ನಂತರ ಬಿಸಿ ಬೇಳೆ ಬಾತ್, ಜೊತೆಗೆ ಖಾರ ಬೂಂದಿ. ಈಗ ನನ್ನನ್ನು ಕೇಳಿ, ಆಮೇಲೆ?",
+      "tutor_en": "Then bisi bele bath, with spicy boondi. Now ask me: and after that?",
+      "goal_en": "The student asks ಆಮೇಲೆ? (and then?). ನಂತರ? is fine too.",
+      "expected_kn": [
+        "ಆಮೇಲೆ",
+        "ನಂತರ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆಮೇಲೆ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಆಮೇಲೆ? (āmēle?), 'and then?'. ನಂತರ (nantara) also means 'after that', ಜೊತೆಗೆ (jotege) means 'along with'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "with_bath",
+      "tutor_kn": "ಆಮೇಲೆ ನಿಂಬೆ ಹುಳಿ ಚಿತ್ರಾನ್ನ, ಮೊಸರನ್ನ. ಬಿಸಿ ಬೇಳೆ ಬಾತ್ ಜೊತೆಗೆ ಏನು?",
+      "tutor_en": "Then lemon rice and curd rice. What comes with the bisi bele bath?",
+      "goal_en": "The student says ಖಾರ ಬೂಂದಿ (spicy boondi).",
+      "expected_kn": [
+        "ಖಾರ ಬೂಂದಿ",
+        "ಬೂಂದಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಖಾರ ಬೂಂದಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಖಾರ ಬೂಂದಿ (khāra būndi), 'spicy boondi'. ಖಾರ (khāra) is 'spicy', ನಿಂಬೆ (nimbe) is 'lemon', ಮೊಸರನ್ನ (mosaranna) is 'curd rice'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "last_sweet",
+      "tutor_kn": "ಕೊನೆಗೆ ಸಿಹಿ ಹೋಳಿಗೆ. ಕೊನೆಗೆ ಏನು?",
+      "tutor_en": "Finally, sweet holige. What comes last?",
+      "goal_en": "The student says ಕೊನೆಗೆ ಸಿಹಿ ಹೋಳಿಗೆ (finally sweet holige), or just ಹೋಳಿಗೆ.",
+      "expected_kn": [
+        "ಕೊನೆಗೆ ಸಿಹಿ ಹೋಳಿಗೆ",
+        "ಹೋಳಿಗೆ",
+        "ಒಬ್ಬಟ್ಟು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಕೊನೆಗೆ ಸಿಹಿ ಹೋಳಿಗೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಕೊನೆಗೆ ಸಿಹಿ ಹೋಳಿಗೆ (konege sihi hōḷige), 'finally, sweet holige'. ಕೊನೆ (kone) is 'end', ಸಿಹಿ (sihi) is 'sweet'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ತಪ್ಪದೇ ಬನ್ನಿ!",
+      "tutor_en": "Come without fail!",
+      "goal_en": "The student accepts: ಖಂಡಿತ ಬರ್ತೀನಿ, ಧನ್ಯವಾದಗಳು (I'll surely come, thank you).",
+      "expected_kn": [
+        "ಖಂಡಿತ ಬರ್ತೀನಿ",
+        "ಬರ್ತೀನಿ",
+        "ಬರುತ್ತೇನೆ",
+        "ಖಂಡಿತ",
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಖಂಡಿತ ಬರ್ತೀನಿ, ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಖಂಡಿತ ಬರ್ತೀನಿ, ಧನ್ಯವಾದಗಳು (khaṇḍita bartīni, dhanyavādagaḷu), 'I'll surely come, thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

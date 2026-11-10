@@ -1,0 +1,132 @@
+{
+  "id": "lesson_05a_persons",
+  "title": "Grammar: I, we, you, he, she, they",
+  "summary_en": "Say 'go to school' with every pronoun and hear how the verb ending changes: ನಾನು -ತೇನೆ, ನಾವು -ತೇವೆ, ನೀನು ಹೋಗು, ನೀವು ಹೋಗಿ, ಅವಳು -ತಾಳೆ, ಅವನು -ತಾನೆ, ಅವರು -ತಾರೆ.",
+  "steps": [
+    {
+      "id": "naanu",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಇವತ್ತು ವ್ಯಾಕರಣ. ನಾನು ಶಾಲೆಗೆ ಹೋಗುತ್ತೇನೆ. ನೀವೂ ಹೇಳಿ, ನಾನು ಶಾಲೆಗೆ ಹೋಗುತ್ತೇನೆ.",
+      "tutor_en": "Hello! Today, grammar. 'I will go to school'. You say it too.",
+      "goal_en": "The student says ನಾನು ಶಾಲೆಗೆ ಹೋಗುತ್ತೇನೆ (I will go to school). Colloquial ಹೋಗ್ತೀನಿ is fine.",
+      "expected_kn": [
+        "ನಾನು ಶಾಲೆಗೆ ಹೋಗುತ್ತೇನೆ",
+        "ಹೋಗುತ್ತೇನೆ",
+        "ಹೋಗ್ತೀನಿ",
+        "ಹೋಗ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ಶಾಲೆಗೆ ಹೋಗುತ್ತೇನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ಶಾಲೆಗೆ ಹೋಗುತ್ತೇನೆ (nānu shālege hōguttēne). With ನಾನು (I) the verb ends -ತೇನೆ (-tēne), or -ತೀನಿ (-tīni) in everyday speech.",
+      "max_attempts": 3
+    },
+    {
+      "id": "naavu",
+      "tutor_kn": "ಚೆನ್ನಾಗಿದೆ! ಈಗ ನಾನು ಬದಲು ನಾವು ಹೇಳಿ.",
+      "tutor_en": "Good! Now say it with ನಾವು (we) instead of ನಾನು (I).",
+      "goal_en": "The student says ನಾವು ಶಾಲೆಗೆ ಹೋಗುತ್ತೇವೆ (we go to school). The ending must be -ತೇವೆ / -ತೀವಿ, not -ತೇನೆ. The endings differ by one letter, so listen carefully.",
+      "expected_kn": [
+        "ನಾವು ಶಾಲೆಗೆ ಹೋಗುತ್ತೇವೆ",
+        "ಹೋಗುತ್ತೇವೆ",
+        "ಹೋಗ್ತೀವಿ",
+        "ಹೋಗ್ತೇವೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾವು ಶಾಲೆಗೆ ಹೋಗುತ್ತೇವೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾವು ಶಾಲೆಗೆ ಹೋಗುತ್ತೇವೆ (nāvu shālege hōguttēve). With ನಾವು (we) the ending is -ತೇವೆ (-tēve), or -ತೀವಿ (-tīvi).",
+      "max_attempts": 3
+    },
+    {
+      "id": "neenu",
+      "tutor_kn": "ಈಗ ಒಬ್ಬ ಚಿಕ್ಕ ಹುಡುಗನಿಗೆ ಹೇಳಿ, ನೀನು ಶಾಲೆಗೆ ಹೋಗು.",
+      "tutor_en": "Now tell a small boy: you go to school.",
+      "goal_en": "The student says ನೀನು ಶಾಲೆಗೆ ಹೋಗು (you, informal, go to school). ಹೋಗು is the informal command.",
+      "expected_kn": [
+        "ನೀನು ಶಾಲೆಗೆ ಹೋಗು",
+        "ಶಾಲೆಗೆ ಹೋಗು"
+      ],
+      "match": "contains",
+      "hint_kn": "ನೀನು ಶಾಲೆಗೆ ಹೋಗು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನೀನು ಶಾಲೆಗೆ ಹೋಗು (nīnu shālege hōgu). ನೀನು (nīnu) is the informal 'you', for a child or a close friend.",
+      "max_attempts": 3
+    },
+    {
+      "id": "neevu",
+      "tutor_kn": "ಈಗ ಗೌರವದಿಂದ, ನೀವು ಬಳಸಿ ಹೇಳಿ.",
+      "tutor_en": "Now say it politely, using ನೀವು.",
+      "goal_en": "The student says ನೀವು ಶಾಲೆಗೆ ಹೋಗಿ (you, polite, go to school). The verb takes -ಇ: ಹೋಗಿ, or ಹೋಗ್ರಿ.",
+      "expected_kn": [
+        "ನೀವು ಶಾಲೆಗೆ ಹೋಗಿ",
+        "ಶಾಲೆಗೆ ಹೋಗಿ",
+        "ಹೋಗ್ರಿ",
+        "ಹೋಗಿರಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನೀವು ಶಾಲೆಗೆ ಹೋಗಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನೀವು ಶಾಲೆಗೆ ಹೋಗಿ (nīvu shālege hōgi). With ನೀವು (polite or plural 'you') the verb takes -ಇ (-i) or -ರಿ (-ri).",
+      "max_attempts": 3
+    },
+    {
+      "id": "avalu",
+      "tutor_kn": "ನಿಮ್ಮ ಮಗಳು ಎಲ್ಲಿಗೆ ಹೋಗುತ್ತಾಳೆ?",
+      "tutor_en": "Where does your daughter go?",
+      "goal_en": "The student says ನನ್ನ ಮಗಳು ಶಾಲೆಗೆ ಹೋಗುತ್ತಾಳೆ (my daughter goes to school), with the 'she' ending -ತಾಳೆ. Any place is fine. The endings differ by one letter, so listen carefully.",
+      "expected_kn": [
+        "ನನ್ನ ಮಗಳು ಶಾಲೆಗೆ ಹೋಗುತ್ತಾಳೆ",
+        "ಹೋಗುತ್ತಾಳೆ",
+        "ಹೋಗ್ತಾಳೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನನ್ನ ಮಗಳು ಶಾಲೆಗೆ ಹೋಗುತ್ತಾಳೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನನ್ನ ಮಗಳು ಶಾಲೆಗೆ ಹೋಗುತ್ತಾಳೆ (nanna magaḷu shālege hōguttāḷe). For ಅವಳು (she) the ending is -ತಾಳೆ (-tāḷe).",
+      "max_attempts": 3
+    },
+    {
+      "id": "avanu",
+      "tutor_kn": "ಅವನ ತಮ್ಮ ಎಲ್ಲಿಗೆ ಹೋಗುತ್ತಾನೆ?",
+      "tutor_en": "Where does his younger brother go?",
+      "goal_en": "The student says ಅವನ ತಮ್ಮ ಶಾಲೆಗೆ ಹೋಗುತ್ತಾನೆ (his brother goes to school), with the 'he' ending -ತಾನೆ. Any place is fine. The endings differ by one letter, so listen carefully.",
+      "expected_kn": [
+        "ಅವನ ತಮ್ಮ ಶಾಲೆಗೆ ಹೋಗುತ್ತಾನೆ",
+        "ಹೋಗುತ್ತಾನೆ",
+        "ಹೋಗ್ತಾನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅವನ ತಮ್ಮ ಶಾಲೆಗೆ ಹೋಗುತ್ತಾನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅವನ ತಮ್ಮ ಶಾಲೆಗೆ ಹೋಗುತ್ತಾನೆ (avana tamma shālege hōguttāne). For ಅವನು (he) the ending is -ತಾನೆ (-tāne).",
+      "max_attempts": 3
+    },
+    {
+      "id": "avaru",
+      "tutor_kn": "ನಿಮ್ಮ ಮಕ್ಕಳು ಎಲ್ಲಿಗೆ ಹೋಗುತ್ತಾರೆ?",
+      "tutor_en": "Where do your children go?",
+      "goal_en": "The student says ನಮ್ಮ ಮಕ್ಕಳು ಶಾಲೆಗೆ ಹೋಗುತ್ತಾರೆ (our children go to school), with the plural ending -ತಾರೆ. Any place is fine. The endings differ by one letter, so listen carefully.",
+      "expected_kn": [
+        "ನಮ್ಮ ಮಕ್ಕಳು ಶಾಲೆಗೆ ಹೋಗುತ್ತಾರೆ",
+        "ಹೋಗುತ್ತಾರೆ",
+        "ಹೋಗ್ತಾರೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮ್ಮ ಮಕ್ಕಳು ಶಾಲೆಗೆ ಹೋಗುತ್ತಾರೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮ್ಮ ಮಕ್ಕಳು ಶಾಲೆಗೆ ಹೋಗುತ್ತಾರೆ (namma makkaḷu shālege hōguttāre). For ಅವರು (they, or a respected he/she) the ending is -ತಾರೆ (-tāre). Plural nouns: ಮಗ/ಮಗಳು → ಮಕ್ಕಳು (makkaḷu).",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ತುಂಬಾ ಚೆನ್ನಾಗಿ ಮಾಡಿದ್ದೀರಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "You did very well! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

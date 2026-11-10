@@ -1,0 +1,142 @@
+{
+  "id": "lesson_02b_train",
+  "title": "On the train: whose and which",
+  "summary_en": "Ask what something is, whose bag and seat it is, which place or station this is, and say where you are from and who you are.",
+  "steps": [
+    {
+      "id": "what_is_this",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ನಾವು ರೈಲಿನಲ್ಲಿ ಇದ್ದೇವೆ. ಸೀಟಿನ ಮೇಲೆ ಏನೋ ಇದೆ. ಇದು ಏನು ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "Hello! We are on a train. There is something on the seat. Ask 'what is this?'.",
+      "goal_en": "The student asks ಇದು ಏನು? (what is this?).",
+      "expected_kn": [
+        "ಇದು ಏನು",
+        "ಇದೇನು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇದು ಏನು ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಇದು ಏನು? (idu ēnu?), 'what is this?'. ಏನು (ēnu) is 'what'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "whose_bag",
+      "tutor_kn": "ಅದು ಚೀಲ. ಈಗ ಇದು ಯಾರ ಚೀಲ ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "That is a bag. Now ask whose bag it is.",
+      "goal_en": "The student asks ಇದು ಯಾರ ಚೀಲ? (whose bag is this?).",
+      "expected_kn": [
+        "ಇದು ಯಾರ ಚೀಲ",
+        "ಯಾರ ಚೀಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇದು ಯಾರ ಚೀಲ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಇದು ಯಾರ ಚೀಲ? (idu yāra chīla?), 'whose bag is this?'. ಯಾರು (yāru) is 'who', ಯಾರ (yāra) is 'whose'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "whose_seat",
+      "tutor_kn": "ಅದು ನನ್ನ ಚೀಲ. ಪಕ್ಕದಲ್ಲಿ ಒಂದು ಖಾಲಿ ಜಾಗ ಇದೆ. ಇದು ಯಾರ ಜಾಗ ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "That is my bag. There is an empty seat next to it. Ask whose seat this is.",
+      "goal_en": "The student asks ಇದು ಯಾರ ಜಾಗ? (whose place is this?).",
+      "expected_kn": [
+        "ಇದು ಯಾರ ಜಾಗ",
+        "ಯಾರ ಜಾಗ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಇದು ಯಾರ ಜಾಗ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಇದು ಯಾರ ಜಾಗ? (idu yāra jāga?), 'whose seat is this?'. ಜಾಗ (jāga) is 'place' or 'seat'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "which_place",
+      "tutor_kn": "ಇದು ಅವರ ಜಾಗ. ಈಗ ರೈಲು ನಿಂತಿದೆ. ಸ್ವಾಮಿ, ಇದು ಯಾವ ಊರು ಎಂದು ಕೇಳಿ.",
+      "tutor_en": "This is their seat. Now the train has stopped. Ask 'Sir, which place is this?'.",
+      "goal_en": "The student asks ಸ್ವಾಮಿ, ಇದು ಯಾವ ಊರು? (Sir, which place is this?). ಸ್ವಾಮಿ is optional.",
+      "expected_kn": [
+        "ಸ್ವಾಮಿ ಇದು ಯಾವ ಊರು",
+        "ಇದು ಯಾವ ಊರು",
+        "ಯಾವ ಊರು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಸ್ವಾಮಿ, ಇದು ಯಾವ ಊರು ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ಸ್ವಾಮಿ, ಇದು ಯಾವ ಊರು? (swāmi, idu yāva ūru?), 'sir, which place is this?'. ಯಾವ (yāva) is 'which', ಊರು (ūru) is 'town' or 'place'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "not_bhopal",
+      "tutor_kn": "ಬೋರ್ಡ್ ಮೇಲೆ ಝಾನ್ಸಿ ಎಂದು ಬರೆದಿದೆ. ಇದು ಭೋಪಾಲ್ ನಿಲ್ದಾಣನಾ?",
+      "tutor_en": "The board says Jhansi. Is this Bhopal station?",
+      "goal_en": "The student says no, this is Jhansi station: ಅಲ್ಲ, ಇದು ಝಾನ್ಸಿ ನಿಲ್ದಾಣ. Just ಅಲ್ಲ (no) is fine.",
+      "expected_kn": [
+        "ಅಲ್ಲ, ಇದು ಝಾನ್ಸಿ ನಿಲ್ದಾಣ",
+        "ಝಾನ್ಸಿ ನಿಲ್ದಾಣ",
+        "ಜಾನ್ಸಿ",
+        "ಅಲ್ಲ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅಲ್ಲ, ಇದು ಝಾನ್ಸಿ ನಿಲ್ದಾಣ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅಲ್ಲ, ಇದು ಝಾನ್ಸಿ ನಿಲ್ದಾಣ (alla, idu jhānsi nildāṇa), 'no, this is Jhansi station'. ನಿಲ್ದಾಣ (nildāṇa) is 'station', ಅಲ್ಲ (alla) is 'no, it isn't'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "your_town",
+      "tutor_kn": "ಓ ಸರಿ. ನಿಮ್ಮ ಊರು ಯಾವುದು?",
+      "tutor_en": "Oh OK. Which is your town?",
+      "goal_en": "The student says their home town: ನಮ್ಮ ಊರು <town>, e.g. ನಮ್ಮ ಊರು ಬೆಂಗಳೂರು. Any town is fine.",
+      "expected_kn": [
+        "ನಮ್ಮ ಊರು",
+        "ನನ್ನ ಊರು"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಮ್ಮ ಊರು ಬೆಂಗಳೂರು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಮ್ಮ ಊರು (namma ūru) + your town, e.g. ನಮ್ಮ ಊರು ಬೆಂಗಳೂರು (namma ūru bengaḷūru), 'my town is Bengaluru'. ಯಾವುದು (yāvudu) means 'which one'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "who_are_you",
+      "tutor_kn": "ನೀವು ಯಾರು?",
+      "tutor_en": "Who are you?",
+      "goal_en": "The student says who they are, e.g. ನಾನು ಕನ್ನಡ ವಿದ್ಯಾರ್ಥಿ (I am a Kannada student). Any answer that starts ನಾನು ... is fine.",
+      "expected_kn": [
+        "ನಾನು ಕನ್ನಡ ವಿದ್ಯಾರ್ಥಿ",
+        "ವಿದ್ಯಾರ್ಥಿ",
+        "ನಾನು"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ಕನ್ನಡ ವಿದ್ಯಾರ್ಥಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ಕನ್ನಡ ವಿದ್ಯಾರ್ಥಿ (nānu kannaḍa vidyārthi), 'I am a Kannada student'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "which_college",
+      "tutor_kn": "ಯಾವ ಕಾಲೇಜು?",
+      "tutor_en": "Which college?",
+      "goal_en": "The student names a college or school, e.g. ಭಾರತೀಯ ಸಿಟಿ ಕಾಲೇಜು. Any name is fine; 'LeLa' or an online class is fine too.",
+      "expected_kn": [
+        "ಕಾಲೇಜು",
+        "ಶಾಲೆ",
+        "ಲೆಲಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಭಾರತೀಯ ಸಿಟಿ ಕಾಲೇಜು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Name your college with ಕಾಲೇಜು (kālēju), e.g. ಭಾರತೀಯ ಸಿಟಿ ಕಾಲೇಜು (bhāratīya siṭi kālēju), 'Bharatiya City College'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಒಳ್ಳೆಯದು! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "Very good! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

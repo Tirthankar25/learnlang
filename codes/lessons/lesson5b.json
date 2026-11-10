@@ -1,0 +1,149 @@
+{
+  "id": "lesson_05b_tenses",
+  "title": "Grammar: going, will go, went",
+  "summary_en": "Use ಹೋಗು (go) in three tenses: present continuous ಹೋಗುತ್ತಿದ್ದೇನೆ (am going), future ಹೋಗುತ್ತೇನೆ (will go), past ಹೋಗಿದ್ದೆ (went), with I, we, she, he and you.",
+  "steps": [
+    {
+      "id": "future",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಇವತ್ತು ಮೂರು ಕಾಲಗಳು. ನಾಳೆ ನಾನು ಹಾಲು ತರಲು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತೇನೆ. ನೀವೂ ಹೇಳಿ.",
+      "tutor_en": "Hello! Today, three tenses. Future: 'tomorrow I will go to the shop to bring milk'. You say it too.",
+      "goal_en": "The student says the future: ನಾಳೆ ನಾನು ಹಾಲು ತರಲು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತೇನೆ (or ಹೋಗ್ತೀನಿ).",
+      "expected_kn": [
+        "ನಾಳೆ ನಾನು ಹಾಲು ತರಲು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತೇನೆ",
+        "ಹೋಗುತ್ತೇನೆ",
+        "ಹೋಗ್ತೀನಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾಳೆ ನಾನು ಹಾಲು ತರಲು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತೇನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾಳೆ ನಾನು ಹಾಲು ತರಲು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತೇನೆ (nāḷe nānu hālu taralu angaḍige hōguttēne). Future = ಹೋಗು + ತ್ತೇನೆ (hōgu + ttēne).",
+      "max_attempts": 3
+    },
+    {
+      "id": "present",
+      "tutor_kn": "ಈಗ ಹೋಗ್ತಾ ಇದ್ದೀರಿ ಅಂದರೆ, ನಾನು ಹೋಗುತ್ತಿದ್ದೇನೆ. ನೀವು ಈಗ ಎಲ್ಲಿಗೆ ಹೋಗುತ್ತಿದ್ದೀರಿ?",
+      "tutor_en": "If you are on your way now, it's 'I am going': ನಾನು ಹೋಗುತ್ತಿದ್ದೇನೆ. Where are you going now?",
+      "goal_en": "The student uses the present continuous: ನಾನು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತಿದ್ದೇನೆ, or colloquial ಹೋಗ್ತಾ ಇದ್ದೀನಿ. Any place is fine.",
+      "expected_kn": [
+        "ನಾನು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತಿದ್ದೇನೆ",
+        "ಹೋಗುತ್ತಿದ್ದೇನೆ",
+        "ಹೋಗ್ತಾ ಇದ್ದೀನಿ",
+        "ಹೋಗ್ತಾ ಇದ್ದೇನೆ",
+        "ಹೋಗ್ತಿದ್ದೀನಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತಿದ್ದೇನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತಿದ್ದೇನೆ (nānu angaḍige hōguttiddēne), 'I am going to the shop'. Present = ಹೋಗು + ತ್ತಾ + ಇದ್ದೇನೆ (hōgu + ttā + iddēne); listen for the ತ್ತಾ / ತ್ತಿ.",
+      "max_attempts": 3
+    },
+    {
+      "id": "past",
+      "tutor_kn": "ನಿನ್ನೆ ನೀವು ಎಲ್ಲಿಗೆ ಹೋಗಿದ್ರಿ?",
+      "tutor_en": "Where did you go yesterday?",
+      "goal_en": "The student uses the past: ನಿನ್ನೆ ನಾನು <place>ಗೆ ಹೋಗಿದ್ದೆ (yesterday I had gone to ...). ಹೋದೆ is fine too. Any place is fine.",
+      "expected_kn": [
+        "ನಿನ್ನೆ ನಾನು ಅಂಗಡಿಗೆ ಹೋಗಿದ್ದೆ",
+        "ಹೋಗಿದ್ದೆ",
+        "ಹೋಗಿದ್ದೆನು",
+        "ಹೋದೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಿನ್ನೆ ನಾನು ಅಂಗಡಿಗೆ ಹೋಗಿದ್ದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಿನ್ನೆ ನಾನು ಅಂಗಡಿಗೆ ಹೋಗಿದ್ದೆ (ninne nānu angaḍige hōgidde), 'yesterday I went to the shop'. Past = ಹೋಗು + ಇದ್ದೆ (hōgu + idde).",
+      "max_attempts": 3
+    },
+    {
+      "id": "we_went",
+      "tutor_kn": "ಈಗ ನಾವು ಬಳಸಿ, ನಿನ್ನೆ ನಾವು ಊರಿಗೆ ಹೋಗಿದ್ದೆವು ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Now with ನಾವು: say 'yesterday we went to our home town'.",
+      "goal_en": "The student says ನಿನ್ನೆ ನಾವು ಊರಿಗೆ ಹೋಗಿದ್ದೆವು (or colloquial ಹೋಗಿದ್ವಿ). The past 'we' ending is -ಇದ್ದೆವು.",
+      "expected_kn": [
+        "ನಿನ್ನೆ ನಾವು ಊರಿಗೆ ಹೋಗಿದ್ದೆವು",
+        "ಹೋಗಿದ್ದೆವು",
+        "ಹೋಗಿದ್ವಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಿನ್ನೆ ನಾವು ಊರಿಗೆ ಹೋಗಿದ್ದೆವು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಿನ್ನೆ ನಾವು ಊರಿಗೆ ಹೋಗಿದ್ದೆವು (ninne nāvu ūrige hōgiddevu), 'yesterday we went to our home town'. ನಾವು (we): ಹೋಗಿದ್ದೆವು (went), ಹೋಗುತ್ತೇವೆ (will go), ಹೋಗುತ್ತಿದ್ದೇವೆ (are going).",
+      "max_attempts": 3
+    },
+    {
+      "id": "she_going",
+      "tutor_kn": "ರಾಧಾ ಈಗ ಅಂಗಡಿಗೆ ಹೋಗುತ್ತಾ ಇದ್ದಾಳಾ?",
+      "tutor_en": "Is Radha going to the shop right now?",
+      "goal_en": "The student says yes, she is going: ಹೌದು, ಅವಳು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತಿದ್ದಾಳೆ (or ಹೋಗ್ತಾ ಇದ್ದಾಳೆ). The 'she' present ending is -ಇದ್ದಾಳೆ.",
+      "expected_kn": [
+        "ಅವಳು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತಿದ್ದಾಳೆ",
+        "ಹೋಗುತ್ತಿದ್ದಾಳೆ",
+        "ಹೋಗ್ತಾ ಇದ್ದಾಳೆ",
+        "ಹೋಗ್ತಿದ್ದಾಳೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಅವಳು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತಿದ್ದಾಳೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಅವಳು ಅಂಗಡಿಗೆ ಹೋಗುತ್ತಿದ್ದಾಳೆ (haudu, avaḷu angaḍige hōguttiddāḷe), 'yes, she is going to the shop'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "he_went",
+      "tutor_kn": "ರಮೇಶ ನಿನ್ನೆ ಚಿತ್ರ ನೋಡಲು ಹೋಗಿದ್ದನು. ನೀವೂ ಹೇಳಿ, ಅವನು ಚಿತ್ರ ನೋಡಲು ಹೋಗಿದ್ದನು.",
+      "tutor_en": "Ramesh went to watch a film yesterday. You say it: he went to watch a film.",
+      "goal_en": "The student says ಅವನು ಚಿತ್ರ ನೋಡಲು ಹೋಗಿದ್ದನು (he went to watch a film). Colloquial ಹೋಗಿದ್ದ is fine.",
+      "expected_kn": [
+        "ಅವನು ಚಿತ್ರ ನೋಡಲು ಹೋಗಿದ್ದನು",
+        "ಹೋಗಿದ್ದನು",
+        "ಹೋಗಿದ್ದ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅವನು ಚಿತ್ರ ನೋಡಲು ಹೋಗಿದ್ದನು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅವನು ಚಿತ್ರ ನೋಡಲು ಹೋಗಿದ್ದನು (avanu chitra nōḍalu hōgiddanu), 'he went to watch a film'. ಚಿತ್ರ (chitra) is 'film', ನೋಡಲು (nōḍalu) is 'to watch'. She went: ಹೋಗಿದ್ದಳು (hōgiddaḷu); they went: ಹೋಗಿದ್ದರು (hōgiddaru).",
+      "max_attempts": 3
+    },
+    {
+      "id": "ask_you",
+      "tutor_kn": "ಈಗ ನನ್ನನ್ನು ಕೇಳಿ, ನೀವು ನಾಳೆ ಶಾಲೆಗೆ ಹೋಗುತ್ತೀರಾ?",
+      "tutor_en": "Now ask me: will you go to school tomorrow?",
+      "goal_en": "The student asks ನೀವು ನಾಳೆ ಶಾಲೆಗೆ ಹೋಗುತ್ತೀರಾ? (or ಹೋಗ್ತೀರಾ?).",
+      "expected_kn": [
+        "ನೀವು ನಾಳೆ ಶಾಲೆಗೆ ಹೋಗುತ್ತೀರಾ",
+        "ಹೋಗುತ್ತೀರಾ",
+        "ಹೋಗ್ತೀರಾ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನೀವು ನಾಳೆ ಶಾಲೆಗೆ ಹೋಗುತ್ತೀರಾ ಎಂದು ಕೇಳಿ.",
+      "hint_en": "Ask ನೀವು ನಾಳೆ ಶಾಲೆಗೆ ಹೋಗುತ್ತೀರಾ? (nīvu nāḷe shālege hōguttīrā?), 'will you go to school tomorrow?'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "do_lunch",
+      "tutor_kn": "ಈಗ ಮಾಡು ಬಳಸಿ. ನಾಳೆ ನೀವು ಊಟ ಮಾಡುತ್ತೀರಾ? ನಾನು ಊಟ ಮಾಡುತ್ತೇನೆ ಎಂದು ಹೇಳಿ.",
+      "tutor_en": "Now use ಮಾಡು (do). Will you have lunch tomorrow? Say 'I will have lunch'.",
+      "goal_en": "The student says ನಾನು ಊಟ ಮಾಡುತ್ತೇನೆ (I will have lunch), or ಮಾಡ್ತೀನಿ.",
+      "expected_kn": [
+        "ನಾನು ಊಟ ಮಾಡುತ್ತೇನೆ",
+        "ಮಾಡುತ್ತೇನೆ",
+        "ಮಾಡ್ತೀನಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾನು ಊಟ ಮಾಡುತ್ತೇನೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾನು ಊಟ ಮಾಡುತ್ತೇನೆ (nānu ūṭa māḍuttēne), 'I will have lunch'. The same pattern: ಮಾಡುತ್ತಿದ್ದೇನೆ (am doing), ಮಾಡಿದ್ದೆ (did).",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ತುಂಬಾ ಚೆನ್ನಾಗಿ ಮಾಡಿದ್ದೀರಿ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "You did very well! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

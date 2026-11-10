@@ -1,0 +1,138 @@
+{
+  "id": "lesson_03e_health",
+  "title": "On the phone: feeling better",
+  "summary_en": "Say how you are after an illness, talk about fever (ಜ್ವರ), medicine that was bitter (ಕಹಿ), a new or old doctor (ಹೊಸ, ಹಳೆಯ), and tell the time with quarter, half and three quarters.",
+  "steps": [
+    {
+      "id": "how_now",
+      "tutor_kn": "ನಮಸ್ಕಾರ, ನಾನು ಮಾತಾಡ್ತಿರೋದು! ನಿಮಗೆ ಹುಷಾರಿಲ್ಲ ಅಂತೆ. ಈಗ ಹೇಗಿದ್ದೀರಿ?",
+      "tutor_en": "Hello, it's me speaking! I heard you were not well. How are you now?",
+      "goal_en": "The student says they are better now: ಈಗ ಪರವಾಗಿಲ್ಲ (better now), or ಚೆನ್ನಾಗಿದ್ದೀನಿ.",
+      "expected_kn": [
+        "ಈಗ ಪರವಾಗಿಲ್ಲ",
+        "ಪರವಾಗಿಲ್ಲ",
+        "ಚೆನ್ನಾಗಿದ್ದೀನಿ",
+        "ಚೆನ್ನಾಗಿದ್ದೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಈಗ ಪರವಾಗಿಲ್ಲ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಈಗ ಪರವಾಗಿಲ್ಲ (haudu, īga paravāgilla), 'yes, I'm better now'. ಹುಷಾರಿಲ್ಲ (hushārilla) means 'not well'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "fever",
+      "tutor_kn": "ಏನಾಗಿತ್ತು? ಜ್ವರ ಇತ್ತಾ?",
+      "tutor_en": "What happened? Did you have a fever?",
+      "goal_en": "The student says they had a high fever: ಹೌದು, ಜ್ವರ ಜಾಸ್ತಿ ಇತ್ತು. ಹೆಚ್ಚು ಇತ್ತು is fine too.",
+      "expected_kn": [
+        "ಜ್ವರ ಜಾಸ್ತಿ ಇತ್ತು",
+        "ಜಾಸ್ತಿ",
+        "ಹೆಚ್ಚು",
+        "ಜ್ವರ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಜ್ವರ ಜಾಸ್ತಿ ಇತ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಜ್ವರ ಜಾಸ್ತಿ ಇತ್ತು (haudu, jwara jāsti ittu), 'yes, I had a high fever'. ಜಾಸ್ತಿ or ಹೆಚ್ಚು (jāsti, hechchu) is 'more/high', ಕಡಿಮೆ (kaḍime) is 'less'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "bitter_medicine",
+      "tutor_kn": "ಒಳ್ಳೆಯ ಔಷಧಿ ತಗೊಂಡ್ರಾ? ಔಷಧಿ ಸಿಹಿ ಇತ್ತಾ, ಕಹಿ ಇತ್ತಾ?",
+      "tutor_en": "Did you take good medicine? Was the medicine sweet or bitter?",
+      "goal_en": "The student says the medicine was very bitter: ಔಷಧಿ ತುಂಬಾ ಕಹಿ ಇತ್ತು. Sweet (ಸಿಹಿ) is accepted too.",
+      "expected_kn": [
+        "ಔಷಧಿ ತುಂಬಾ ಕಹಿ ಇತ್ತು",
+        "ಕಹಿ",
+        "ಸಿಹಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಔಷಧಿ ತುಂಬಾ ಕಹಿ ಇತ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಔಷಧಿ ತುಂಬಾ ಕಹಿ ಇತ್ತು (aushadhi tumbā kahi ittu), 'the medicine was very bitter'. ಕಹಿ (kahi) is 'bitter', ಸಿಹಿ (sihi) is 'sweet'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "fever_less",
+      "tutor_kn": "ಈಗ ಜ್ವರ ಕಡಿಮೆ ಆಯ್ತಾ?",
+      "tutor_en": "Has the fever come down now?",
+      "goal_en": "The student says yes, it has come down: ಹೌದು, ಕಡಿಮೆ ಆಯ್ತು. ಕಮ್ಮಿ ಆಯ್ತು or ಗುಣ ಆಯ್ತು (cured) are fine too.",
+      "expected_kn": [
+        "ಹೌದು, ಕಡಿಮೆ ಆಯ್ತು",
+        "ಕಡಿಮೆ",
+        "ಕಮ್ಮಿ",
+        "ಗುಣ ಆಯ್ತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಕಡಿಮೆ ಆಯ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಕಡಿಮೆ ಆಯ್ತು (haudu, kaḍime āytu), 'yes, it has come down'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "which_doctor",
+      "tutor_kn": "ಹೊಸ ಡಾಕ್ಟರ್ ಹತ್ತಿರ ಹೋಗಿದ್ರಾ, ಹಳೆಯ ಡಾಕ್ಟರ್ ಹತ್ತಿರ ಹೋಗಿದ್ರಾ?",
+      "tutor_en": "Did you go to a new doctor, or to the old doctor?",
+      "goal_en": "The student says which doctor: ಹೊಸ ಡಾಕ್ಟರ್ ಹತ್ತಿರ ಹೋಗಿದ್ದೆ (I went to a new doctor) or ಹಳೆಯ ... Either is fine.",
+      "expected_kn": [
+        "ಹೊಸ ಡಾಕ್ಟರ್ ಹತ್ತಿರ ಹೋಗಿದ್ದೆ",
+        "ಹೊಸ",
+        "ಹಳೆಯ",
+        "ಹೋಗಿದ್ದೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೊಸ ಡಾಕ್ಟರ್ ಹತ್ತಿರ ಹೋಗಿದ್ದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೊಸ ಡಾಕ್ಟರ್ ಹತ್ತಿರ ಹೋಗಿದ್ದೆ (hosa ḍākṭar hattira hōgidde), 'I went to a new doctor'. ಹೊಸ (hosa) is 'new', ಹಳೆಯ (haḷeya) is 'old'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "what_time",
+      "tutor_kn": "ಒಂಬತ್ತು ಕಾಲು ಅಂದರೆ ಒಂಬತ್ತು ಹದಿನೈದು. ಒಂಬತ್ತು ಮುಕ್ಕಾಲು ಅಂದರೆ ಒಂಬತ್ತು ನಲವತ್ತೈದು. ನೀವು ಎಷ್ಟು ಗಂಟೆಗೆ ಹೋದ್ರಿ?",
+      "tutor_en": "Nine and a quarter means nine fifteen. Nine and three quarters means nine forty-five. At what time did you go?",
+      "goal_en": "The student says a time, ideally ಒಂಬತ್ತು ಕಾಲು ಗಂಟೆಗೆ ಹೋದೆ (I went at nine fifteen). Any time with ಗಂಟೆಗೆ is fine.",
+      "expected_kn": [
+        "ಒಂಬತ್ತು ಕಾಲು ಗಂಟೆಗೆ ಹೋದೆ",
+        "ಗಂಟೆಗೆ",
+        "ಕಾಲು",
+        "ಮುಕ್ಕಾಲು",
+        "ಹೋದೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಒಂಬತ್ತು ಕಾಲು ಗಂಟೆಗೆ ಹೋದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಒಂಬತ್ತು ಕಾಲು ಗಂಟೆಗೆ ಹೋದೆ (ombattu kālu gaṇṭege hōde), 'I went at nine fifteen'. ಕಾಲು (kālu) is a quarter, ಅರ್ಧ (ardha) is half, ಮುಕ್ಕಾಲು (mukkālu) is three quarters.",
+      "max_attempts": 3
+    },
+    {
+      "id": "how_long",
+      "tutor_kn": "ಒಂಬತ್ತು ಕಾಲಿಗೆ ಹೋಗಿ ಒಂಬತ್ತು ಮುಕ್ಕಾಲಿಗೆ ಬಂದ್ರೆ, ಎಷ್ಟು ಹೊತ್ತು ಆಯ್ತು?",
+      "tutor_en": "If you went at nine fifteen and came back at nine forty-five, how long did it take?",
+      "goal_en": "The student says half an hour: ಅರ್ಧ ಗಂಟೆ ಅಷ್ಟೆ (only half an hour).",
+      "expected_kn": [
+        "ಅರ್ಧ ಗಂಟೆ ಅಷ್ಟೆ",
+        "ಅರ್ಧ ಗಂಟೆ",
+        "ಅರ್ಧ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅರ್ಧ ಗಂಟೆ ಅಷ್ಟೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅರ್ಧ ಗಂಟೆ ಅಷ್ಟೆ (ardha gaṇṭe ashṭe), 'only half an hour'. ಹೊತ್ತು (hottu) is 'time'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಸರಿ, ಹೊತ್ತಾಯ್ತು, ಫೋನ್ ಇಡ್ತೀನಿ. ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು.",
+      "tutor_en": "OK, it's late, I'll hang up now. Today's lesson is over.",
+      "goal_en": "The student says OK, let's talk again (ಆಯ್ತು, ಮತ್ತೆ ಮಾತಾಡೋಣ), or thanks the teacher.",
+      "expected_kn": [
+        "ಮತ್ತೆ ಮಾತಾಡೋಣ",
+        "ಮಾತಾಡೋಣ",
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆಯ್ತು, ಮತ್ತೆ ಮಾತಾಡೋಣ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಆಯ್ತು, ಮತ್ತೆ ಮಾತಾಡೋಣ (āytu, matte mātāḍōṇa), 'OK, let's talk again'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

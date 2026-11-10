@@ -74,6 +74,26 @@
    "started_at": "2026-11-09T14:13:28+00:00",
    "last_played": "2026-11-09T14:20:06+00:00",
    "completed_at": "2026-11-09T14:15:12+00:00"
+  },
+  "lesson_01b_family": {
+   "status": "completed",
+   "step": 6,
+   "total": 7,
+   "results": {
+    "how_are_you": "passed",
+    "and_you": "first_try",
+    "father_near": "first_try",
+    "mother_far": "first_try",
+    "daughter_near": "first_try",
+    "son_far": "first_try",
+    "goodbye": "first_try"
+   },
+   "first_try": 6,
+   "best_first_try": 6,
+   "completions": 1,
+   "started_at": "2026-11-10T06:30:08+00:00",
+   "last_played": "2026-11-10T06:34:31+00:00",
+   "completed_at": "2026-11-10T06:34:31+00:00"
   }
  },
  "name": "Tirthankar Banerjee"

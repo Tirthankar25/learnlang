@@ -1,0 +1,129 @@
+{
+  "id": "lesson_03b_describe",
+  "title": "Tall, short, thin: describing people",
+  "summary_en": "Use ಒಳಗೆ / ಹೊರಗೆ (inside, outside), ಮೇಲೆ / ಕೆಳಗೆ (up, down), ಎತ್ತರ / ಗಿಡ್ಡ (tall, short), colours ಬಿಳಿ / ಕಪ್ಪು and ತೆಳ್ಳಗೆ / ದಪ್ಪ (thin, fat) to describe things and people.",
+  "steps": [
+    {
+      "id": "darshan_done",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ದೇವಿ ದರ್ಶನ ಆಯ್ತಾ?",
+      "tutor_en": "Hello! Have you had the darshan of the goddess?",
+      "goal_en": "The student says yes, done: ಆಯ್ತು.",
+      "expected_kn": [
+        "ಆಯ್ತು",
+        "ಆಯಿತು",
+        "ಹೌದು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆಯ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಆಯ್ತು (āytu), 'yes, done'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "go_inside",
+      "tutor_kn": "ಚೆನ್ನಾಗಿದೆ. ಈಗ ನನಗೆ ಹೇಳಿ, ನೀವು ಒಳಗೆ ಹೋಗಿ ಬನ್ನಿ, ನಾನು ಹೊರಗೆ ಇರ್ತೀನಿ.",
+      "tutor_en": "Good. Now tell me: you go inside and come back, I'll be outside.",
+      "goal_en": "The student says ನೀವು ಒಳಗೆ ಹೋಗಿ ಬನ್ನಿ, ನಾನು ಹೊರಗೆ ಇರ್ತೀನಿ. Either half is fine.",
+      "expected_kn": [
+        "ನೀವು ಒಳಗೆ ಹೋಗಿ ಬನ್ನಿ",
+        "ಒಳಗೆ ಹೋಗಿ",
+        "ಹೊರಗೆ ಇರ್ತೀನಿ",
+        "ಹೊರಗೆ ಇರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನೀವು ಒಳಗೆ ಹೋಗಿ ಬನ್ನಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನೀವು ಒಳಗೆ ಹೋಗಿ ಬನ್ನಿ, ನಾನು ಹೊರಗೆ ಇರ್ತೀನಿ (nīvu oḷage hōgi banni, nānu horage irtīni). ಒಳಗೆ (oḷage) is 'inside', ಹೊರಗೆ (horage) is 'outside'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "tall_tree",
+      "tutor_kn": "ಆಯ್ತು. ಮೇಲೆ ನೋಡಿ. ಈ ಮರ ಎತ್ತರ ಇದೆ ಅಲ್ವಾ?",
+      "tutor_en": "OK. Look up. This tree is tall, isn't it?",
+      "goal_en": "The student agrees: ಹೌದು, ಈ ಮರ ಎತ್ತರ ಇದೆ (yes, this tree is tall).",
+      "expected_kn": [
+        "ಹೌದು, ಈ ಮರ ಎತ್ತರ ಇದೆ",
+        "ಎತ್ತರ",
+        "ಹೌದು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಈ ಮರ ಎತ್ತರ ಇದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಈ ಮರ ಎತ್ತರ ಇದೆ (haudu, ī mara ettara ide), 'yes, this tree is tall'. ಮರ (mara) is 'tree', ಮೇಲೆ (mēle) is 'up'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "short_plant",
+      "tutor_kn": "ಈಗ ಕೆಳಗೆ ನೋಡಿ. ಆ ಗಿಡ ಹೇಗಿದೆ? ಎತ್ತರನಾ, ಗಿಡ್ಡನಾ?",
+      "tutor_en": "Now look down. How is that plant? Tall or short?",
+      "goal_en": "The student says the plant is short: ಆ ಗಿಡ ಗಿಡ್ಡ ಇದೆ.",
+      "expected_kn": [
+        "ಆ ಗಿಡ ಗಿಡ್ಡ ಇದೆ",
+        "ಗಿಡ್ಡ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಆ ಗಿಡ ಗಿಡ್ಡ ಇದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಆ ಗಿಡ ಗಿಡ್ಡ ಇದೆ (ā giḍa giḍḍa ide), 'that plant is short'. ಗಿಡ (giḍa) is 'plant', ಗಿಡ್ಡ (giḍḍa) is 'short', ಕೆಳಗೆ (keḷage) is 'down'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "shirt_colour",
+      "tutor_kn": "ಅಲ್ಲಿ ನನ್ನ ದೊಡ್ಡಪ್ಪ ಇದ್ದಾರೆ. ಅವರು ಬಿಳಿ ಅಂಗಿ, ಕಪ್ಪು ಪ್ಯಾಂಟು ಹಾಕಿದ್ದಾರೆ. ಅವರ ಅಂಗಿ ಯಾವ ಬಣ್ಣ?",
+      "tutor_en": "My elder uncle is over there. He is wearing a white shirt and black trousers. What colour is his shirt?",
+      "goal_en": "The student says white: ಬಿಳಿ (or ಬಿಳಿ ಅಂಗಿ).",
+      "expected_kn": [
+        "ಬಿಳಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಬಿಳಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಬಿಳಿ (biḷi), 'white'. The trousers are ಕಪ್ಪು (kappu), 'black'. ಹಾಕಿದ್ದಾರೆ (hākiddāre) means 'is wearing'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "thin_or_fat",
+      "tutor_kn": "ತೆಳ್ಳಗೆ ಇದ್ದಾರಲ್ಲ, ಅವರು ನನ್ನ ಚಿಕ್ಕಮ್ಮ. ದಪ್ಪ ಇದ್ದಾರಲ್ಲ, ಅವರು ನನ್ನ ದೊಡ್ಡಮ್ಮ. ನನ್ನ ಚಿಕ್ಕಮ್ಮ ತೆಳ್ಳಗಾ, ದಪ್ಪನಾ?",
+      "tutor_en": "The thin lady is my younger aunt. The plump lady is my elder aunt. Is my younger aunt thin or plump?",
+      "goal_en": "The student says she is thin: ತೆಳ್ಳಗೆ (or ಅವರು ತೆಳ್ಳಗೆ ಇದ್ದಾರೆ).",
+      "expected_kn": [
+        "ಅವರು ತೆಳ್ಳಗೆ ಇದ್ದಾರೆ",
+        "ತೆಳ್ಳಗೆ",
+        "ತೆಳ್ಳಗಿದ್ದಾರೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅವರು ತೆಳ್ಳಗೆ ಇದ್ದಾರೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅವರು ತೆಳ್ಳಗೆ ಇದ್ದಾರೆ (avaru teḷḷage iddāre), 'she is thin'. ದಪ್ಪ (dappa) is 'fat'. ಚಿಕ್ಕಮ್ಮ / ಚಿಕ್ಕಪ್ಪ (chikkamma / chikkappa) are the younger aunt and uncle, ದೊಡ್ಡಮ್ಮ / ದೊಡ್ಡಪ್ಪ (doḍḍamma / doḍḍappa) the elder ones.",
+      "max_attempts": 3
+    },
+    {
+      "id": "bring_them_home",
+      "tutor_kn": "ಈಗ ನಿಮಗೆ ನನ್ನ ನೆಂಟರ ಪರಿಚಯ ಆಯ್ತು. ನನಗೆ ಹೇಳಿ, ಅವರನ್ನು ಮನೆಗೆ ಕರೆದುಕೊಂಡು ಬನ್ನಿ.",
+      "tutor_en": "Now you have met my relatives. Tell me: bring them home.",
+      "goal_en": "The student invites them: ಅವರನ್ನು ಮನೆಗೆ ಕರೆದುಕೊಂಡು ಬನ್ನಿ (bring them home). Colloquial ಕರ್ಕೊಂಡು ಬನ್ನಿ is fine.",
+      "expected_kn": [
+        "ಅವರನ್ನು ಮನೆಗೆ ಕರೆದುಕೊಂಡು ಬನ್ನಿ",
+        "ಕರೆದುಕೊಂಡು ಬನ್ನಿ",
+        "ಕರ್ಕೊಂಡು ಬನ್ನಿ",
+        "ಮನೆಗೆ ಬನ್ನಿ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಅವರನ್ನು ಮನೆಗೆ ಕರೆದುಕೊಂಡು ಬನ್ನಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಅವರನ್ನು ಮನೆಗೆ ಕರೆದುಕೊಂಡು ಬನ್ನಿ (avarannu manege karedukoṇḍu banni), 'bring them home'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಆಗಲಿ, ಧನ್ಯವಾದಗಳು! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು. ಮತ್ತೆ ಸಿಗೋಣ.",
+      "tutor_en": "Sure, thank you! Today's lesson is over. See you again.",
+      "goal_en": "The student thanks the teacher or says goodbye.",
+      "expected_kn": [
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), meaning 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}

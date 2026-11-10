@@ -165,7 +165,9 @@ import tempfile
 from progress import ProgressStore, load_lessons, user_key
 from translit import has_kannada
 LS = load_lessons("lessons")
-assert [l["num"] for l in LS][:3] == ["1", "1a", "2"] and LS[0]["id"] == L["id"], [l["num"] for l in LS]
+NUMS = ["1", "1a", "1b", "1c", "1d", "1e", "2", "2a", "2b", "2c", "2d", "2e", "3", "3a", "3b", "3c", "3d", "3e",
+        "4a", "4b", "4c", "4d", "4e", "5a", "5b", "5c", "5d"]
+assert [l["num"] for l in LS] == NUMS and LS[0]["id"] == L["id"], [l["num"] for l in LS]
 assert LS[1]["id"] == "lesson_01a_introduction"
 for l in LS:  # every lesson file has what LessonSession needs
     for st in l["steps"]:

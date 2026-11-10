@@ -1,0 +1,118 @@
+{
+  "id": "lesson_03d_weather",
+  "title": "Hot sun, rain and left or right",
+  "summary_en": "Talk about a door closing and opening, the summer heat (ಬಿಸಿಲು), shade, rain and cold, and use ಬಲಕ್ಕೆ / ಎಡಕ್ಕೆ (to the right, to the left).",
+  "steps": [
+    {
+      "id": "door_opens",
+      "tutor_kn": "ನಮಸ್ಕಾರ! ಅಲ್ಲಿ ನೋಡಿ. ದೇವಸ್ಥಾನದ ಬಾಗಿಲು ಮುಚ್ಚುತ್ತಾ ಇದ್ದಾರೆ. ಮತ್ತೆ ನಾಳೆ ಬೆಳಿಗ್ಗೆ ತೆಗೆಯೋದಾ?",
+      "tutor_en": "Hello! Look there. They are closing the temple door. Will it open again tomorrow morning?",
+      "goal_en": "The student says yes, it opens tomorrow morning: ಹೌದು, ಮತ್ತೆ ನಾಳೆ ಬೆಳಿಗ್ಗೆ ತೆಗೆಯೋದು. Just ಹೌದು or ನಾಳೆ ಬೆಳಿಗ್ಗೆ is fine.",
+      "expected_kn": [
+        "ಹೌದು, ಮತ್ತೆ ನಾಳೆ ಬೆಳಿಗ್ಗೆ ತೆಗೆಯೋದು",
+        "ನಾಳೆ ಬೆಳಿಗ್ಗೆ",
+        "ಹೌದು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಮತ್ತೆ ನಾಳೆ ಬೆಳಿಗ್ಗೆ ತೆಗೆಯೋದು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಮತ್ತೆ ನಾಳೆ ಬೆಳಿಗ್ಗೆ ತೆಗೆಯೋದು (haudu, matte nāḷe beḷigge tegeyōdu), 'yes, it opens again tomorrow morning'. ಮುಚ್ಚು (muchchu) is 'close', ತೆಗೆ (tege) is 'open', ಬಾಗಿಲು (bāgilu) is 'door'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "summer_hot",
+      "tutor_kn": "ಬೇಸಿಗೆ ಶುರು ಆಯ್ತು ಅಲ್ವಾ?",
+      "tutor_en": "Summer has started, hasn't it?",
+      "goal_en": "The student agrees and says it is very hot: ಹೌದು, ತುಂಬಾ ಬಿಸಿಲು. Just ಹೌದು is fine.",
+      "expected_kn": [
+        "ಹೌದು, ತುಂಬಾ ಬಿಸಿಲು",
+        "ಬಿಸಿಲು",
+        "ಹೌದು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ತುಂಬಾ ಬಿಸಿಲು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ತುಂಬಾ ಬಿಸಿಲು (haudu, tumbā bisilu), 'yes, it's very sunny and hot'. ಬೇಸಿಗೆ (bēsige) is 'summer'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "come_right",
+      "tutor_kn": "ರಸ್ತೆಯ ಬಲಕ್ಕೆ ನೆರಳು ಇದೆ. ನನಗೆ ಹೇಳಿ, ರಸ್ತೆಯ ಬಲಕ್ಕೆ ಬನ್ನಿ.",
+      "tutor_en": "There is shade on the right side of the road. Tell me: come to the right side of the road.",
+      "goal_en": "The student says ರಸ್ತೆಯ ಬಲಕ್ಕೆ ಬನ್ನಿ (come to the right of the road).",
+      "expected_kn": [
+        "ರಸ್ತೆಯ ಬಲಕ್ಕೆ ಬನ್ನಿ",
+        "ಬಲಕ್ಕೆ ಬನ್ನಿ",
+        "ಬಲಕ್ಕೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ರಸ್ತೆಯ ಬಲಕ್ಕೆ ಬನ್ನಿ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ರಸ್ತೆಯ ಬಲಕ್ಕೆ ಬನ್ನಿ (rasteya balakke banni), 'come to the right side of the road'. ಬಲ (bala) is 'right', ಎಡ (eḍa) is 'left', ನೆರಳು (neraḷu) is 'shade'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "left_water",
+      "tutor_kn": "ಎಡಕ್ಕೆ ನೋಡಿ. ರಸ್ತೆಯ ಎಡಕ್ಕೆ ಏನಿದೆ?",
+      "tutor_en": "Look to the left. What is on the left of the road? (There is water.)",
+      "goal_en": "The student says there is water on the left: ರಸ್ತೆಯ ಎಡಕ್ಕೆ ನೀರಿದೆ, or ನೀರು ಇದೆ.",
+      "expected_kn": [
+        "ರಸ್ತೆಯ ಎಡಕ್ಕೆ ನೀರಿದೆ",
+        "ನೀರಿದೆ",
+        "ನೀರು ಇದೆ",
+        "ನೀರು"
+      ],
+      "match": "contains",
+      "hint_kn": "ರಸ್ತೆಯ ಎಡಕ್ಕೆ ನೀರಿದೆ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ರಸ್ತೆಯ ಎಡಕ್ಕೆ ನೀರಿದೆ (rasteya eḍakke nīride), 'there is water on the left of the road'. ನೀರು + ಇದೆ becomes ನೀರಿದೆ (nīride).",
+      "max_attempts": 3
+    },
+    {
+      "id": "rained",
+      "tutor_kn": "ನಿನ್ನೆ ಮಳೆ ಬಂತು ಅಲ್ವಾ?",
+      "tutor_en": "It rained yesterday, didn't it?",
+      "goal_en": "The student agrees and may add that it was a little cold: ಹೌದು, ಅದಕ್ಕೆ ಸ್ವಲ್ಪ ತಂಪು ಇತ್ತು. Just ಹೌದು is fine.",
+      "expected_kn": [
+        "ಹೌದು, ಅದಕ್ಕೆ ಸ್ವಲ್ಪ ತಂಪು ಇತ್ತು",
+        "ತಂಪು",
+        "ಹೌದು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಹೌದು, ಅದಕ್ಕೆ ಸ್ವಲ್ಪ ತಂಪು ಇತ್ತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಹೌದು, ಅದಕ್ಕೆ ಸ್ವಲ್ಪ ತಂಪು ಇತ್ತು (haudu, adakke swalpa tampu ittu), 'yes, that's why it was a little cool'. ಮಳೆ (maḷe) is 'rain', ಅದಕ್ಕೆ (adakke) is 'that's why'.",
+      "max_attempts": 3
+    },
+    {
+      "id": "house_here",
+      "tutor_kn": "ಈಗ ನಿಮ್ಮ ಮನೆ ಬಂತು. ನನಗೆ ಹೇಳಿ, ಸರಿ, ನಮ್ಮ ಮನೆ ಬಂತು.",
+      "tutor_en": "Now we have reached your house. Tell me: OK, my house is here.",
+      "goal_en": "The student says ಸರಿ, ನಮ್ಮ ಮನೆ ಬಂತು (OK, our house has come).",
+      "expected_kn": [
+        "ಸರಿ, ನಮ್ಮ ಮನೆ ಬಂತು",
+        "ನಮ್ಮ ಮನೆ ಬಂತು",
+        "ಮನೆ ಬಂತು"
+      ],
+      "match": "contains",
+      "hint_kn": "ಸರಿ, ನಮ್ಮ ಮನೆ ಬಂತು ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ಸರಿ, ನಮ್ಮ ಮನೆ ಬಂತು (sari, namma mane bantu), 'OK, here's my house' (literally 'our house has come').",
+      "max_attempts": 3
+    },
+    {
+      "id": "goodbye",
+      "tutor_kn": "ಆಯ್ತು, ನಾಳೆ ಸಿಗೋಣ! ಇವತ್ತಿನ ಪಾಠ ಮುಗಿಯಿತು.",
+      "tutor_en": "Alright, see you tomorrow! Today's lesson is over.",
+      "goal_en": "The student says see you tomorrow (ನಾಳೆ ಸಿಗೋಣ) or thanks the teacher.",
+      "expected_kn": [
+        "ನಾಳೆ ಸಿಗೋಣ",
+        "ಸಿಗೋಣ",
+        "ಧನ್ಯವಾದ",
+        "ಧನ್ಯವಾದಗಳು",
+        "ಮತ್ತೆ ಸಿಗೋಣ",
+        "ಹೋಗಿ ಬರುತ್ತೇನೆ"
+      ],
+      "match": "contains",
+      "hint_kn": "ನಾಳೆ ಸಿಗೋಣ ಎಂದು ಹೇಳಿ.",
+      "hint_en": "Say ನಾಳೆ ಸಿಗೋಣ (nāḷe sigōṇa), 'see you tomorrow', or ಧನ್ಯವಾದಗಳು (dhanyavādagaḷu), 'thank you'.",
+      "max_attempts": 2,
+      "reprompt_kn": "",
+      "reprompt_en": ""
+    }
+  ]
+}
