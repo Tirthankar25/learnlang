@@ -6,6 +6,8 @@ Lessons:  lessons/lesson1.json, lessons/lesson2.json, ...  The number in the fil
           order; add a lesson by dropping in the next lessonN.json (same format) and restarting.
           A letter after the number adds a supplementary lesson: lesson1a.json comes after
           lesson1.json and before lesson2.json, and is shown as "Lesson 1a".
+          Each lesson's steps are expanded into AuTut's four-part flow when loaded (flow.py):
+          concept intro, guided repetition, micro-roleplay, mastery check, wrap-up.
 Progress: progress/<user>.json, one file per learner, holding one card per lesson id:
   {
     "status": "not_started" | "in_progress" | "completed",
@@ -15,6 +17,9 @@ Progress: progress/<user>.json, one file per learner, holding one card per lesso
     "first_try": 1,            # steps passed first time in this run
     "best_first_try": 4,       # best over finished runs
     "completions": 1,          # how many times the lesson was finished
+    "mastery": {"right": 2, "total": 3},   # mastery check of this run (first-try passes)
+    "best_mastery": 3,         # best mastery check over finished runs
+    "flow": 2,                 # flow.FLOW_VERSION the card was saved under
     "started_at": "...", "last_played": "...", "completed_at": "..."
   }
 Learners identify themselves by name only (no password): fine for a family or classroom machine,
@@ -28,6 +33,8 @@ import os
 import re
 import threading
 from datetime import datetime, timezone
+
+from flow import FLOW_VERSION, build_flow
 
 _LESSON_FILE = re.compile(r"^lesson(\d+)([a-z]?)\.json$", re.IGNORECASE)
 _UNSAFE = re.compile(r"[^\w-]+", re.UNICODE)
@@ -44,6 +51,7 @@ def load_lessons(lesson_dir: str) -> list[dict]:
                 lesson = json.load(f)
             n, sub = int(m.group(1)), m.group(2).lower()
             lesson["num"] = f"{n}{sub}"
+            lesson["steps"] = build_flow(lesson)
             found.append(((n, sub), lesson))
     found = [l for _, l in sorted(found, key=lambda t: t[0])]
     nums = [l["num"] for l in found]
@@ -59,8 +67,13 @@ def load_lessons(lesson_dir: str) -> list[dict]:
 
 def lesson_summary(lesson: dict) -> dict:
     """What the lesson picker shows."""
+    phases = []
+    for st in lesson["steps"]:
+        if st.get("phase") and st["phase"] not in phases:
+            phases.append(st["phase"])
     return {"id": lesson["id"], "num": lesson["num"], "title": lesson.get("title", lesson["id"]),
-            "summary": lesson.get("summary_en", ""), "steps": len(lesson["steps"])}
+            "summary": lesson.get("summary_en", ""), "steps": len(lesson["steps"]), "phases": phases,
+            "step_phases": [st.get("phase", "roleplay") for st in lesson["steps"]]}
 
 
 def user_key(name: str) -> str:
@@ -76,6 +89,7 @@ def _now() -> str:
 def empty_card(lesson: dict) -> dict:
     return {"status": "not_started", "step": 0, "total": len(lesson["steps"]), "results": {},
             "first_try": 0, "best_first_try": 0, "completions": 0,
+            "mastery": None, "best_mastery": 0, "flow": FLOW_VERSION,
             "started_at": None, "last_played": None, "completed_at": None}
 
 
@@ -118,6 +132,8 @@ class ProgressStore:
         for lid in self.order:
             card = empty_card(self.lessons[lid])
             card.update(saved.get(lid, {}))
+            if lid in saved and "flow" not in saved[lid]:
+                card["flow"] = None  # saved before the four-part flow
             card["total"] = len(self.lessons[lid]["steps"])  # the lesson file may have changed
             card["step"] = min(card["step"], card["total"] - 1)
             out[lid] = card
@@ -136,8 +152,10 @@ class ProgressStore:
         """Card for a session that is starting. Resumes an unfinished run; a finished lesson
         (or restart=True) starts a new run at step 0, keeping completions and the best score."""
         card = self.cards(name)[lesson_id]
-        if restart or card["status"] != "in_progress":
-            card.update(step=0, results={}, first_try=0, started_at=_now())
+        # A run saved before the four-part flow has step numbers that no longer line up: start over.
+        if restart or card["status"] != "in_progress" or card.get("flow") != FLOW_VERSION:
+            card.update(step=0, results={}, first_try=0, mastery=None, started_at=_now())
+        card["flow"] = FLOW_VERSION
         card["status"] = "in_progress"  # a replay of a finished lesson keeps its completions count
         card["last_played"] = _now()
         self._save(name, lesson_id, card)
@@ -148,6 +166,7 @@ class ProgressStore:
         card = self.cards(name)[lesson_id]
         card["results"] = dict(session.results)
         card["first_try"] = sum(1 for r in session.results.values() if r == "first_try")
+        card["mastery"] = session.mastery_score()
         card["last_played"] = _now()
         if session.done:
             card["step"] = card["total"] - 1
@@ -156,8 +175,17 @@ class ProgressStore:
                 card["completions"] += 1
                 card["completed_at"] = card["last_played"]
                 card["best_first_try"] = max(card["best_first_try"], card["first_try"])
+                if card["mastery"]:
+                    card["best_mastery"] = max(card.get("best_mastery") or 0, card["mastery"]["right"])
         else:
             card["step"] = session.step_idx
+        self._save(name, lesson_id, card)
+        return card
+
+    def reset(self, name: str, lesson_id: str) -> dict:
+        """Wipe one lesson for this learner: back to step 0 with no scores, completions or bests,
+        as if never played. Other lessons are untouched."""
+        card = empty_card(self.lessons[lesson_id])
         self._save(name, lesson_id, card)
         return card
 

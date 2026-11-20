@@ -35,6 +35,16 @@ Config (env vars):
   LELA_LLM_JSON_SCHEMA  1 (default): ask vLLM for schema-forced JSON; 0 turns it off
   LELA_LLM_KANNADA  0 (default): LeLa speaks only hand-checked Kannada; 1: also speak the LLM's own Kannada
   LELA_CONFORMER_DEVICE  "auto" (GPU, falls back to CPU if onnxruntime's CUDA/cuDNN fails) | "cpu"
+  LELA_EN_TTS       "tinyvoca" (default): at the start of a lesson AuTut repeats its opening in English with the
+                    tiny-voca voice (CPU, see english_tts.py); skipped if not installed | "off"
+  LELA_TINYVOCA_DIR folder with tiny-voca.pt and phonemizer/ (default ./models/tiny-voca)
+  LELA_EN_VOICE     tiny-voca voice: "M2" (male, default) or "F2" (female)
+  LELA_EN_SPEED     tiny-voca speed, 0.25 to 4 (default 0.8: slower than normal, for a learner)
+  LELA_EN_PITCH     tiny-voca pitch shift (default -0.1, a little deeper; 0.058 is about one semitone, 0 = normal)
+  LELA_EN_VOLUME    tiny-voca loudness, 0 to 1 (default 0.7: a little quieter than the Kannada voice)
+  set LELA_EN_VOLUME (0.5 is quieter, 1.0 is the original level) or LELA_EN_PITCH (-0.15 is deeper, 0 is normal).
+  LELA_EN_GAP       seconds of silence between the Kannada and the English (default 1.0)
+  LELA_LOG_PARTIAL  1: log each live-preview transcription with its size and time (to measure ASR speed)
   LELA_LESSONS_DIR  folder of lesson1.json, lesson2.json, ... (default ./lessons)
   LELA_PROGRESS_DIR folder for each learner's progress file (default ./progress)
   LELA_DISABLE_CUDNN   default 1 (cuDNN off for PyTorch, as in your original; IndicF5 fails with
@@ -49,7 +59,9 @@ import json
 import os
 import re
 import threading
+import time
 import traceback
+from typing import Optional
 from contextlib import asynccontextmanager
 
 import httpx
@@ -68,6 +80,13 @@ LLM_URL = os.getenv("LELA_LLM_URL", "http://127.0.0.1:8001/v1/chat/completions")
 LLM_MODEL = os.getenv("LELA_LLM_MODEL", "hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4")
 ASR_KN = os.getenv("LELA_ASR_KN", "indicconformer")
 ASR_EN = os.getenv("LELA_ASR_EN", "small")
+LOG_PARTIAL = os.getenv("LELA_LOG_PARTIAL", "0") == "1"
+EN_TTS_BACKEND = os.getenv("LELA_EN_TTS", "tinyvoca")
+EN_GAP_SECS = float(os.getenv("LELA_EN_GAP", "1.0"))
+EN_VOICE = os.getenv("LELA_EN_VOICE", "M2")
+EN_SPEED = float(os.getenv("LELA_EN_SPEED", "0.8"))
+EN_PITCH = float(os.getenv("LELA_EN_PITCH", "-0.1"))
+EN_VOLUME = float(os.getenv("LELA_EN_VOLUME", "0.7"))
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Only affects PyTorch (IndicF5). Whisper (CTranslate2) and IndicConformer (ONNX) don't use this flag.
@@ -156,6 +175,7 @@ def load_models() -> None:
     else:
         M["whisper"] = WhisperModel("large-v3", device=DEVICE, compute_type=compute)
     load_tts()
+    load_english_tts()
 
 
 def load_tts() -> None:
@@ -224,6 +244,9 @@ async def lifespan(_app: FastAPI):
         print(f"[Init] TTS self-test OK ({len(wav) // 2 / TTS_SAMPLE_RATE:.1f} s of audio)")
     else:
         print(f"[Init] !!! TTS self-test FAILED: {TTS_LAST_ERROR['error']}  (the tutor will be silent)")
+    if M.get("en_tts"):  # same for the English voice, with the first lesson's opening line
+        en_wav = await asyncio.to_thread(synthesize_en, LESSONS[0]["steps"][0]["tutor_en"])
+        print(f"[Init] English voice self-test {'OK' if en_wav else 'FAILED (see [TTS:en] above)'}")
     if TRANSLATE_BACKEND == "sarvam" and SARVAM_KEY:
         print(f"[Init] English questions: answered in Kannada via Sarvam translate ({SARVAM_TRANSLATE_MODEL})")
     else:
@@ -248,33 +271,83 @@ def decode_audio(data: bytes, rate: int = 16000) -> np.ndarray:
     resampler = av.AudioResampler(format="s16", layout="mono", rate=rate)
     chunks = []
     with av.open(io.BytesIO(data), mode="r") as container:
-        for frame in container.decode(audio=0):
-            chunks += [f.to_ndarray().reshape(-1) for f in resampler.resample(frame)]
+        try:
+            for frame in container.decode(audio=0):
+                chunks += [f.to_ndarray().reshape(-1) for f in resampler.resample(frame)]
+        except av.error.FFmpegError:
+            # A live preview is a recording cut mid-stream: keep the frames decoded so far.
+            if not chunks:
+                raise
     chunks += [f.to_ndarray().reshape(-1) for f in resampler.resample(None)]  # flush
     if not chunks:
         return np.zeros(0, dtype=np.float32)
     return np.concatenate(chunks).astype(np.float32) / 32768.0
 
 
-def transcribe(audio_bytes: bytes, lang: str) -> str:
-    """Any browser format -> text. lang is "kn" or "en"."""
+def transcribe(audio_bytes: bytes, lang: str, partial: bool = False) -> Optional[str]:
+    """Any browser format -> text. lang is "kn" or "en".
+    partial: a live preview of a recording still in progress. It never waits for the GPU: if
+    another learner's ASR call is running it returns None at once, so previews can't slow grading."""
     try:
         audio = decode_audio(audio_bytes)
     except Exception as e:
-        print(f"[ASR] decode failed: {e}")
+        if not partial:
+            print(f"[ASR] decode failed: {e}")
         return ""
     if len(audio) < 16000 * 0.3:  # under 0.3 s: a click, not speech
         return ""
-    with ASR_LOCK:
+    if not ASR_LOCK.acquire(blocking=not partial):
+        return None
+    try:
         if lang == "kn" and "conformer" in M:
             wav = torch.from_numpy(audio).unsqueeze(0)
             text = M["conformer"](wav, "kn", "rnnt")
             return (text[0] if isinstance(text, (list, tuple)) else str(text)).strip()
         segments, _ = M["whisper"].transcribe(
-            audio, language=lang, beam_size=5, vad_filter=True,
+            audio, language=lang, beam_size=1 if partial else 5, vad_filter=True,
             condition_on_previous_text=False,
         )
         return " ".join(s.text for s in segments).strip()
+    finally:
+        ASR_LOCK.release()
+
+
+def load_english_tts() -> None:
+    """tiny-voca for AuTut's spoken English. Optional: without it the English is only shown."""
+    if EN_TTS_BACKEND != "tinyvoca":
+        print("[Init] English voice off (LELA_EN_TTS)")
+        return
+    try:
+        from english_tts import EnglishTTS
+
+        M["en_tts"] = EnglishTTS(os.getenv("LELA_TINYVOCA_DIR", os.path.join(BASE_DIR, "models", "tiny-voca")),
+                                 EN_VOICE, EN_SPEED, EN_PITCH, EN_VOLUME)
+        print(f"[Init] English voice: tiny-voca {M['en_tts'].voice}, speed {EN_SPEED}, "
+              f"pitch {EN_PITCH:+}, volume {EN_VOLUME} on CPU")
+    except Exception as e:
+        print(f"[Init] English voice unavailable, English is shown but not spoken: {e}")
+
+
+def synthesize_en(text: str) -> bytes:
+    """English -> WAV bytes with tiny-voca, or b"" if it isn't loaded or fails."""
+    tts = M.get("en_tts")
+    if not tts:
+        return b""
+    from english_tts import speakable
+    t0 = time.perf_counter()
+    try:
+        audio = tts(text)
+    except Exception as e:
+        traceback.print_exc()
+        print(f"[TTS:en] failed: {e!r}  line='{speakable(text)[:80]}'")
+        return b""
+    if not len(audio):
+        print(f"[TTS:en] nothing could be read aloud from '{speakable(text)[:80]}'")
+        return b""
+    print(f"[TTS:en] {len(audio) / tts.sample_rate:.1f} s of English in {time.perf_counter() - t0:.1f} s")
+    buf = io.BytesIO()
+    sf.write(buf, audio, tts.sample_rate, format="WAV", subtype="PCM_16")
+    return buf.getvalue()
 
 
 SENTENCE_GAP = np.zeros(int(0.25 * TTS_SAMPLE_RATE), dtype=np.float32)  # rebuilt in load_tts()
@@ -527,12 +600,31 @@ async def api_lessons(user: str = ""):
     return out
 
 
+@app.post("/api/reset")
+async def api_reset(user: str = "", lesson: str = ""):
+    """Wipe one lesson's progress for this learner (step 0, no scores). The page asks to confirm first."""
+    if not user_key(user) or lesson not in LESSONS_BY_ID:
+        return JSONResponse({"ok": False, "error": "unknown learner or lesson"}, 400)
+    return {"ok": True, "card": await asyncio.to_thread(PROGRESS.reset, user, lesson)}
+
+
 @app.get("/tts_test")
 async def tts_test(text: str = "ನಮಸ್ಕಾರ! ನೀವು ಹೇಗಿದ್ದೀರಿ?"):
     """Open http://localhost:7800/tts_test in the browser: plays the WAV, or shows the TTS error."""
     wav = await asyncio.to_thread(synthesize, text)
     if not wav:
         return JSONResponse({"ok": False, "error": TTS_LAST_ERROR["error"], "tts": TTS_BACKEND}, 500)
+    return Response(wav, media_type="audio/wav")
+
+
+@app.get("/tts_test_en")
+async def tts_test_en(text: str = "Welcome to LeLa. Namaskara means hello."):
+    """Open http://localhost:7800/tts_test_en in the browser: plays tiny-voca's English, or says why not."""
+    if not M.get("en_tts"):
+        return JSONResponse({"ok": False, "error": "English voice not loaded (see the [Init] lines in the log)"}, 500)
+    wav = await asyncio.to_thread(synthesize_en, text)
+    if not wav:
+        return JSONResponse({"ok": False, "error": "tiny-voca produced no audio (see [TTS:en] in the log)"}, 500)
     return Response(wav, media_type="audio/wav")
 
 
@@ -560,6 +652,21 @@ async def send_turn(ws: WebSocket, turn) -> None:
                 await ws.send_bytes(silence_wav(PAUSE_SECS))
             await ws.send_bytes(audio)
             sent = True
+    # Lesson start: the same in English, after a pause. turn_end comes last, so the mic stays
+    # locked until the English has played too.
+    # Kannada words inside the English are said by the Kannada voice (tiny-voca can't say them).
+    if getattr(turn, "speak_en", None) and M.get("en_tts"):
+        from english_tts import segments
+
+        first = True
+        for lang, piece in segments(turn.speak_en, getattr(turn, "speak_en_kn", None)):
+            audio = await asyncio.to_thread(synthesize_en if lang == "en" else synthesize, piece)
+            if not audio:
+                continue
+            if first and sent:
+                await ws.send_bytes(silence_wav(EN_GAP_SECS))
+            first = False
+            await ws.send_bytes(audio)
     await ws.send_text(json.dumps({"type": "turn_end", "tts_error": None if ok else TTS_LAST_ERROR["error"]}))
 
 
@@ -591,6 +698,7 @@ async def websocket_tutor(ws: WebSocket):
         translate=translate_en_kn if (TRANSLATE_BACKEND == "sarvam" and SARVAM_KEY) else None,
     )
     next_audio_lang = "kn"
+    next_is_partial = False   # the next audio clip is a live preview, not the student's answer
     try:
         await send_progress(ws, lesson_id, card)
         await send_turn(ws, session.opening())  # tutor opens the class with a greeting
@@ -604,14 +712,31 @@ async def websocket_tutor(ws: WebSocket):
                 if data.get("type") == "audio_lang":      # next audio clip is "kn" or "en"
                     next_audio_lang = "en" if data.get("lang") == "en" else "kn"
                     continue
+                if data.get("type") == "partial_audio":   # next clip: the recording so far, for a preview
+                    next_is_partial = True
+                    next_audio_lang = "en" if data.get("lang") == "en" else "kn"
+                    continue
                 if data.get("type") != "text" or not data.get("text", "").strip():
                     continue
                 student_text = data["text"].strip()
                 # Typed input: Kannada script if it contains any, else treat as English.
                 lang = "kn" if has_kannada(student_text) else "en"
+            elif next_is_partial:
+                # Live preview while the student is still speaking: show it, nothing else.
+                next_is_partial = False
+                t0 = time.perf_counter()
+                text = await asyncio.to_thread(transcribe, msg["bytes"], next_audio_lang, True)
+                if LOG_PARTIAL:
+                    print(f"[ASR:partial] {len(msg['bytes'])} B in {time.perf_counter() - t0:.2f}s: '{text}'")
+                await ws.send_text(json.dumps({"type": "partial", "skipped": text is None,
+                                               "student_display": student_display(text, next_audio_lang) if text else ""},
+                                              ensure_ascii=False))
+                continue
             else:
                 lang, next_audio_lang = next_audio_lang, "kn"
+                t0 = time.perf_counter()
                 student_text = await asyncio.to_thread(transcribe, msg["bytes"], lang)
+                print(f"[ASR] {len(msg['bytes'])} B transcribed in {time.perf_counter() - t0:.2f}s")
                 print(f"[ASR:{lang}] '{student_text}'")
                 if not student_text:
                     retry_kn = "ದಯವಿಟ್ಟು ಮತ್ತೊಮ್ಮೆ ಹೇಳಿ."

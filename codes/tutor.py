@@ -27,7 +27,7 @@ import unicodedata
 from dataclasses import dataclass, field
 from typing import Awaitable, Callable, Optional
 
-from flow import PHASE_LABELS, PHASE_START, phase_of
+from flow import PHASE_LABELS, PHASE_START, key_phrase, phase_of
 from translit import has_kannada, transliterate
 
 # LLM call signature: (messages) -> raw assistant text. Injected so tests can fake it.
@@ -312,6 +312,11 @@ class TutorTurn:
     choices: Optional[list] = None      # set at the end of a lesson: what the student can pick
     choice: Optional[str] = None        # the student's pick ("next" / "repeat" / "stop")
     mastery: Optional[dict] = None      # {"right": k, "total": n} once the lesson is done
+    focus: Optional[dict] = None        # the phrase card on screen (LessonSession.annotate)
+    position: Optional[dict] = None     # {"phase", "i", "n"}: step i of n in this phase
+    score: Optional[float] = None       # how close the student's Kannada was (0..1), when graded
+    speak_en: Optional[str] = None      # English AuTut also SAYS after the Kannada (lesson start), else None
+    speak_en_kn: Optional[dict] = None  # {romanized: Kannada} in speak_en, said by the Kannada voice instead
 
     def to_json(self) -> dict:
         return {
@@ -330,6 +335,9 @@ class TutorTurn:
             "choices": self.choices,
             "choice": self.choice,
             "mastery": self.mastery,
+            "focus": self.focus,
+            "position": self.position,
+            "score": None if self.score is None else round(self.score, 2),
         }
 
 
@@ -363,6 +371,8 @@ class LessonSession:
     choice: Optional[str] = None
     # A side practice in progress: {"kn": phrase, "tries": n}. The lesson step is kept meanwhile.
     practice: Optional[dict] = None
+    # Similarity of the student's last graded Kannada answer (match_score / roman_similarity).
+    last_score: Optional[float] = None
 
     @property
     def step(self) -> dict:
@@ -417,11 +427,15 @@ class LessonSession:
     def opening(self) -> TutorTurn:
         """The tutor starts the class with a greeting, or welcomes the student back mid-lesson."""
         if self.step_idx == 0:
-            return self._prompt_turn()
-        welcome = "ಮತ್ತೆ ಸ್ವಾಗತ!"
-        return self._prompt_turn(prefix=TutorTurn(
-            welcome, transliterate(welcome), "Welcome back! Let's continue where you left off.", self.step["id"]),
-            announce=True)
+            turn = self._prompt_turn()
+        else:
+            welcome = "ಮತ್ತೆ ಸ್ವಾಗತ!"
+            turn = self._prompt_turn(prefix=TutorTurn(
+                welcome, transliterate(welcome), "Welcome back! Let's continue where you left off.", self.step["id"]),
+                announce=True)
+        turn.speak_en = turn.en  # at the start of a lesson AuTut says it in English too, after a pause
+        turn.speak_en_kn = self.lesson_phrases()
+        return self.annotate(turn)
 
     def _record(self, result: str) -> None:
         self.results[self.step["id"]] = result
@@ -660,6 +674,7 @@ class LessonSession:
         else:
             score = max(match_score(student_text, [phrase], "contains") if lang == "kn" else 0.0,
                         roman_similarity(student_text, phrase))
+            self.last_score = score
             print(f"[Turn] practice '{phrase}' heard='{student_text}' [{lang}] score={score:.2f}")
             if score >= PRACTICE_PASS:
                 ok = PRACTICE_OK
@@ -710,7 +725,67 @@ class LessonSession:
                              student_lang="kn" if has_kannada(student_text) else "en", phase=self.phase)
         return self._prompt_turn(prefix=feedback)
 
+    # ------------------------------------------------------------ screen helpers
+
+    def focus(self) -> Optional[dict]:
+        """What the phrase card shows now. kind:
+        "practice" (say-it-after-me inside a question), "repeat" (guided repetition),
+        "question" (roleplay / mastery / wrap-up: AuTut's question; roleplay also carries the
+        model "answer", which the page hides until asked), "phrases" (concept intro), or None."""
+        def card(kn: str, en: str = "") -> dict:
+            return {"kn": kn, "roman": transliterate(kn), "en": en}
+        if self.practice:
+            return dict(card(self.practice["kn"]), kind="practice")
+        if self.done:
+            return None
+        st, phase = self.step, self.phase
+        if phase == "concept":
+            items = [card(x["expected_kn"][0], x.get("phrase_en", ""))
+                     for x in self.lesson["steps"] if phase_of(x) == "repeat" and x.get("expected_kn")]
+            return {"kind": "phrases", "items": items} if items else None
+        if phase == "repeat" and st.get("expected_kn"):
+            return dict(card(st["expected_kn"][0], st.get("phrase_en", "")), kind="repeat")
+        en = (st.get("tutor_en") or "").strip().split("\n")[-1]
+        out = dict(card(kannada_only(st.get("tutor_kn", "")).strip(), en), kind="question")
+        if phase == "roleplay":
+            kp = key_phrase(st)
+            if kp:
+                out["answer"] = card(*kp)
+        return out
+
+    def position(self) -> Optional[dict]:
+        """{"phase", "i", "n"}: the current step is number i of n steps in its phase."""
+        if self.done:
+            return None
+        phase = self.phase
+        ids = [k for k, x in enumerate(self.lesson["steps"]) if phase_of(x) == phase]
+        return {"phase": phase, "i": ids.index(self.step_idx) + 1 if self.step_idx in ids else 1, "n": len(ids)}
+
+    def lesson_phrases(self) -> dict:
+        """{romanized: Kannada} for the phrases this lesson teaches (as they appear in its English)."""
+        out = {}
+        for st in self.lesson["steps"]:
+            if phase_of(st) == "repeat" and st.get("expected_kn"):
+                kn = st["expected_kn"][0]
+            else:
+                kp = key_phrase(st) if phase_of(st) == "roleplay" else None
+                kn = kp[0] if kp else ""
+            if kn:
+                out[transliterate(kn)] = kn
+        return out
+
+    def annotate(self, turn: TutorTurn) -> TutorTurn:
+        """Add what the screen needs (phrase card, place in the phase, score) to a turn."""
+        turn.focus, turn.position = self.focus(), self.position()
+        if turn.student and turn.score is None:
+            turn.score = self.last_score
+        return turn
+
     async def handle_student(self, student_text: str, lang: str = "kn") -> TutorTurn:
+        self.last_score = None
+        return self.annotate(await self._handle_student(student_text, lang))
+
+    async def _handle_student(self, student_text: str, lang: str = "kn") -> TutorTurn:
         student_text = (student_text or "").strip()
         if self.done:
             self._log("Student", f"{student_text} [{lang}]")
@@ -739,6 +814,7 @@ class LessonSession:
         if st.get("match") == "any":
             return await self._ready_turn(student_text, lang)
         score = match_score(student_text, st.get("expected_kn", []), st.get("match", "contains")) if lang == "kn" else 0.0
+        self.last_score = score if lang == "kn" else None
         if lang == "kn" and score < FUZZY_PASS and _KN_HELP.search(student_text):
             return self._kannada_help_turn(student_text)
         if lang == "en" and _ACK.match(student_text):

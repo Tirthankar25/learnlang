@@ -212,6 +212,13 @@ async def progress_cards():
         assert card["step"] == 0 and card["results"] == {} and card["completions"] == 1
         # Survives a restart of the server (new store, same folder).
         assert ProgressStore(d, LS).cards("ana")[lid]["completions"] == 1
+        # Reset: this lesson back to zero (no completions, no bests); other lessons untouched.
+        other = LS[1]["id"]
+        store.start("ana", other)
+        store.reset("ana", lid)
+        c = ProgressStore(d, LS).cards("ana")
+        assert c[lid]["status"] == "not_started" and c[lid]["completions"] == 0 and c[lid]["best_first_try"] == 0
+        assert c[lid]["results"] == {} and c[other]["status"] == "in_progress"
         # A run saved before the four-part flow (no "flow" on the card) restarts at step 0.
         store.update("Ana", lid, LessonSession(LS[0], fake([]), step_idx=5))
         data = json.load(open(os.path.join(d, "ana.json"), encoding="utf-8"))
@@ -403,3 +410,45 @@ async def acks_and_end():
     t = await s.handle_student("lets go to the next lesson", "en")
     assert t.choice == "next" and "Next lesson button" in t.en and "ಬಟನ್" in t.kn, t.en
 asyncio.run(acks_and_end()); print("acks and end OK")
+
+
+# The new screen: each turn says what the phrase card shows, where the learner is, and the score.
+async def screen_fields():
+    from progress import load_lessons
+    L1 = load_lessons("lessons")[0]
+    s = LessonSession(L1, fake([J("advance")] * 20))
+    j = s.opening().to_json()
+    assert j["focus"]["kind"] == "phrases" and j["focus"]["items"][0]["roman"], j["focus"]
+    assert j["position"] == {"phase": "concept", "i": 1, "n": 1}
+    j = (await s.handle_student("ಸರಿ", "kn")).to_json()
+    first = j["focus"]
+    assert first["kind"] == "repeat" and first["kn"] and first["roman"], first
+    assert j["position"]["phase"] == "repeat" and j["position"]["i"] == 1
+    j = (await s.handle_student(first["kn"], "kn")).to_json()
+    assert j["score"] == 1.0 and j["passed"] and j["position"]["i"] == 2, j
+    while s.phase != "roleplay":
+        await s.handle_student(s.step["expected_kn"][0], "kn")
+    f = s.focus()
+    assert f["kind"] == "question" and "answer" in f, f
+    while s.phase != "mastery":
+        await s.handle_student(s.step["expected_kn"][0], "kn")
+    assert s.focus()["kind"] == "question" and "answer" not in s.focus()  # no model answer in the check
+asyncio.run(screen_fields()); print("screen fields OK")
+
+
+# Lesson start: AuTut's opening is also spoken in English (english_tts.speakable cleans it up).
+def spoken_english():
+    from english_tts import speakable
+    from progress import load_lessons
+    L1 = load_lessons("lessons")[0]
+    t = LessonSession(L1, fake([])).opening()
+    assert t.speak_en == t.en and t.to_json()["focus"]
+    line = speakable(t.speak_en)
+    assert line and not any("ಀ" <= c <= "೿" for c in line) and "Namaskara, meaning hello" in line, line
+    assert "Say sari when you are ready" in line and "\n" not in line, line
+    back = LessonSession(L1, fake([]), step_idx=4).opening()
+    assert back.speak_en.startswith("Welcome back!")
+    s = LessonSession(L1, fake([J("advance")]))
+    s.opening()
+    assert asyncio.run(s.handle_student("ಸರಿ", "kn")).speak_en is None  # only the opening
+spoken_english(); print("spoken english OK")

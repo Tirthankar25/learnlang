@@ -58,22 +58,19 @@
    "completed_at": "2026-11-09T14:29:31+00:00"
   },
   "lesson_01_greetings": {
-   "status": "completed",
-   "step": 4,
-   "total": 5,
-   "results": {
-    "greet": "first_try",
-    "how_are_you": "first_try",
-    "name": "first_try",
-    "where_from": "first_try",
-    "goodbye": "shown"
-   },
-   "first_try": 4,
-   "best_first_try": 5,
-   "completions": 4,
-   "started_at": "2026-11-20T07:00:26+00:00",
-   "last_played": "2026-11-20T07:03:43+00:00",
-   "completed_at": "2026-11-20T07:03:06+00:00"
+   "status": "in_progress",
+   "step": 0,
+   "total": 12,
+   "results": {},
+   "first_try": 0,
+   "best_first_try": 0,
+   "completions": 0,
+   "mastery": null,
+   "best_mastery": 0,
+   "flow": 2,
+   "started_at": "2026-11-20T10:26:34+00:00",
+   "last_played": "2026-11-20T12:58:01+00:00",
+   "completed_at": null
   },
   "lesson_01b_family": {
    "status": "completed",
@@ -94,6 +91,58 @@
    "started_at": "2026-11-10T06:30:08+00:00",
    "last_played": "2026-11-10T06:34:31+00:00",
    "completed_at": "2026-11-10T06:34:31+00:00"
+  },
+  "lesson_01c_family_more": {
+   "status": "completed",
+   "step": 17,
+   "total": 18,
+   "results": {
+    "intro": "first_try",
+    "rep_elder_brother": "first_try",
+    "rep_younger_sister": "first_try",
+    "rep_how_many_children": "first_try",
+    "rep_grandpa_age": "passed",
+    "rep_had_lunch": "first_try",
+    "rep_ask_lunch": "first_try",
+    "elder_brother": "first_try",
+    "younger_sister": "passed",
+    "fathers_name": "passed",
+    "how_many_children": "first_try",
+    "grandpa_age": "first_try",
+    "had_lunch": "first_try",
+    "ask_lunch": "first_try",
+    "check_elder_brother": "first_try",
+    "check_how_many_children": "first_try",
+    "check_ask_lunch": "first_try",
+    "goodbye": "first_try"
+   },
+   "first_try": 15,
+   "best_first_try": 15,
+   "completions": 1,
+   "mastery": {
+    "right": 3,
+    "total": 3
+   },
+   "best_mastery": 3,
+   "flow": 2,
+   "started_at": "2026-11-20T09:39:07+00:00",
+   "last_played": "2026-11-20T09:58:57+00:00",
+   "completed_at": "2026-11-20T09:58:57+00:00"
+  },
+  "lesson_01d_shopping": {
+   "status": "in_progress",
+   "step": 0,
+   "total": 17,
+   "results": {},
+   "first_try": 0,
+   "best_first_try": 0,
+   "completions": 0,
+   "mastery": null,
+   "best_mastery": 0,
+   "flow": 2,
+   "started_at": "2026-11-20T10:24:58+00:00",
+   "last_played": "2026-11-20T10:24:58+00:00",
+   "completed_at": null
   }
  },
  "name": "Tirthankar Banerjee"

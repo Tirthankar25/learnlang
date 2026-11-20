@@ -129,7 +129,7 @@ def _repeat_step(kn: str, en: str, src: dict, n: int) -> dict:
         "tutor_kn": _clean_kn(f"ನನ್ನ ನಂತರ ಹೇಳಿ. {kn}"),
         "tutor_en": f"Say after me: {roman}{meaning}.",
         "goal_en": f"The student repeats the phrase {kn}. Only this phrase counts; small pronunciation slips are fine.",
-        "expected_kn": [kn], "match": "contains",
+        "expected_kn": [kn], "match": "contains", "phrase_en": en,
         "hint_kn": _clean_kn(f"{kn} ಎಂದು ಹೇಳಿ."),
         "hint_en": src.get("hint_en") or f"Say {kn} ({roman}){meaning}.",
         "max_attempts": 2,

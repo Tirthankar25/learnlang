@@ -12,7 +12,10 @@ faster-whisper           # English questions (and Kannada if LELA_ASR_KN=whisper
 # transformers 5.x. If you install torchaudio fresh, match it to your torch version.
 torch
 torchaudio
-transformers<5
+transformers>=4.33,<5    # MMS-TTS (VitsModel) needs >=4.33
+
+# Optional, only for LELA_TTS=parler (pins transformers==4.46.1):
+# parler-tts @ git+https://github.com/huggingface/parler-tts.git
 
 # One clean cuDNN 9 for both torch 2.4.1 (built with 9.1) and onnxruntime-gpu 1.20.
 # pip warns that torch pins 9.1.0.70; newer 9.x minors are backward compatible, so that's fine.
@@ -23,3 +26,14 @@ nvidia-cudnn-cu12==9.5.1.17
 # on PyPI; 1.20.2 is the matching patch release. Don't also install the CPU "onnxruntime" package.
 onnx==1.20.1
 onnxruntime-gpu==1.20.2
+
+# vLLM keeps NumPy 1.26; pyarrow 20+ needs NumPy 2 and makes every vLLM chat request return 500.
+pyarrow<20
+# vLLM 0.6.x uses outlines 0.0.46 for JSON output, which imports pyairports. The PyPI "pyairports 0.0.1"
+# is an empty placeholder, so outlines fails to import. LeLa doesn't need airport data; an empty stub works:
+#   SP=$(python -c "import site; print(site.getsitepackages()[0])"); mkdir -p "$SP/pyairports"
+#   touch "$SP/pyairports/__init__.py"; echo "AIRPORT_LIST = []" > "$SP/pyairports/airports.py"
+
+# Optional English voice (AuTut repeats the lesson opening in English). CPU only, Apache-2.0.
+# Install with --no-deps so torch / numpy stay as they are; model files: see english_tts.py.
+#   pip install --no-deps git+https://github.com/n4ze3m/dizione git+https://github.com/n4ze3m/tiny-voca
