@@ -210,3 +210,22 @@ LeLa used to cut every line into sentences and voice each one separately, so "�
 **Indic-TTS.** [AI4Bharat Indic-TTS](https://github.com/AI4Bharat/Indic-TTS) Kannada (FastPitch + HiFi-GAN, CC-BY 4.0) now runs as `LELA_TTS=indictts`. It runs on the CPU, so it takes no GPU memory from vLLM. Tested here on CPU: about 4 s to load, then about 1 s for the 4 s greeting. It has `female` (default) and `male` voices (`LELA_INDICTTS_SPEAKER`). Setup is three commands, listed at the top of `indictts.py`. Install coqui-tts with the pins shown there: a plain `pip install coqui-tts` upgrades numpy to 2.x and transformers to 5.x, which would break vLLM 0.6.2. Model files go in `models/indictts/kn/` (about 1.6 GB, `LELA_INDICTTS_DIR` to change). Sample clips: `samples/indictts_female_greeting.wav`, `samples/indictts_male_greeting.wav`.
 
 **Sarvam disk cache.** Sarvam audio is now saved in `tts_cache/` (`LELA_TTS_CACHE_DIR`), keyed by model, speaker, pace and text. Each fixed lesson line is paid for once, ever, not once per server run. Changing the speaker or pace makes new files. Deleting the folder is safe.
+
+## Update: AuTut and the four-part lesson flow (2026-11-20)
+
+The tutor is now **AuTut**, who speaks Kannada and English. Every lesson runs as a fixed sequence of parts, and the student can interrupt at any point.
+
+- **Flow** (new `flow.py`): when lessons load, each lesson's steps are expanded into five parts. The lesson files did not need rewriting.
+  1. *Concept intro*: AuTut says the lesson's key phrases. The screen shows them in English letters with their meanings. Saying ಸರಿ (or anything that isn't a question) starts the lesson.
+  2. *Guided repetition*: "ನನ್ನ ನಂತರ ಹೇಳಿ" (say after me), one step per key phrase, graded on that exact phrase.
+  3. *Micro-roleplay*: the lesson's own dialogue steps, unchanged.
+  4. *Mastery check*: up to three roleplay questions asked again, without "say after me" and with two attempts instead of three. The score appears on the progress card.
+  5. *Wrap-up*: the goodbye step. Then AuTut asks: next lesson, repeat this lesson, or stop for now?
+  AuTut announces each new part out loud ("ಈಗ ಒಂದು ಸಣ್ಣ ಸಂಭಾಷಣೆ ಮಾಡೋಣ", now let's have a short conversation).
+- **Key phrases** come from each step's model answer in `hint_kn` ("X ಎಂದು ಹೇಳಿ" gives X). Open-answer steps such as "say your name" get no repetition step. To override this by hand, a lesson file can set `"key_phrases": [{"kn": "...", "en": "..."}]` or `"mastery": ["step_id", ...]`, and a single step can set `"repeat_kn"`. Lesson 1 and 1a set `repeat_kn` on the greeting so that it is ನಮಸ್ಕಾರ and not the instruction "ನೀವೂ ನನಗೆ ನಮಸ್ಕಾರ". **Please have a Kannada speaker check the new fixed lines** in `flow.py` (`PHASE_START`, the intro) and in `tutor.py` (`END_ASK`, `END_REPLY`, `RESUME`).
+- **Interruptions**: an English question is still answered (in Kannada through Sarvam translate, with English on screen). AuTut now adds "ಸರಿ, ಪಾಠ ಮುಂದುವರಿಸೋಣ" (back to the lesson) and asks the same step again. The step and its attempt count stay as they were. Kannada requests for help, such as ಅರ್ಥ ಆಗಲಿಲ್ಲ, ಮತ್ತೊಮ್ಮೆ ಹೇಳಿ or ನಿಧಾನವಾಗಿ, are now caught without an LLM call: AuTut gives the hint slowly and asks the step again, and no attempt is used.
+- **End of lesson**: the student can answer by voice or typing (ಮುಂದಿನ ಪಾಠ / ಮತ್ತೊಮ್ಮೆ / ಸಾಕು, or "next" / "again" / "stop for now"), or with the *Next lesson*, *Repeat this lesson* and *Stop for now* buttons. A spoken choice takes effect once AuTut finishes talking. A question asked at this point is answered, and then the choice is offered again. On the last lesson, "next" is not offered.
+- **Progress**: cards now store `mastery` and `best_mastery`, plus a `flow` version. An unfinished run saved before this update restarts at step 1, because its step numbers no longer line up. Completions and best scores are kept.
+- **UI**: four chips show which part of the lesson AuTut is on.
+- **Bug fix** (`app.py`): typed English that ended in "?" was treated as Kannada, because `kannada_only()` keeps punctuation. Typed input is now checked with `has_kannada()`.
+- `test_tutor.py` now checks the flow structure of all 27 lessons, phase announcements, English and Kannada interruptions (step and attempts kept), mastery attempts and score, the end-of-lesson choice (including the last-lesson case) and the progress migration. All tests pass. I also clicked through a full lesson in a browser, using a stand-in server with a fake LLM and no audio.

@@ -131,7 +131,9 @@ async def english_answers():
     ex = json.dumps({"action": "explain", "say_kn": "", "say_en": "Say nanu chennagiddene."})
     s = LessonSession(L, fake([ex]), translate=tr); s.step_idx = 1
     t = await s.handle_student("How do you say I am fine?", "en")
-    assert t.kn.startswith("ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ.") and t.kn.endswith("ನೀವು ಹೇಗಿದ್ದೀರಿ?") and s.attempts == 0, t.kn
+    assert t.kn == "ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ.\nಈಗ ನೀವು ಹೇಳಿ. ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ" and t.action == "practice", t.kn
+    t = await s.handle_student("ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ", "kn")  # the practice try; then back to the question
+    assert t.kn.startswith("ಚೆನ್ನಾಗಿದೆ!") and t.kn.endswith("ನೀವು ಹೇಗಿದ್ದೀರಿ?") and s.attempts == 0, t.kn
     # e. "When is the next class?" misfiled as explain: still a real answer in Kannada.
     ans = json.dumps({"action": "answer", "say_kn": "", "say_en": "You can start the next lesson whenever you like."})
     s = LessonSession(L, fake([ex, ans]), translate=tr); s.step_idx = 4
@@ -161,7 +163,7 @@ async def plain_answers():
 asyncio.run(plain_answers()); print("plain answers OK")
 
 # Lessons are lessons/lesson1.json, lesson2.json, ... and every learner has a progress card per lesson.
-import tempfile
+import os, tempfile
 from progress import ProgressStore, load_lessons, user_key
 from translit import has_kannada
 LS = load_lessons("lessons")
@@ -182,31 +184,40 @@ async def progress_cards():
         lid = LS[0]["id"]
         assert store.next_lesson("Ana") == lid and store.cards("Ana")[lid]["status"] == "not_started"
         card = store.start("Ana", lid)
+        assert LS[0]["steps"][0]["id"] == "intro" and LS[0]["steps"][1]["id"] == "rep_greet"
         s = LessonSession(LS[0], fake([J("advance"), J("retry"), J("retry")]), step_idx=card["step"])
-        await s.handle_student("ನಮಸ್ಕಾರ", "kn")                      # first try
-        await s.handle_student("ಏನೋ", "kn")                           # retry ...
+        await s.handle_student("ಸರಿ", "kn")                           # intro: ready (no LLM call)
+        await s.handle_student("ನಮಸ್ಕಾರ", "kn")                      # repeat greet: first try
+        await s.handle_student("ಏನೋ", "kn")                           # repeat how_are_you: retry ...
         await s.handle_student("ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ", "kn")           # ... then passed
         card = store.update("Ana", lid, s)
-        assert card["status"] == "in_progress" and card["step"] == 2 and card["first_try"] == 1, card
-        assert card["results"] == {"greet": "first_try", "how_are_you": "passed"}, card["results"]
+        assert card["status"] == "in_progress" and card["step"] == 3 and card["first_try"] == 2, card
+        assert card["results"] == {"intro": "first_try", "rep_greet": "first_try", "rep_how_are_you": "passed"}, card["results"]
         # Another learner is untouched.
         assert store.cards("Bo")[lid]["status"] == "not_started"
         # Reconnect: resumes at the saved step with a welcome back.
         card = store.start("Ana", lid)
-        s = LessonSession(LS[0], fake([J("advance")] * 20), step_idx=card["step"], results=dict(card["results"]))
+        s = LessonSession(LS[0], fake([J("advance")] * 30), step_idx=card["step"], results=dict(card["results"]))
         t = s.opening()
-        assert card["step"] == 2 and t.kn.startswith("ಮತ್ತೆ ಸ್ವಾಗತ!") and t.kn.endswith(LS[0]["steps"][2]["tutor_kn"]), t.kn
+        assert card["step"] == 3 and t.kn.startswith("ಮತ್ತೆ ಸ್ವಾಗತ!") and t.kn.endswith(LS[0]["steps"][3]["tutor_kn"]), t.kn
         while not s.done:
             await s.handle_student(s.step["expected_kn"][0], "kn")
             card = store.update("Ana", lid, s)
         card = store.update("Ana", lid, s)  # extra turns after the end don't count twice
         assert card["status"] == "completed" and card["completions"] == 1 and len(card["results"]) == card["total"], card
+        assert card["mastery"] == {"right": 3, "total": 3} and card["best_mastery"] == 3, card
         assert store.next_lesson("Ana") == LS[1]["id"]
         # Replaying a finished lesson starts at step 0 and keeps the completion count.
         card = store.start("Ana", lid)
         assert card["step"] == 0 and card["results"] == {} and card["completions"] == 1
         # Survives a restart of the server (new store, same folder).
         assert ProgressStore(d, LS).cards("ana")[lid]["completions"] == 1
+        # A run saved before the four-part flow (no "flow" on the card) restarts at step 0.
+        store.update("Ana", lid, LessonSession(LS[0], fake([]), step_idx=5))
+        data = json.load(open(os.path.join(d, "ana.json"), encoding="utf-8"))
+        data["lessons"][lid].pop("flow")
+        json.dump(data, open(os.path.join(d, "ana.json"), "w", encoding="utf-8"))
+        assert store.start("Ana", lid)["step"] == 0
 asyncio.run(progress_cards()); print("progress OK")
 
 # Each lesson can be finished by saying its expected phrases, even with a strict LLM.
@@ -218,3 +229,177 @@ async def all_lessons():
             await s.handle_student(s.step["expected_kn"][0], "kn")
         assert all(r == "first_try" for r in s.results.values()), (l["id"], s.results)
 asyncio.run(all_lessons()); print("all lessons OK")
+
+
+# ---------------------------------------------------------------- AuTut's four-part lesson flow
+from tutor import end_choice
+
+# Every lesson: concept intro -> guided repetition -> micro-roleplay -> mastery check -> wrap-up.
+for l in LS:
+    phases = [st["phase"] for st in l["steps"]]
+    order = [p for i, p in enumerate(phases) if i == 0 or phases[i - 1] != p]
+    assert order == ["concept", "repeat", "roleplay", "mastery", "close"], (l["id"], order)
+    assert len({st["id"] for st in l["steps"]}) == len(phases), l["id"]
+    for st in l["steps"]:
+        if st["phase"] == "repeat":  # AuTut says exactly the phrase the student must repeat
+            assert st["expected_kn"][0] in st["tutor_kn"], (l["id"], st["id"])
+    assert 1 <= phases.count("mastery") <= 3, l["id"]
+print("flow structure OK")
+
+FL = LS[0]  # lesson 1 as a four-part flow
+ids = [st["id"] for st in FL["steps"]]
+checks = [st["id"] for st in FL["steps"] if st["phase"] == "mastery"]
+
+async def four_part_flow():
+    # Opening: concept intro names the key phrases; a question is answered, then "ready?" again.
+    ans = json.dumps({"action": "answer", "say_kn": "ಹೌದು", "say_en": "Yes."})
+    s = LessonSession(FL, fake([ans]))
+    t = s.opening()
+    assert t.phase == "concept" and "ನಮಸ್ಕಾರ" in t.kn and "Key phrases" in t.en, t.en
+    t = await s.handle_student("Is this lesson about greetings?", "en")
+    assert t.action == "answer" and s.step["id"] == "intro" and t.kn.endswith("ಸಿದ್ಧವೇ?"), t.kn
+    # Any other reply means ready: on to guided repetition, announced.
+    t = await s.handle_student("ok", "en")
+    assert s.step["id"] == "rep_greet" and t.phase == "repeat" and "guided repetition" in t.en, t.en
+    assert "ಮೊದಲು ಅಭ್ಯಾಸ ಮಾಡೋಣ." in t.kn and t.kn.endswith("ನನ್ನ ನಂತರ ಹೇಳಿ. ನಮಸ್ಕಾರ"), t.kn
+
+    # Interrupt mid-repetition in English: answered, "back to the lesson", same step and attempts.
+    s = LessonSession(FL, fake([J("retry"), ans]), step_idx=ids.index("rep_how_are_you"))
+    await s.handle_student("ಏನೋ", "kn")
+    assert s.attempts == 1
+    t = await s.handle_student("Why do we repeat phrases?", "en")
+    assert t.action == "answer" and s.step["id"] == "rep_how_are_you" and s.attempts == 1, (t.action, s.step["id"])
+    assert "ನಾವು ನಿಲ್ಲಿಸಿದ ಕಡೆಯಿಂದ ಮುಂದುವರಿಸೋಣ." in t.kn and t.kn.endswith("ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ"), t.kn
+    assert "where we left off" in t.en
+
+    # Interrupt in Kannada ("I didn't understand, say it again"): hint slowly, same question,
+    # no attempt used and no LLM call (the fake LLM has no replies).
+    s = LessonSession(FL, fake([]), step_idx=ids.index("name"))
+    t = await s.handle_student("ಅರ್ಥ ಆಗಲಿಲ್ಲ, ಮತ್ತೊಮ್ಮೆ ಹೇಳಿ", "kn")
+    assert t.action == "explain" and s.step["id"] == "name" and s.attempts == 0, (t.action, s.step["id"])
+    assert t.kn.startswith("ಸರಿ, ನಿಧಾನವಾಗಿ ಹೇಳುತ್ತೇನೆ.") and t.kn.endswith(FL["steps"][ids.index("name")]["tutor_kn"]), t.kn
+
+    # Entering the roleplay and the mastery check is announced.
+    s = LessonSession(FL, fake([J("advance")] * 5), step_idx=ids.index([i for i in ids if i.startswith("rep_")][-1]))
+    t = await s.handle_student(s.step["expected_kn"][0], "kn")
+    assert s.step["id"] == "greet" and t.phase == "roleplay" and "micro-roleplay" in t.en, t.en
+    s = LessonSession(FL, fake([J("advance")] * 5), step_idx=ids.index("where_from"))
+    t = await s.handle_student("ನಾನು ಕೋಲ್ಕತ ಇಂದ ಬಂದಿದ್ದೇನೆ", "kn")
+    assert s.step["id"] == "check_greet" and t.phase == "mastery" and "ಪರೀಕ್ಷೆ" in t.kn, t.kn
+
+    # Mastery check gives fewer attempts: two misses, then AuTut models it and moves on.
+    s = LessonSession(FL, fake([J("retry")] * 5), step_idx=ids.index("check_greet"))
+    await s.handle_student("ಏನೋ", "kn")
+    await s.handle_student("ಏನೋ", "kn")
+    assert s.step["id"] == checks[1] and s.results["check_greet"] == "shown", s.step["id"]
+
+    # End of lesson: mastery score, then "next lesson, repeat, or stop?".
+    s = LessonSession(FL, fake([J("advance")] * 5), step_idx=ids.index("goodbye"),
+                      results=dict(zip(checks, ["first_try", "passed", "first_try"])))
+    t = await s.handle_student("ಧನ್ಯವಾದಗಳು", "kn")
+    assert t.lesson_done and t.choices == ["next", "repeat", "stop"] and t.mastery == {"right": 2, "total": 3}
+    assert t.kn.endswith("ಅಥವಾ ಈಗ ಸಾಕೇ?") and "Mastery check: 2 of 3" in t.en, (t.kn, t.en)
+    j = t.to_json()
+    assert j["choices"] == ["next", "repeat", "stop"] and j["phase"] == "end"
+    # A question is still answered, then the choice is asked again.
+    s.llm = fake([ans])
+    t = await s.handle_student("When is the next class?", "en")
+    assert t.action == "answer" and t.choices and s.choice is None and t.kn.endswith("ಸಾಕೇ?"), t.kn
+    # Something unclear: asked again, nothing picked.
+    t = await s.handle_student("ಹ್ಮ್", "kn")
+    assert t.action == "ask_choice" and s.choice is None
+    for said, lang, want in [("ಮುಂದಿನ ಪಾಠ", "kn", "next"), ("Let's do it again", "en", "repeat"),
+                             ("ಈಗ ಸಾಕು", "kn", "stop"), ("Can we do the next lesson?", "en", "next"),
+                             ("stop for now", "en", "stop"), ("ಮತ್ತೊಮ್ಮೆ ಮಾಡೋಣ", "kn", "repeat")]:
+        s.choice = None
+        t = await s.handle_student(said, lang)
+        assert t.action == "choice" and t.choice == want and s.choice == want, (said, t.action, t.choice)
+    # Last lesson: no "next" choice.
+    s = LessonSession(FL, fake([J("advance")]), step_idx=ids.index("goodbye"), has_next=False)
+    t = await s.handle_student("ಧನ್ಯವಾದಗಳು", "kn")
+    assert t.choices == ["repeat", "stop"] and "last lesson" in t.en
+    t = await s.handle_student("next", "en")
+    assert t.action == "ask_choice" and s.choice is None
+asyncio.run(four_part_flow()); print("four-part flow OK")
+
+assert end_choice("When is the next class?", "en") is None
+assert end_choice("ಮತ್ತೆ ಸಿಗೋಣ", "kn") == "stop"  # "see you again" is stop, not repeat
+print("end choice OK")
+
+
+# A question about a Kannada word mid-lesson: answer, pause, "now you say it", check, then
+# "let's go back to where we left off", pause, and the step's question again.
+from tutor import lesson_phrase_in, PAUSE
+assert lesson_phrase_in("How do you pronounce Chenna Gidinai?", L) == "ಚೆನ್ನಾಗಿದ್ದೀನಿ" or \
+       lesson_phrase_in("How do you pronounce Chenna Gidinai?", L).startswith("ಚೆನ್ನಾಗಿದ್ದ")
+assert lesson_phrase_in("How do you say thank you in Kannada?", L) is None
+assert lesson_phrase_in("When is the next class?", L) is None
+
+async def side_practice():
+    name = [st["id"] for st in L["steps"]].index("name")
+    async def chat(msgs): return "Chennagiddini is pronounced as Chen-nah Gid-dee-nee."
+    ans = json.dumps({"action": "answer", "say_kn": "", "say_en": ""})
+    s = LessonSession(L, fake([ans]), chat=chat, step_idx=name)
+    t = await s.handle_student("How do you pronounce Chenna Gidinai?", "en")
+    phrase = s.practice["kn"]
+    assert t.action == "practice" and s.step["id"] == "name", (t.action, t.kn)
+    assert t.kn == f"{phrase}.{PAUSE}ಈಗ ನೀವು ಹೇಳಿ. {phrase}" and "pronounced" in t.en and "say it after me" in t.en, (t.kn, t.en)
+    # A miss: one more try, still on the practice.
+    t = await s.handle_student("ನಮಸ್ಕಾರ", "kn")
+    assert t.action == "practice" and s.practice and t.kn.startswith("ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸಿ."), t.kn
+    # Said right: praise, pause, "back to where we left off", pause, the step's question. No LLM call.
+    t = await s.handle_student(phrase, "kn")
+    q = L["steps"][name]["tutor_kn"]
+    assert t.kn == f"ಚೆನ್ನಾಗಿದೆ!{PAUSE}ಸರಿ, ನಾವು ನಿಲ್ಲಿಸಿದ ಕಡೆಯಿಂದ ಮುಂದುವರಿಸೋಣ.{PAUSE}{q}", t.kn
+    assert "where we left off" in t.en and s.practice is None and s.step["id"] == "name" and s.attempts == 0
+    # Typed in English letters counts too; two misses end the practice kindly.
+    s = LessonSession(L, fake([ans]), chat=chat, step_idx=name)
+    await s.handle_student("How do you pronounce chennagiddini?", "en")
+    t = await s.handle_student("chennagiddini", "en")
+    assert t.kn.startswith("ಚೆನ್ನಾಗಿದೆ!"), t.kn
+    s = LessonSession(L, fake([ans]), chat=chat, step_idx=name)
+    await s.handle_student("How do you pronounce chennagiddini?", "en")
+    await s.handle_student("ಏನೋ", "kn")
+    t = await s.handle_student("ಏನೋ", "kn")
+    assert t.kn.startswith("ಪರವಾಗಿಲ್ಲ") and t.kn.endswith(q) and s.practice is None, t.kn
+    # "skip" goes straight back to the lesson.
+    s = LessonSession(L, fake([ans]), chat=chat, step_idx=name)
+    await s.handle_student("How do you pronounce chennagiddini?", "en")
+    t = await s.handle_student("skip", "en")
+    assert t.kn == f"ಸರಿ, ನಾವು ನಿಲ್ಲಿಸಿದ ಕಡೆಯಿಂದ ಮುಂದುವರಿಸೋಣ.{PAUSE}{q}", t.kn
+    # A question that isn't about a Kannada word: answer, pause, back to where we left off, pause, question.
+    async def chat2(msgs): return "There is no fixed timetable."
+    async def tr(text): return "ಯಾವುದೇ ನಿಗದಿತ ವೇಳಾಪಟ್ಟಿ ಇಲ್ಲ."
+    s = LessonSession(L, fake([ans]), chat=chat2, step_idx=name, translate=tr)
+    t = await s.handle_student("When is the next class?", "en")
+    assert t.kn.count(PAUSE) == 2 and t.kn.endswith(f"ಮುಂದುವರಿಸೋಣ.{PAUSE}{q}") and s.practice is None, t.kn
+asyncio.run(side_practice()); print("side practice OK")
+
+# "Okay" is not an answer, the goodbye step says what to do after a question, practice also works
+# after the lesson, and the end-of-lesson reply points to the buttons.
+async def acks_and_end():
+    q_name = FL["steps"][ids.index("name")]["tutor_kn"]
+    s = LessonSession(FL, fake([]), step_idx=ids.index("name"))
+    t = await s.handle_student("Okay", "en")      # no LLM call, no attempt
+    assert t.action == "ack" and s.attempts == 0 and s.step["id"] == "name" and t.kn.endswith(q_name), t.kn
+    async def tr(text): return {"see you next time": "ಮತ್ತೆ ಸಿಗೋಣ"}.get(text.strip("'\" ?"), "ಅನುವಾದ")
+    async def chat(msgs): return "You say matte sigona."
+    ans = json.dumps({"action": "answer", "say_kn": "", "say_en": ""})
+    # At the goodbye step: practise, "Okay" doesn't count as a try, then the goodbye reprompt (not silence).
+    s = LessonSession(FL, fake([ans]), step_idx=ids.index("goodbye"), translate=tr, chat=chat)
+    t = await s.handle_student("How to say 'see you next time'", "en")
+    assert t.action == "practice" and s.practice["kn"] == "ಮತ್ತೆ ಸಿಗೋಣ", t.kn
+    t = await s.handle_student("Okay", "en")
+    assert t.action == "practice" and s.practice["tries"] == 0, t.kn
+    t = await s.handle_student("ಮತ್ತೆ ಸಿಗೋಣ", "kn")
+    assert t.kn.endswith("ಪಾಠ ಮುಗಿಸಲು ಧನ್ಯವಾದಗಳು ಎಂದು ಹೇಳಿ.") and not s.done, t.kn
+    # After the lesson: practise, then "next lesson, repeat, or stop?" again.
+    s = LessonSession(FL, fake([ans]), step_idx=ids.index("goodbye"), translate=tr, chat=chat); s.done = True
+    t = await s.handle_student("How to say 'see you next time'", "en")
+    assert t.action == "practice" and t.lesson_done
+    t = await s.handle_student("ಮತ್ತೆ ಸಿಗೋಣ", "kn")
+    assert t.kn.endswith("ಅಥವಾ ಈಗ ಸಾಕೇ?") and t.choices and s.choice is None, t.kn
+    # "Let's go to the next lesson": AuTut points to the button.
+    t = await s.handle_student("lets go to the next lesson", "en")
+    assert t.choice == "next" and "Next lesson button" in t.en and "ಬಟನ್" in t.kn, t.en
+asyncio.run(acks_and_end()); print("acks and end OK")

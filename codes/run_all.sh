@@ -23,12 +23,20 @@ fi
 #   (slower, roughly 1-3 s per utterance). Try LELA_CONFORMER_DEVICE=auto to put it on the GPU
 #   with a smaller vLLM share (LELA_VLLM_MEM=0.66 LELA_VLLM_MAX_LEN=2048) if latency matters.
 #   IndicF5 (LELA_TTS=indicf5) needs ~2 GB more and will not fit on this card.
+#   LELA_TTS=sarvam runs the voice in Sarvam's cloud (needs SARVAM_API_KEY) and keeps MMS loaded as the offline fallback.
+#   LELA_TTS=indictts runs AI4Bharat's free Kannada voice on the CPU (no GPU memory); setup steps are in indictts.py.
 # app.py must ask vLLM for the same model name it serves, so both read LELA_LLM_MODEL.
 GPU="${LELA_GPU:-0}"
 export LELA_VLLM_MEM="${LELA_VLLM_MEM:-0.72}"
 export LELA_LLM_MODEL="${LELA_LLM_MODEL:-hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4}"
-export LELA_TTS="${LELA_TTS:-mms}"
+# Default voice: AI4Bharat Indic-TTS on the CPU (free, offline). LELA_TTS=sarvam or mms to switch.
+export LELA_TTS="${LELA_TTS:-indictts}"
 export LELA_CONFORMER_DEVICE="${LELA_CONFORMER_DEVICE:-cpu}"
+# Check the voice model before starting vLLM, so a missing download fails in seconds, not minutes.
+if [ "$LELA_TTS" = "indictts" ] && [ ! -d "${LELA_INDICTTS_DIR:-models/indictts/kn}/fastpitch" ]; then
+    echo "LELA_TTS=indictts but no Indic-TTS model in ${LELA_INDICTTS_DIR:-models/indictts/kn}."
+    echo "Set it up with the steps at the top of indictts.py, or start with LELA_TTS=mms ./run_all.sh"; exit 1
+fi
 
 # Fail early with a clear message instead of a vLLM traceback.
 if ! nvidia-smi > /dev/null 2>&1; then
@@ -71,6 +79,9 @@ done
 curl -sf http://127.0.0.1:8001/health > /dev/null || { echo "vLLM not healthy after timeout"; exit 1; }
 echo "--> vLLM is ready!"
 
+if [ "$LELA_TTS" = "sarvam" ] && [ -z "${SARVAM_API_KEY:-}" ]; then
+    echo "LELA_TTS=sarvam but SARVAM_API_KEY is not set: LeLa will use the MMS voice for every line"
+fi
 if [ "$LELA_TTS" = "indicf5" ] && [ ! -f prompts/kannada_teacher.wav ]; then
     echo "Missing prompts/kannada_teacher.wav (needed for LELA_TTS=indicf5)"; exit 1
 fi

@@ -77,6 +77,7 @@
     }
 
     .english-help {
+      white-space: pre-line;
       font-size: 0.95rem;
       color: var(--subtext);
       font-style: italic;
@@ -127,6 +128,7 @@
       cursor: not-allowed;
     }
 
+    .kannada-text, .romanized { white-space: pre-line; }
     .romanized { font-size: 1rem; color: var(--text); opacity: 0.85; }
     .btn-mic { touch-action: none; user-select: none; -webkit-user-select: none; }
     .btn-ask { background: transparent; color: var(--subtext); border: 1px solid #334155; display: none; }
@@ -164,6 +166,12 @@
     .lesson-head { display: flex; flex-direction: column; gap: 0.4rem; }
     .lesson-head-row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
     .done-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    /* AuTut's four lesson parts */
+    .phases { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+    .done-row button.chosen { outline: 3px solid var(--accent); outline-offset: 3px; animation: pulse 1.5s infinite; }
+    .phase-chip { font-size: 0.72rem; padding: 2px 9px; border-radius: 999px; background: #334155; color: var(--subtext); }
+    .phase-chip.done { background: #064e3b; color: #6ee7b7; }
+    .phase-chip.now { background: var(--accent); color: #000; font-weight: 600; }
 
     @keyframes pulse {
       0% { transform: scale(1); }
@@ -178,7 +186,7 @@
   <header>
     <div>
       <h2>LeLa (ಲೆಲಾ)</h2>
-      <p style="color: var(--subtext); font-size: 0.85rem;">Interactive Kannada Tutor</p>
+      <p style="color: var(--subtext); font-size: 0.85rem;">Learn Kannada with AuTut, your Kannada and English tutor</p>
     </div>
     <span id="status" class="status-badge">Standby</span>
   </header>
@@ -209,13 +217,19 @@
       <strong id="lessonTitle"></strong>
       <button id="backBtn" class="link-btn" type="button">All lessons</button>
     </div>
+    <div class="phases" id="phaseChips">
+      <span class="phase-chip" data-phase="concept">1 · Concept intro</span>
+      <span class="phase-chip" data-phase="repeat">2 · Guided repetition</span>
+      <span class="phase-chip" data-phase="roleplay">3 · Micro-roleplay</span>
+      <span class="phase-chip" data-phase="mastery">4 · Mastery check</span>
+    </div>
     <div class="bar" id="lessonBar"><div style="width: 0%"></div></div>
     <div class="muted" id="lessonStepText" style="font-size: 0.8rem;"></div>
   </div>
 
   <!-- Teacher Prompt Area -->
   <div class="speech-box">
-    <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--subtext); letter-spacing: 0.05em;">Tutor</div>
+    <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--subtext); letter-spacing: 0.05em;">AuTut</div>
     <div id="tutorKannada" class="kannada-text" lang="kn">…</div>
     <div id="tutorRoman" class="romanized"></div>
     <div id="englishHelp" class="english-help">Connecting…</div>
@@ -233,12 +247,14 @@
     <button id="askBtn" class="btn-ask">Hold to ask in English</button>
   </div>
   <form id="textRow" class="text-row">
-    <input id="textInput" type="text" autocomplete="off" placeholder="Or type a question / answer (English or ಕನ್ನಡ)">
+    <input id="textInput" type="text" autocomplete="off" placeholder="Or type an answer, or ask anything (English or ಕನ್ನಡ)">
     <button class="btn-primary" type="submit">Send</button>
   </form>
+  <p class="muted" style="text-align: center; font-size: 0.8rem;">You can stop AuTut any time with a question, in English or Kannada. AuTut answers, then carries on.</p>
   <div id="doneRow" class="done-row hidden">
     <button id="nextBtn" class="btn-primary" type="button">Next lesson</button>
-    <button id="doneBackBtn" class="btn-ask" style="display: inline-block;" type="button">All lessons</button>
+    <button id="repeatBtn" class="btn-ask" style="display: inline-block;" type="button">Repeat this lesson</button>
+    <button id="doneBackBtn" class="btn-ask" style="display: inline-block;" type="button">Stop for now</button>
   </div>
   </section>
 </div>
@@ -266,6 +282,7 @@
   let suggested = null;
   let current = null;          // lesson being played
   let lessonDone = false;
+  const PHASE_ORDER = ["concept", "repeat", "roleplay", "mastery"];
 
   function store(key, value) {  // localStorage can be blocked (private windows): never fail on it
     try { value == null ? localStorage.removeItem(key) : localStorage.setItem(key, value); } catch (e) {}
@@ -343,6 +360,8 @@
       if (done) stats.append(el("span", null, `${c.first_try || 0} right first time`));
       if (c.completions) stats.append(el("span", null,
         `Finished ${c.completions}×, best ${c.best_first_try}/${c.total} first time`));
+      if (c.completions && c.mastery) stats.append(el("span", null,
+        `Best mastery check ${c.best_mastery}/${c.mastery.total}`));
       if (c.last_played) stats.append(el("span", null, "Last played " + ago(c.last_played)));
       card.append(stats);
 
@@ -367,10 +386,35 @@
     const done = stepsDone(card);
     $("lessonBar").className = "bar" + (card.status === "completed" ? " done" : "");
     $("lessonBar").firstElementChild.style.width = Math.round(100 * done / card.total) + "%";
+    const m = card.mastery;
     $("lessonStepText").textContent = card.status === "completed"
-      ? `Lesson complete: ${card.first_try} of ${card.total} right first time`
+      ? `Lesson complete: ${card.first_try} of ${card.total} right first time` +
+        (m ? ` · mastery check ${m.right} of ${m.total}` : "")
       : `Step ${Math.min(done + 1, card.total)} of ${card.total}`;
     progress[current.id] = card;
+  }
+  // Highlight the lesson part AuTut is on (parts before it are ticked off).
+  function showPhase(phase) {
+    const at = phase === "end" || phase === "close" ? PHASE_ORDER.length : PHASE_ORDER.indexOf(phase);
+    if (at < 0 && phase) return;
+    for (const chip of $("phaseChips").children) {
+      const i = PHASE_ORDER.indexOf(chip.dataset.phase);
+      chip.className = "phase-chip" + (i < at ? " done" : i === at ? " now" : "");
+    }
+  }
+  // End of lesson: next lesson, this lesson again, or back to the list.
+  // The student said "next" / "repeat" / "stop": light up that button for them to press.
+  function highlightChoice(choice) {
+    const ids = { next: "nextBtn", repeat: "repeatBtn", stop: "doneBackBtn" };
+    for (const [c, id] of Object.entries(ids)) $(id).classList.toggle("chosen", c === choice);
+  }
+  function doChoice(choice) {
+    const i = lessons.findIndex((l) => l.id === current.id);
+    const id = current.id;
+    leaveLesson();
+    if (choice === "next" && i + 1 < lessons.length) startLesson(lessons[i + 1].id, false);
+    else if (choice === "repeat") startLesson(id, true);
+    else loadPicker();
   }
 
   $("nameForm").addEventListener("submit", (e) => {
@@ -381,12 +425,10 @@
     loadPicker();
   });
   $("switchBtn").onclick = () => { store("lela_learner", null); $("nameInput").value = ""; show("whoView"); setStatus("Standby", ""); };
-  $("backBtn").onclick = $("doneBackBtn").onclick = () => { leaveLesson(); loadPicker(); };
-  $("nextBtn").onclick = () => {
-    const i = lessons.findIndex((l) => l.id === current.id);
-    leaveLesson();
-    if (i + 1 < lessons.length) startLesson(lessons[i + 1].id, false); else loadPicker();
-  };
+  $("backBtn").onclick = () => { leaveLesson(); loadPicker(); };
+  $("doneBackBtn").onclick = () => doChoice("stop");
+  $("nextBtn").onclick = () => doChoice("next");
+  $("repeatBtn").onclick = () => doChoice("repeat");
 
   // Mic is locked while the tutor thinks/speaks, so the student never talks over LeLa
   // and the tutor's own voice is not recorded as the student's answer.
@@ -398,13 +440,15 @@
   }
 
   function maybeIdle() {
-    if (turnEnded && !playing && playQueue.length === 0) setBusy(false);
+    if (!(turnEnded && !playing && playQueue.length === 0)) return;
+    setBusy(false);
   }
 
   // Picking a lesson card is the click that lets the browser play audio and open the mic.
   async function startLesson(lessonId, restart) {
     current = lessons.find((l) => l.id === lessonId);
-    lessonDone = false;
+    lessonDone = false; highlightChoice(null);
+    showPhase("concept");
     try {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       if (audioCtx.state === "suspended") await audioCtx.resume();
@@ -477,7 +521,13 @@
       if (p.teacher_kannada) $("tutorKannada").textContent = p.teacher_kannada;
       $("tutorRoman").textContent = p.romanized || "";
       if (p.english_help) $("englishHelp").textContent = p.english_help;
-      if (p.lesson_done) { lessonDone = true; setStatus("Lesson complete"); $("doneRow").classList.remove("hidden"); }
+      if (p.phase) showPhase(p.phase);
+      if (p.lesson_done) {
+        lessonDone = true; setStatus("Lesson complete");
+        $("doneRow").classList.remove("hidden");
+        if (p.choices) $("nextBtn").classList.toggle("hidden", !p.choices.includes("next"));
+      }
+      if (p.choice) highlightChoice(p.choice);  // the student said it: AuTut points to the button
     };
 
     sock.onclose = (e) => {

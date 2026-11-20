@@ -1,17 +1,21 @@
 """LeLa: agentic 1-on-1 Kannada tutor (FastAPI + WebSocket).
 
 Pipeline per student turn:  audio/text -> ASR -> LessonSession (LLM + guardrails) -> TTS -> browser.
-The lesson logic lives in tutor.py; this file only wires models and transport.
+The lesson logic lives in tutor.py (tutor persona: AuTut) and flow.py (the four-part lesson flow:
+concept intro -> guided repetition -> micro-roleplay -> mastery check); this file only wires models
+and transport. At the end of a lesson AuTut asks "next lesson, repeat, or stop?": the turn carries
+"choices", and once the student picks (by voice, typing or a button) the turn carries "choice" and
+the page opens the next lesson, restarts this one, or goes back to the lesson list.
 
 Config (env vars):
   LELA_LLM_URL      vLLM OpenAI endpoint     (default http://127.0.0.1:8001/v1/chat/completions)
   LELA_LLM_MODEL    model name served by vLLM (default hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4)
   LELA_ASR_KN       "indicconformer" | "whisper"   (Kannada ASR backend, default indicconformer)
   LELA_ASR_EN       faster-whisper size for English questions (default "small"; reused if LELA_ASR_KN=whisper)
-  LELA_TTS          "mms" (default, Meta MMS-TTS Kannada: fast) | "parler" (AI4Bharat Indic Parler-TTS: nicer, slow)
+  LELA_TTS          "indictts" (default: AI4Bharat Indic-TTS Kannada on CPU: free, offline, clear pronunciation; see indictts.py)
+                    | "mms" (Meta MMS-TTS Kannada: fast) | "parler" (AI4Bharat Indic Parler-TTS: nicer, slow)
                     | "indicf5" (voice clone of prompts/kannada_teacher.wav)
                     | "sarvam" (Sarvam Bulbul cloud API: most natural; falls back to MMS when offline)
-                    | "indictts" (AI4Bharat Indic-TTS Kannada on CPU: free, offline, clear pronunciation; see indictts.py)
   LELA_INDICTTS_DIR     folder with fastpitch/ and hifigan/ (default ./models/indictts/kn)
   LELA_INDICTTS_SPEAKER "female" (default) | "male"
   LELA_TTS_CACHE_DIR    where Sarvam audio is saved so each line is paid for once (default ./tts_cache)
@@ -26,6 +30,7 @@ Config (env vars):
   LELA_SARVAM_TRANSLATE_MODEL  default sarvam-translate:v1 (mayura:v1 also works)
   LELA_TTS_RATE     MMS speaking rate (default 0.85: a little slower than normal, for a learner)
   LELA_TTS_PAD      seconds of silence added after each spoken line, half as much before (default 0.4)
+  LELA_TTS_PAUSE    seconds AuTut pauses inside a turn, e.g. before "let's go back to where we left off" (default 0.9)
   LELA_TTS_VOICE    Parler voice description (default: Anu, slow and clear)
   LELA_LLM_JSON_SCHEMA  1 (default): ask vLLM for schema-forced JSON; 0 turns it off
   LELA_LLM_KANNADA  0 (default): LeLa speaks only hand-checked Kannada; 1: also speak the LLM's own Kannada
@@ -55,8 +60,8 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse, JSONResponse, Response
 
 from progress import ProgressStore, lesson_summary, load_lessons, user_key
-from translit import transliterate
-from tutor import RESPONSE_SCHEMA, LessonSession, kannada_only, student_display
+from translit import has_kannada, transliterate
+from tutor import PAUSE, RESPONSE_SCHEMA, LessonSession, kannada_only, student_display
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LLM_URL = os.getenv("LELA_LLM_URL", "http://127.0.0.1:8001/v1/chat/completions")
@@ -72,7 +77,7 @@ if os.getenv("LELA_DISABLE_CUDNN", "1") == "1":
 REF_AUDIO_PATH = os.path.join(BASE_DIR, "prompts", "kannada_teacher.wav")
 # Must be the exact words spoken in kannada_teacher.wav, or IndicF5 output degrades.
 REF_AUDIO_TEXT = os.getenv("LELA_REF_TEXT", "ನಮಸ್ಕಾರ, ಎಲ್ಲರಿಗೂ ಸುಸ್ವಾಗತ.")
-TTS_BACKEND = os.getenv("LELA_TTS", "mms")
+TTS_BACKEND = os.getenv("LELA_TTS", "indictts")
 TTS_VOICE = os.getenv(
     "LELA_TTS_VOICE",
     "Anu speaks slowly and clearly at a slightly slow pace, with a clear, close-sounding recording of very high quality.",
@@ -531,13 +536,31 @@ async def tts_test(text: str = "ನಮಸ್ಕಾರ! ನೀವು ಹೇಗಿ
     return Response(wav, media_type="audio/wav")
 
 
+PAUSE_SECS = float(os.getenv("LELA_TTS_PAUSE", "0.9"))  # silence where AuTut pauses inside a turn (tutor.PAUSE)
+
+
+def silence_wav(secs: float) -> bytes:
+    buf = io.BytesIO()
+    sf.write(buf, np.zeros(int(secs * TTS_SAMPLE_RATE), dtype=np.float32), TTS_SAMPLE_RATE, format="WAV")
+    return buf.getvalue()
+
+
 async def send_turn(ws: WebSocket, turn) -> None:
     # Text first so the student can read while audio is synthesized.
     await ws.send_text(json.dumps(turn.to_json(), ensure_ascii=False))
-    audio = await asyncio.to_thread(synthesize, turn.kn)
-    if audio:
-        await ws.send_bytes(audio)
-    await ws.send_text(json.dumps({"type": "turn_end", "tts_error": None if audio else TTS_LAST_ERROR["error"]}))
+    # A turn can hold pauses (tutor.PAUSE, a line break): "answer / pause / now you say it", or
+    # "let's go back to where we left off / pause / the question". Each piece is its own clip;
+    # the page plays the clips in order, with a clip of silence between them.
+    ok, sent = True, False
+    for piece in (p for p in turn.kn.split(PAUSE) if kannada_only(p)):
+        audio = await asyncio.to_thread(synthesize, piece)
+        ok = ok and bool(audio)
+        if audio:
+            if sent:
+                await ws.send_bytes(silence_wav(PAUSE_SECS))
+            await ws.send_bytes(audio)
+            sent = True
+    await ws.send_text(json.dumps({"type": "turn_end", "tts_error": None if ok else TTS_LAST_ERROR["error"]}))
 
 
 async def send_progress(ws: WebSocket, lesson_id: str, card: dict) -> None:
@@ -561,6 +584,7 @@ async def websocket_tutor(ws: WebSocket):
     print(f"[WS] {user}: lesson {lesson['num']} ({lesson_id}) from step {card['step']}")
     session = LessonSession(
         lesson, call_llm, step_idx=card["step"], results=dict(card["results"]),
+        has_next=LESSONS.index(lesson) + 1 < len(LESSONS),
         llm_kannada=os.getenv("LELA_LLM_KANNADA", "0") == "1",
         chat=call_llm_text,
         english_answers=os.getenv("LELA_EN_ANSWERS", "repeat"),
@@ -584,7 +608,7 @@ async def websocket_tutor(ws: WebSocket):
                     continue
                 student_text = data["text"].strip()
                 # Typed input: Kannada script if it contains any, else treat as English.
-                lang = "kn" if kannada_only(student_text) else "en"
+                lang = "kn" if has_kannada(student_text) else "en"
             else:
                 lang, next_audio_lang = next_audio_lang, "kn"
                 student_text = await asyncio.to_thread(transcribe, msg["bytes"], lang)
