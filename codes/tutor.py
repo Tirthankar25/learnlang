@@ -27,7 +27,7 @@ import unicodedata
 from dataclasses import dataclass, field
 from typing import Awaitable, Callable, Optional
 
-from flow import PHASE_LABELS, PHASE_START, key_phrase, phase_of
+from flow import PHASE_LABELS, PHASE_START, READY_LINE_EN, READY_LINE_SPOKEN, key_phrase, phase_of
 from translit import has_kannada, transliterate
 
 # LLM call signature: (messages) -> raw assistant text. Injected so tests can fake it.
@@ -85,8 +85,33 @@ ANSWER_EXAMPLES = [
 ]
 
 
+# Common English words: a real English reply has at least one of them. Garbled decoder output such
+# as "� closures �:// �ın readcrigue. ant." has none, or has replacement characters / URL bits.
+_EN_COMMON = set("""a an the is are am was were be been you your i me my we our it its this that there
+here to of in on at for from with and or but not no yes can will would do does did have has what when
+where who how why which so if as by please thank thanks hello hi sure okay well good great very let say
+said means mean word kannada lesson next any time like just one two three""".split())
+
+
+def is_garbled(text: str) -> bool:
+    """True for model output that is not readable English (bad decoding, a derailed small model)."""
+    t = (text or "").strip()
+    if not t:
+        return False
+    if "\ufffd" in t or "://" in t or re.search(r"[<>{}\[\]|\\^~`]", t):
+        return True
+    letters = [c for c in t if c.isalpha()]
+    if letters and sum(1 for c in letters if c.isascii()) / len(letters) < 0.9:
+        return True   # stray non-English letters ("ın", Cyrillic, CJK ...); Kannada is checked elsewhere
+    words = re.findall(r"[a-z']+", t.lower())
+    return not words or not any(w.strip("'") in _EN_COMMON for w in words)
+
+
 def clean_answer(text: str) -> str:
-    """Tidy a free-text LLM answer: drop junk tokens and labels, keep at most two sentences."""
+    """Tidy a free-text LLM answer: drop junk tokens and labels, keep at most two sentences.
+    Returns "" when the output is garbled, so the caller falls back to a safe reply."""
+    if is_garbled(re.sub(r"[ಀ-೿]+", "", text or "")):
+        return ""
     text = re.sub(r"\s+", " ", (text or "").strip())
     text = re.sub(r"^(AuTut|LeLa|Answer|Teacher)\s*:\s*", "", text, flags=re.I).strip(" \"'")
     text = re.sub(r"\S*_\S*", "", text)            # tokens like "can_hostname"
@@ -125,15 +150,36 @@ END_ASK = ("ಮುಂದಿನ ಪಾಠ ಶುರು ಮಾಡೋಣವೇ, ಈ
            "Shall we start the next lesson, repeat this lesson, or stop for now?")
 END_ASK_LAST = ("ಈ ಪಾಠವನ್ನು ಮತ್ತೆ ಮಾಡೋಣವೇ, ಅಥವಾ ಈಗ ಸಾಕೇ?",
                 "That was the last lesson. Shall we repeat this lesson, or stop for now?")
-# The page starts nothing by itself: AuTut points to the button, which the page highlights.
+# A new learner's first lesson: AuTut introduces itself (English, then the same in Kannada).
+_NUM_EN = "zero one two three four five six seven eight nine ten".split()
+_NUM_KN = ["ಸೊನ್ನೆ", "ಒಂದು", "ಎರಡು", "ಮೂರು", "ನಾಲ್ಕು", "ಐದು", "ಆರು", "ಏಳು", "ಎಂಟು", "ಒಂಬತ್ತು", "ಹತ್ತು"]
+
+
+def welcome_lines(n_lessons: int) -> tuple[str, str]:
+    """(Kannada, English) of AuTut's self-introduction for a new learner."""
+    n_en = _NUM_EN[n_lessons] if 0 < n_lessons < len(_NUM_EN) else str(n_lessons)
+    n_kn = _NUM_KN[n_lessons] if 0 < n_lessons < len(_NUM_KN) else ""
+    en = (f"Hello! My name is AuTut. I am your virtual Kannada teacher. We have {n_en} lessons, and each "
+          "lesson has small parts. You can speak in English whenever you need to, but please keep trying "
+          "in Kannada. That is the best way to learn. Let's begin!")
+    kn = (f"ನಮಸ್ಕಾರ! ನನ್ನ ಹೆಸರು ಆಟುಟ್. ನಾನು ನಿಮ್ಮ ವರ್ಚುವಲ್ ಕನ್ನಡ ಶಿಕ್ಷಕ. ನಮ್ಮಲ್ಲಿ {n_kn} ಪಾಠಗಳಿವೆ, "
+          "ಪ್ರತಿ ಪಾಠದಲ್ಲಿ ಸಣ್ಣ ಭಾಗಗಳಿವೆ. ಬೇಕಾದಾಗ ನೀವು ಇಂಗ್ಲಿಷಿನಲ್ಲಿ ಮಾತನಾಡಬಹುದು, ಆದರೆ ಕನ್ನಡದಲ್ಲೇ "
+          "ಪ್ರಯತ್ನಿಸುತ್ತಿರಿ. ಕಲಿಯಲು ಅದೇ ಉತ್ತಮ ದಾರಿ. ಶುರು ಮಾಡೋಣ!")
+    return re.sub(r"\s+", " ", kn), en
+
+
+# What the student says decides: AuTut confirms the pick, and when it has finished speaking the
+# page opens the next lesson, restarts this one, or goes back to the lesson list by itself.
 END_REPLY = {
-    "next": ("ಸರಿ! ಮುಂದಿನ ಪಾಠಕ್ಕೆ ಹೋಗಲು ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ.",
-             "Great! Press the Next lesson button below to start it."),
-    "repeat": ("ಸರಿ! ಈ ಪಾಠವನ್ನು ಮತ್ತೆ ಮಾಡಲು ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ.",
-               "Sure! Press the Repeat this lesson button below to start again."),
-    "stop": ("ಸರಿ, ಮತ್ತೆ ಸಿಗೋಣ! ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ.",
-             "Okay, see you next time! Your progress is saved. Press Stop for now to go back to the lesson list."),
+    "next": ("ಸರಿ! ಮುಂದಿನ ಪಾಠ ಶುರು ಮಾಡೋಣ.", "Great! Let's start the next lesson."),
+    "repeat": ("ಸರಿ! ಈ ಪಾಠವನ್ನು ಮತ್ತೆ ಮಾಡೋಣ.", "Sure! Let's do this lesson again."),
+    "stop": ("ಸರಿ, ಮತ್ತೆ ಸಿಗೋಣ!", "Okay, see you next time! Your progress is saved."),
 }
+# The reply wasn't one of the choices: say so, and ask again with what to say.
+END_UNCLEAR = ("ಕ್ಷಮಿಸಿ, ನನಗೆ ಅರ್ಥವಾಗಲಿಲ್ಲ.", "Sorry, I didn't catch that.")
+END_HOW = {"next": "ಮುಂದಿನ ಪಾಠ (mundina pāṭha) for the next lesson",
+           "repeat": "ಮತ್ತೆ (matte) to repeat this lesson",
+           "stop": "ಸಾಕು (sāku) to stop for now"}
 RESUME = ("ಸರಿ, ನಾವು ನಿಲ್ಲಿಸಿದ ಕಡೆಯಿಂದ ಮುಂದುವರಿಸೋಣ.", "Let's go back to where we left off.")
 
 # A pause in what AuTut says: app.py speaks the pieces as separate clips with a short silence between.
@@ -153,6 +199,18 @@ _SKIP = re.compile(r"\b(skip|later|no|not now|continue|move on|go on|next)\b", r
 PRACTICE_PASS = 0.75     # similarity for the practice phrase (ASR on a single new word is noisy)
 
 
+# The same choices by sound (see _sound_key: marks, long vowels and double letters folded), so
+# speech recognition variants pass: "ಈಗ ಸಾಕೆ" / "Iga sake" (enough for now), "ಮತ್ತ", "mundina".
+_CHOICE_SOUNDS = [
+    ("stop", {"saku", "sake", "saka", "saki", "sakai", "nilisi", "nilisu", "nilisona", "beda", "bedai",
+              "bye", "bai", "stop", "stap", "enough", "quit", "later", "goodbye", "finish", "end", "done"}),
+    ("repeat", {"mate", "mata", "matomme", "matome", "inome", "inomme", "punah", "punaha", "puna",
+                "repeat", "ripit", "again", "agen", "redo"}),
+    ("next", {"mundina", "mundinadu", "munde", "mundake", "next", "nekst", "hosa", "continue"}),
+]
+_STOP_PHRASES = ("matesigo", "matebetiyago", "hogibar")   # "see you again", "I'll go and come back"
+
+
 def end_choice(text: str, lang: str) -> Optional[str]:
     """"next" / "repeat" / "stop" from the student's reply at the end of a lesson, or None."""
     text = (text or "").strip()
@@ -160,6 +218,12 @@ def end_choice(text: str, lang: str) -> Optional[str]:
         return None  # "When is the next class?" is a question, not a choice
     for choice, rx in _CHOICE_RX:
         if rx.search(text):
+            return choice
+    keys = [_sound_key(w) for w in re.split(r"[\s.,!?।]+", text) if w]
+    if any(p in "".join(keys) for p in _STOP_PHRASES):
+        return "stop"
+    for choice, sounds in _CHOICE_SOUNDS:
+        if any(k in sounds for k in keys):
             return choice
     return None
 
@@ -217,6 +281,13 @@ def phrase_to_say(text: str) -> Optional[str]:
     return None
 
 
+_KN_QUESTION = re.compile(r"(\?|ಏನು|ಯಾರು|ಎಲ್ಲಿ|ಯಾವಾಗ|ಹೇಗೆ|ಯಾಕೆ|ಏಕೆ|ಎಷ್ಟು|ಯಾವ|ಹೇಳ್ತೀರಾ|ಹೇಳುತ್ತೀರಾ)")
+
+
+def looks_like_kn_question(text: str) -> bool:
+    return bool(text) and bool(_KN_QUESTION.search(text))
+
+
 def looks_like_question(text: str) -> bool:
     return bool(text) and (text.rstrip().endswith("?") or bool(_QUESTION.match(text)))
 
@@ -250,23 +321,88 @@ def _norm(text: str) -> str:
     return _PUNCT.sub("", unicodedata.normalize("NFC", text or ""))
 
 
+WORD_OK = 0.75   # a word of the expected phrase counts as said at this similarity
+WORD_JOINED = 0.90  # two expected words said as one ("ನನ್ನಮಗ"): strict, so "ನನ್ನ" alone is not "ನನ್ನ ಮಗ"
+
+
+def _words(text: str) -> list[str]:
+    return [w for w in (_norm(x) for x in unicodedata.normalize("NFC", text or "").split()) if w]
+
+
+def _sound_key(word: str) -> str:
+    """A word by sound with the fine marks folded away: ṇ/n, ḷ/l, ṭ/t, ḍ/d, long/short vowels,
+    aspirates (dh/d) and doubled letters. Speech recognition (and learners) often miss these:
+    ಅನ್ನ for ಅಣ್ಣ ("anna" for "aṇṇa") must still count, while ಮಗಳು stays different from ಮಗ."""
+    key = re.sub(r"([bcdgjkpt])h", r"\1", _roman_key(word))
+    return re.sub(r"(.)\1+", r"\1", key)
+
+
+def _word_sim(a: str, b: str) -> float:
+    """Similarity of two whole words: Kannada letter by letter, else by sound in English letters.
+    Words that sound the same once the fine marks are folded away count as the same word."""
+    ka, kb = _sound_key(a), _sound_key(b)
+    if ka and ka == kb:
+        return 1.0
+    if not (has_kannada(a) and has_kannada(b)):
+        a, b = _roman_key(a), _roman_key(b)
+    return difflib.SequenceMatcher(None, a, b).ratio() if a and b else 0.0
+
+
+def word_check(student: str, expected_phrase: str, mode: str = "contains") -> tuple[float, list[tuple[str, str]]]:
+    """Whole-word check of the student's reply against one expected phrase.
+
+    Every word of the phrase must be said as a whole word: "ನನ್ನ ಮಗಳು" (my daughter) does NOT
+    contain "ನನ್ನ ಮಗ" (my son), although the letters do. Extra words are fine
+    ("ನಮಸ್ಕಾರ, ನಾನು ಚೆನ್ನಾಗಿದ್ದೀನಿ" contains "ನಾನು ಚೆನ್ನಾಗಿದ್ದೀನಿ"). mode "prefix" compares
+    only the start of the reply. Returns (score 0..1, [(expected word, closest word said)] for the
+    words that were not said)."""
+    said, want = _words(student), _words(expected_phrase)
+    if not said or not want:
+        return 0.0, []
+    if mode == "prefix":
+        said = said[: len(want) + 1]
+    # Candidates: each word, and pairs of neighbours (speech recognition splits words: "ಚೆನ್ನಾಗಿ ದ್ದೀನಿ").
+    cands = said + [a + b for a, b in zip(said, said[1:])]
+    sims, close = [], []
+    for w in want:
+        best = max(cands, key=lambda c: _word_sim(w, c))
+        sims.append(_word_sim(w, best))
+        close.append(best)
+    # ... and the other way round: two expected words run together into one ("ನನ್ನಮಗ").
+    for i in range(len(want) - 1):
+        joined = want[i] + want[i + 1]
+        best = max(said, key=lambda c: _word_sim(joined, c))
+        sim = _word_sim(joined, best)
+        if sim >= WORD_JOINED and sim > min(sims[i], sims[i + 1]):
+            sims[i], sims[i + 1] = max(sims[i], sim), max(sims[i + 1], sim)
+    missing = [(w, c) for w, c, x in zip(want, close, sims) if x < WORD_OK]
+    score = min(sims) if missing else sum(sims) / len(sims)
+    return score, missing
+
+
 def match_score(student: str, expected: list[str], mode: str) -> float:
-    """0..1 similarity of the student's Kannada to any expected phrase."""
-    s = _norm(student)
-    if not s or not expected or mode == "llm":
+    """0..1 similarity of the student's Kannada to the closest expected phrase (whole words)."""
+    if not expected or mode == "llm":
         return 0.0
-    best = 0.0
-    for exp in expected:
-        e = _norm(exp)
-        if not e:
-            continue
-        if mode == "prefix":
-            cand = [s[: len(e)]]
-        else:  # "contains": best window of the same length anywhere in the reply
-            cand = [s[i : i + len(e)] for i in range(max(1, len(s) - len(e) + 1))]
-        for c in cand:
-            best = max(best, difflib.SequenceMatcher(None, c, e).ratio())
-    return best
+    return max((word_check(student, exp, mode)[0] for exp in expected), default=0.0)
+
+
+def wrong_word(student: str, expected: list[str], mode: str) -> Optional[tuple[str, str]]:
+    """(expected word, word said) when the student built one of the expected sentences but got a
+    key word wrong (e.g. "ಆ ಹುಡುಗ ನನ್ನ ಮಗಳು" for "ಆ ಹುಡುಗ ನನ್ನ ಮಗ"): most of the phrase is
+    clearly there, one word is not. None when the reply matches or is something else entirely."""
+    if mode == "llm":
+        return None
+    best = None
+    for exp in expected or []:
+        score, missing = word_check(student, exp, mode)
+        n = len(_words(exp))
+        if not missing:
+            return None  # this phrase was said
+        if n >= 2 and n - len(missing) >= max(1, n / 2):
+            if best is None or score > best[0]:
+                best = (score, missing[0])
+    return best[1] if best else None
 
 
 def parse_llm_json(raw: str) -> Optional[dict]:
@@ -284,6 +420,9 @@ def parse_llm_json(raw: str) -> Optional[dict]:
         return None
     data["say_kn"] = kannada_only(data.get("say_kn", ""))
     data["say_en"] = str(data.get("say_en", "")).strip()
+    if is_garbled(re.sub(r"[ಀ-೿]+", "", data["say_en"])):
+        print(f"[LLM] garbled say_en dropped: {data['say_en']!r}")
+        data["say_en"] = ""
     return data
 
 
@@ -317,6 +456,9 @@ class TutorTurn:
     score: Optional[float] = None       # how close the student's Kannada was (0..1), when graded
     speak_en: Optional[str] = None      # English AuTut also SAYS after the Kannada (lesson start), else None
     speak_en_kn: Optional[dict] = None  # {romanized: Kannada} in speak_en, said by the Kannada voice instead
+    # What AuTut says, in order: [("en" | "kn", text), ...], with a pause between parts. None: the
+    # Kannada (kn) and then speak_en, if set. Used for "English first, then Kannada".
+    speech: Optional[list] = None
 
     def to_json(self) -> dict:
         return {
@@ -424,8 +566,11 @@ class LessonSession:
         self._log(TUTOR, turn.kn)
         return turn
 
-    def opening(self) -> TutorTurn:
-        """The tutor starts the class with a greeting, or welcomes the student back mid-lesson."""
+    def opening(self, welcome_lessons: int = 0) -> TutorTurn:
+        """The tutor starts the class with a greeting, or welcomes the student back mid-lesson.
+
+        AuTut says it in English first, pauses, then says it in Kannada. welcome_lessons > 0: a new
+        learner; AuTut first introduces itself (English, pause, Kannada), with that many lessons."""
         if self.step_idx == 0:
             turn = self._prompt_turn()
         else:
@@ -433,8 +578,21 @@ class LessonSession:
             turn = self._prompt_turn(prefix=TutorTurn(
                 welcome, transliterate(welcome), "Welcome back! Let's continue where you left off.", self.step["id"]),
                 announce=True)
-        turn.speak_en = turn.en  # at the start of a lesson AuTut says it in English too, after a pause
+        # At the start of a lesson AuTut says it in English too, after a pause. The "say sari"
+        # line is spoken all in English (no Kannada voice) as the learner asked.
+        # The "Part 1 of 4, concept intro." label stays on screen but is not read out: every new
+        # lesson starts there, so hearing it each time is just noise.
+        spoken = re.sub(r"^Part \w+ of \w+, [^.]*\.\s*", "", turn.en)
+        turn.speak_en = spoken.replace(READY_LINE_EN, READY_LINE_SPOKEN)
         turn.speak_en_kn = self.lesson_phrases()
+        turn.speech = [("en", turn.speak_en), ("kn", turn.kn)]
+        if welcome_lessons > 0:
+            w_kn, w_en = welcome_lines(welcome_lessons)
+            turn.speech = [("en", w_en), ("kn", w_kn)] + turn.speech
+            turn.kn = f"{w_kn}{PAUSE}{turn.kn}"
+            turn.roman = transliterate(turn.kn)
+            turn.en = f"{w_en}\n\n{turn.en}"
+            turn.action = "welcome"
         return self.annotate(turn)
 
     def _record(self, result: str) -> None:
@@ -633,8 +791,18 @@ class LessonSession:
             feedback.roman, feedback.en = transliterate(feedback.kn), f"{feedback.en}\n{ask_en}"
             feedback.choices = self._choices()
             self._log(TUTOR, feedback.kn)
-            return feedback
-        return self._prompt_turn(prefix=feedback, reprompt=True)
+            return self._english_first(feedback, say_en, ask_kn, lang)
+        turn = self._prompt_turn(prefix=feedback, reprompt=True)
+        rest = turn.kn[len(feedback.kn):].strip() if turn.kn.startswith(feedback.kn) else turn.kn
+        return self._english_first(turn, say_en, rest, lang)
+
+    @staticmethod
+    def _english_first(turn: TutorTurn, say_en: str, kn_after: str, lang: str) -> TutorTurn:
+        """The student asked in English: AuTut answers aloud in English, then goes on in Kannada.
+        (The Kannada of the answer stays on screen.)"""
+        if lang == "en" and say_en:
+            turn.speech = [("en", say_en)] + ([("kn", kn_after)] if kannada_only(kn_after) else [])
+        return turn
 
     async def _phrase_asked(self, student_text: str) -> str:
         """The Kannada the student asked about: a phrase of this lesson they wrote in English
@@ -653,8 +821,9 @@ class LessonSession:
         en = f"{say_en}\n{PRACTICE_ASK[1]} {roman}"
         print(f"[Turn] step={self.step['id']} question heard='{student_text}' -> practise '{phrase}'")
         self._log(TUTOR, kn)
-        return TutorTurn(kn, transliterate(kn), en, "END" if self.done else self.step["id"], action="practice",
+        turn = TutorTurn(kn, transliterate(kn), en, "END" if self.done else self.step["id"], action="practice",
                          student=student_text, student_lang=lang, phase=self.phase, lesson_done=self.done)
+        return self._english_first(turn, say_en, kn, lang)
 
     async def _practice_reply(self, student_text: str, lang: str) -> Optional[TutorTurn]:
         """The student's try at the practice phrase. None: it was a new question, handle it normally."""
@@ -799,9 +968,13 @@ class LessonSession:
             if lang == "en" and student_text and looks_like_question(student_text):
                 # The lesson is over, but a question still gets a real answer.
                 return await self._answer_turn(student_text, lang, None)
-            kn, en = self._end_question()
+            ask_kn, ask_en = self._end_question()
+            how = ", ".join(END_HOW[c] for c in self._choices())
+            kn = f"{END_UNCLEAR[0]}{PAUSE}{ask_kn}"
+            en = f"{END_UNCLEAR[1]} {ask_en}\nSay {how}. In English, say next, repeat or stop."
+            print(f"[Turn] end of lesson heard='{student_text}' [{lang}] -> unclear, ask again")
             self._log(TUTOR, kn)
-            return TutorTurn(kn, transliterate(kn), f"{en} You can also tap a button below.", "END",
+            return TutorTurn(kn, transliterate(kn), en, "END",
                              action="ask_choice", student=student_text, student_lang=lang,
                              lesson_done=True, phase="end", choices=self._choices())
 
@@ -824,16 +997,35 @@ class LessonSession:
                                                       st["id"], action="ack", student=student_text,
                                                       student_lang=lang, phase=self.phase))
 
+        clear_match = lang == "kn" and score >= FUZZY_PASS
         decision = None
-        try:
-            decision = parse_llm_json(await self.llm(self._build_messages(student_text, lang, score)))
-        except Exception as err:  # network / server errors: keep the lesson going
-            print(f"[LLM] call failed: {err}")
+        if clear_match and not self.llm_kannada:
+            # The expected phrase was said (extra words such as "ನಮಸ್ಕಾರ" are fine). AuTut's praise is
+            # vetted, so the LLM has nothing to add: skip the call (faster, and it can't derail).
+            decision = {"action": "advance", "say_kn": "", "say_en": ""}
+        else:
+            try:
+                decision = parse_llm_json(await self.llm(self._build_messages(student_text, lang, score)))
+            except Exception as err:  # network / server errors: keep the lesson going
+                print(f"[LLM] call failed: {err}")
         if decision is None:
             decision = self._fallback(score)
 
         # Guardrails: a clear match always passes; a clarification never costs an attempt.
         action = decision["action"]
+        if clear_match and action != "advance":
+            action = decision["action"] = "advance"
+            decision.update(say_kn="ಚೆನ್ನಾಗಿದೆ!", say_en="Well done!")
+        if lang == "kn" and action == "answer" and not looks_like_kn_question(student_text):
+            # A Kannada reply that isn't a question is an attempt at the step, not a side question.
+            action = decision["action"] = "retry"
+        wrong = None
+        if lang == "kn" and not clear_match and st.get("expected_kn"):
+            wrong = wrong_word(student_text, st["expected_kn"], st.get("match", "contains"))
+            if wrong and action == "advance":
+                # The LLM accepted a sentence with a wrong key word ("ನನ್ನ ಮಗಳು" for "ನನ್ನ ಮಗ").
+                print(f"[Turn] step={st['id']} advance vetoed: said '{wrong[1]}' for '{wrong[0]}'")
+                action = decision["action"] = "retry"
         if action == "answer":
             return await self._answer_turn(student_text, lang, decision)
         if lang == "en":
@@ -865,6 +1057,11 @@ class LessonSession:
                 decision["say_kn"], decision["say_en"] = PRAISE[self.turns % len(PRAISE)]
             elif action == "retry":
                 decision["say_kn"], decision["say_en"] = st["hint_kn"], st["hint_en"]
+                if wrong:
+                    need, said = transliterate(wrong[0]), transliterate(wrong[1])
+                    note = (f'Not quite: you said "{said}", but the word here is "{need}".'
+                            if _word_sim(*wrong) >= 0.4 else f'Not quite: the answer needs the word "{need}".')
+                    decision["say_en"] = f'{note} {st["hint_en"]}'
             elif action == "explain":
                 # "How do you say I am fine?" / "How do I pronounce chennagiddini?": AuTut says the
                 # phrase, pauses, has the student say it, then goes back to the step's question.
@@ -873,6 +1070,8 @@ class LessonSession:
                     return self._start_practice(phrase, decision["say_en"], student_text, lang)
                 # Otherwise: the step's hint, then the same question again.
                 decision["say_kn"] = kannada_only(st["hint_kn"]) if lang == "en" else ""
+        if not decision["say_en"]:  # empty or garbled LLM English: a vetted line instead
+            decision["say_en"] = ("Well done!" if action == "advance" else st["hint_en"])
         print(f"[Turn] step={st['id']} heard='{student_text}' [{lang}] score={score:.2f} action={action} "
               f"llm_kn='{llm_kn}' spoken='{decision['say_kn']}'")
 

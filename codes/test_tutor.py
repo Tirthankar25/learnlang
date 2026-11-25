@@ -185,9 +185,10 @@ async def progress_cards():
         assert store.next_lesson("Ana") == lid and store.cards("Ana")[lid]["status"] == "not_started"
         card = store.start("Ana", lid)
         assert LS[0]["steps"][0]["id"] == "intro" and LS[0]["steps"][1]["id"] == "rep_greet"
-        s = LessonSession(LS[0], fake([J("advance"), J("retry"), J("retry")]), step_idx=card["step"])
+        # A clear match of the expected phrase passes without an LLM call, so only "ಏನೋ" uses one.
+        s = LessonSession(LS[0], fake([J("retry")]), step_idx=card["step"])
         await s.handle_student("ಸರಿ", "kn")                           # intro: ready (no LLM call)
-        await s.handle_student("ನಮಸ್ಕಾರ", "kn")                      # repeat greet: first try
+        await s.handle_student("ನಮಸ್ಕಾರ", "kn")                      # repeat greet: first try (no LLM call)
         await s.handle_student("ಏನೋ", "kn")                           # repeat how_are_you: retry ...
         await s.handle_student("ನಾನು ಚೆನ್ನಾಗಿದ್ದೇನೆ", "kn")           # ... then passed
         card = store.update("Ana", lid, s)
@@ -383,7 +384,7 @@ async def side_practice():
 asyncio.run(side_practice()); print("side practice OK")
 
 # "Okay" is not an answer, the goodbye step says what to do after a question, practice also works
-# after the lesson, and the end-of-lesson reply points to the buttons.
+# after the lesson, and the end-of-lesson reply confirms the pick (the page then acts on it).
 async def acks_and_end():
     q_name = FL["steps"][ids.index("name")]["tutor_kn"]
     s = LessonSession(FL, fake([]), step_idx=ids.index("name"))
@@ -408,7 +409,7 @@ async def acks_and_end():
     assert t.kn.endswith("ಅಥವಾ ಈಗ ಸಾಕೇ?") and t.choices and s.choice is None, t.kn
     # "Let's go to the next lesson": AuTut points to the button.
     t = await s.handle_student("lets go to the next lesson", "en")
-    assert t.choice == "next" and "Next lesson button" in t.en and "ಬಟನ್" in t.kn, t.en
+    assert t.choice == "next" and "start the next lesson" in t.en and "ಬಟನ್" not in t.kn, t.en
 asyncio.run(acks_and_end()); print("acks and end OK")
 
 
@@ -439,16 +440,295 @@ asyncio.run(screen_fields()); print("screen fields OK")
 # Lesson start: AuTut's opening is also spoken in English (english_tts.speakable cleans it up).
 def spoken_english():
     from english_tts import speakable
+    from flow import READY_LINE_EN, READY_LINE_SPOKEN
     from progress import load_lessons
     L1 = load_lessons("lessons")[0]
     t = LessonSession(L1, fake([])).opening()
-    assert t.speak_en == t.en and t.to_json()["focus"]
+    assert t.en.startswith("Part 1 of 4, concept intro.")                 # shown on screen ...
+    assert not t.speak_en.startswith("Part") and t.speak_en.startswith("Today:"), t.speak_en  # ... not spoken
+    assert t.speak_en == t.en.replace("Part 1 of 4, concept intro. ", "").replace(READY_LINE_EN, READY_LINE_SPOKEN)
+    assert t.to_json()["focus"]
+    assert "Say ಸರಿ (sari) when you are ready" in t.en  # the screen still shows the word
     line = speakable(t.speak_en)
     assert line and not any("ಀ" <= c <= "೿" for c in line) and "Namaskara, meaning hello" in line, line
-    assert "Say sari when you are ready" in line and "\n" not in line, line
+    assert "Say in Kannada the word, saari, when you are ready" in line and "\n" not in line, line
     back = LessonSession(L1, fake([]), step_idx=4).opening()
     assert back.speak_en.startswith("Welcome back!")
+    from english_tts import segments
+    seg = segments(t.speak_en, t.speak_en_kn)
+    assert ("kn", "ನಮಸ್ಕಾರ") in seg and ("kn", "ಸರಿ") not in seg, seg
+    assert any(lang == "en" and "the word, saari, when you are ready" in x for lang, x in seg), seg
+    assert not any(lang == "en" and "Namask" in x for lang, x in seg), seg
     s = LessonSession(L1, fake([J("advance")]))
     s.opening()
     assert asyncio.run(s.handle_student("ಸರಿ", "kn")).speak_en is None  # only the opening
 spoken_english(); print("spoken english OK")
+
+
+# ---- Answer checking is by whole words, and garbled model output never reaches the learner.
+from tutor import word_check, wrong_word, is_garbled, clean_answer
+SON = ["ಆ ಹುಡುಗ ನನ್ನ ಮಗ", "ನನ್ನ ಮಗ", "ಅವನು ನನ್ನ ಮಗ"]
+FINE = ["ನಾನು ಚೆನ್ನಾಗಿದ್ದೀನಿ", "ಚೆನ್ನಾಗಿದ್ದೀನಿ", "ಚೆನ್ನಾಗಿದ್ದೇನೆ"]
+
+
+def whole_word_matching():
+    # "magaḷu" (daughter) is not "maga" (son), although the letters of ಮಗ are inside ಮಗಳು.
+    assert match_score("ಆ ಹುಡುಗ ನನ್ನ ಮಗಳು", SON, "contains") < 0.8
+    assert match_score("ನನ್ನ ಮಗಳು", SON, "contains") < 0.8
+    assert wrong_word("ಆ ಹುಡುಗ ನನ್ನ ಮಗಳು", SON, "contains") == ("ಮಗ", "ಮಗಳು")
+    assert match_score("ಆ ಹುಡುಗ ನನ್ನ ತಮ್ಮ", SON, "contains") < 0.8          # "my younger brother"
+    assert match_score("ನನ್ನ", SON, "contains") < 0.8                        # half the answer
+    # Right answers still pass: exact, with small speech-recognition slips, words split or run together.
+    for ok in ("ಆ ಹುಡುಗ ನನ್ನ ಮಗ", "ಆ ಹುಡುಗ ನನ್ನ ಮಗ.", "ನನ್ನಮಗ", "ಅವನು ನನ್ನ ಮಗ"):
+        assert match_score(ok, SON, "contains") >= 0.8, ok
+    assert wrong_word("ಆ ಹುಡುಗ ನನ್ನ ಮಗ", SON, "contains") is None
+    # Extra words around the answer are fine: a greeting first, as people do.
+    for ok in ("ನಮಸ್ಕಾರ ನಾನು ಚೆನ್ನಾಗಿದ್ದೀನಿ", "ನಮಸ್ಕಾರ, ನಾನು ಚೆನ್ನಾಗಿದ್ದೀನಿ.", "ನಾನು ಚೆನ್ನಾಗಿ ದ್ದೀನಿ",
+               "ನಾನು ಚೆನ್ನಾಗಿದೀನಿ", "ಚೆನ್ನಾಗಿದ್ದೇನೆ ಧನ್ಯವಾದಗಳು"):
+        assert match_score(ok, FINE, "contains") >= 0.8, ok
+    assert match_score("ನಾನು ಚೆನ್ನಾಗಿಲ್ಲ", FINE, "contains") < 0.8           # "I am not well"
+    assert word_check("ನನ್ನ ಹೆಸರು ತೀರ್ಥಂಕರ್", "ನನ್ನ ಹೆಸರು", "prefix")[0] == 1.0
+    # Garbled decoder output (seen live) is detected; normal English answers are not.
+    assert is_garbled("� closures �:// �ın readcrigue. ant.")
+    assert is_garbled("closures readcrigue ant") and is_garbled("{\"x\": 1}")
+    for ok in ("There is no fixed timetable.", "The capital of Karnataka is Bengaluru.", "Well done!",
+               "Say ಆ ಹುಡುಗ ನನ್ನ ಮಗ (ā huḍuga nanna maga), 'that boy is my son'."):
+        assert not is_garbled(ok.replace("ಆ ಹುಡುಗ ನನ್ನ ಮಗ", "")), ok
+    assert clean_answer("� closures �:// �ın readcrigue. ant.") == ""
+    assert parse_llm_json(J("explain", en="� closures �:// �ın"))["say_en"] == ""
+whole_word_matching(); print("whole-word matching OK")
+
+
+def _lesson(lid):
+    return next(x for x in LS if x["id"] == lid)
+
+
+def _at(lesson, step_id, llm, **kw):
+    s = LessonSession(lesson, llm, **kw)
+    s.step_idx = [st["id"] for st in lesson["steps"]].index(step_id)
+    return s
+
+
+async def strict_checking():
+    L1b = _lesson("lesson_01b_family")
+    # The LLM wrongly accepts "that boy is my daughter": the code vetoes it and coaches the word.
+    lenient = fake([J("advance", en="Very good! The check is done.")] * 3)
+    s = _at(L1b, "check_son_far", lenient)
+    t = await s.handle_student("ಆ ಹುಡುಗ ನನ್ನ ಮಗಳು", "kn")
+    assert t.action == "retry" and not t.passed and s.step["id"] == "check_son_far", (t.action, s.step["id"])
+    assert '"Magaḷu"' in t.en and '"Maga"' in t.en and "check is done" not in t.en, t.en
+    assert s.results.get("check_son_far") is None and s.attempts == 1
+    # The right answer then passes.
+    t = await s.handle_student("ಆ ಹುಡುಗ ನನ್ನ ಮಗ", "kn")
+    assert t.passed and s.results["check_son_far"] == "passed"
+    # Same in the roleplay step.
+    s = _at(L1b, "son_far", fake([J("advance")] * 3))
+    t = await s.handle_student("ನನ್ನ ಮಗಳು", "kn")
+    assert t.action == "retry" and s.step["id"] == "son_far"
+
+    # A fuller right answer ("Hello, I am fine") passes at once. The LLM is not even asked, so it
+    # can't turn the reply into a side question with a garbled answer (seen live).
+    async def no_llm(msgs):
+        raise AssertionError("the LLM must not be called for a clear match")
+    garble = fake(["� closures �:// �ın readcrigue. ant."] * 3)
+    s = _at(L1b, "check_how_are_you", no_llm, chat=garble)
+    t = await s.handle_student("ನಮಸ್ಕಾರ ನಾನು ಚೆನ್ನಾಗಿದ್ದೀನಿ", "kn")
+    assert t.passed and s.step["id"] == "check_father_near" and s.results["check_how_are_you"] == "first_try"
+    assert "closures" not in t.en and "go back to where we left off" not in t.en, t.en
+    # Also when the LLM is used for Kannada (llm_kannada=True) and calls it a side question.
+    s = _at(L1b, "check_how_are_you", fake([J("answer", en="� closures �://")]), chat=garble, llm_kannada=True)
+    t = await s.handle_student("ನಮಸ್ಕಾರ ನಾನು ಚೆನ್ನಾಗಿದ್ದೀನಿ", "kn")
+    assert t.passed and s.step["id"] == "check_father_near" and "closures" not in t.en, t.en
+    # A Kannada reply that isn't a question is an attempt, never a detour, even if the LLM says "answer".
+    s = _at(L1b, "check_how_are_you", fake([J("answer", en="x")]), chat=garble)
+    t = await s.handle_student("ನಾನು ಚೆನ್ನಾಗಿಲ್ಲ", "kn")
+    assert t.action == "retry" and s.step["id"] == "check_how_are_you" and "closures" not in t.en, t.en
+    # A garbled answer to a real English question becomes a polite "please ask again".
+    s = _at(L1b, "check_how_are_you", fake([J("answer", en="x")]), chat=garble)
+    t = await s.handle_student("When is the next class?", "en")
+    assert "closures" not in t.en and "ask me again" in t.en and s.step["id"] == "check_how_are_you", t.en
+    # Garbled English in a retry/explain reply falls back to the step's own hint.
+    s = _at(L1b, "check_how_are_you", fake([J("retry", en="� closures �://")]), llm_kannada=True)
+    t = await s.handle_student("ಏನೋ", "kn")
+    assert t.en == s.step["hint_en"], t.en
+asyncio.run(strict_checking()); print("strict checking OK")
+
+
+def push_to_talk_page():
+    """The mic never cuts the learner off on a pause: tap to start / tap to send, or hold the spacebar."""
+    import re as _re
+    page = open("index.html", encoding="utf-8").read()
+    assert "silenceMs" not in page and "noSpeechMs" not in page
+    assert _re.search(r'addEventListener\("keydown"[^\n]*\n[^\n]*e\.code !== "Space"', page)
+    assert _re.search(r'addEventListener\("keyup"[^\n]*\n[^\n]*e\.code !== "Space"', page)
+    assert "spaceHeld && recording()) finishRecording()" in page
+push_to_talk_page(); print("push-to-talk page OK")
+
+
+def folded_marks():
+    """Missing fine marks (ṇ/n, ḷ/l, long vowels, aspirates) still pass; a different word does not."""
+    BRO = ["ಅವರು ನನ್ನ ಅಣ್ಣ", "ನನ್ನ ಅಣ್ಣ"]
+    assert match_score("ಅವರು ನನ್ನ ಅನ್ನ", BRO, "contains") == 1.0             # "anna" for "aṇṇa" (seen live)
+    assert match_score("ಅವರು ನನ್ನ ಅಣ್ಣ", BRO, "contains") == 1.0
+    assert match_score("ಅವರು ನನ್ನ ತಮ್ಮ", BRO, "contains") < 0.8              # younger brother: wrong
+    assert match_score("ನಾನು ಚೆನ್ನಾಗಿದ್ದಿನಿ", FINE, "contains") >= 0.8      # short i for long ī
+    assert match_score("ದನ್ಯವಾದಗಳು", ["ಧನ್ಯವಾದಗಳು"], "contains") == 1.0      # no aspirate
+    assert match_score("ನನ್ನ ಮಗಲು", ["ನನ್ನ ಮಗಳು"], "contains") == 1.0        # l for ḷ
+    assert match_score("ನನ್ನ ಮಗಳು", SON, "contains") < 0.8                    # daughter is still not son
+    assert match_score("ಆ ಹುಡುಗ ನನ್ನ ಮಗಲು", SON, "contains") < 0.8
+folded_marks(); print("folded marks OK")
+
+
+async def folded_marks_session():
+    L1c = _lesson("lesson_01c_family_more")
+    rep = next(st["id"] for st in L1c["steps"] if st.get("phase") == "repeat" and "ಅಣ್ಣ" in st["expected_kn"][0])
+    async def no_llm(msgs):
+        raise AssertionError("the LLM must not be called for a clear match")
+    s = _at(L1c, rep, no_llm)
+    t = await s.handle_student("ಅವರು ನನ್ನ ಅನ್ನ", "kn")
+    assert t.passed and "Not quite" not in t.en and s.results[rep] == "first_try", t.en
+asyncio.run(folded_marks_session()); print("folded marks session OK")
+
+
+async def spoken_end_choice():
+    """At "next lesson, repeat, or stop?" what the learner says decides; unclear replies are asked again."""
+    for said, want in [("ಈಗ ಸಾಕೆ", "stop"), ("ಈಗ ಸಾಕೇ", "stop"), ("ಈಗ ಸಾಕು", "stop"), ("ಸಾಕ", "stop"),
+                       ("ಮತ್ತೆ ಸಿಗೋಣ", "stop"), ("ಮತ್ತ", "repeat"), ("ಮತ್ತೆ ಮಾಡೋಣ", "repeat"),
+                       ("ಮುಂದಿನದು", "next"), ("ಮುಂದಿನ ಪಾಟ", "next"), ("Iga sake", "stop"), ("Iga sāku", "stop"),
+                       ("mundina paata", "next"), ("matte", "repeat"), ("next", "next"), ("stop", "stop"),
+                       ("ಸ್ಟಾಪ್", "stop"), ("ನೆಕ್ಸ್ಟ್", "next"), ("ರಿಪೀಟ್", "repeat")]:  # last three: English said in Kannada mode
+        lang = "kn" if has_kannada(said) else "en"
+        assert end_choice(said, lang) == want, (said, end_choice(said, lang))
+    for said in ("ಹ್ಮ್", "ಈಗ", "ನಮಸ್ಕಾರ", "banana"):
+        assert end_choice(said, "kn" if has_kannada(said) else "en") is None, said
+    s = LessonSession(FL, fake([J("advance")]), step_idx=ids.index("goodbye"))
+    await s.handle_student("ಧನ್ಯವಾದಗಳು", "kn")
+    t = await s.handle_student("ಈಗ ಸಾಕೆ", "kn")       # seen live: was not understood
+    assert t.action == "choice" and t.choice == "stop" and "button" not in t.en.lower(), (t.action, t.en)
+    s.choice = None
+    t = await s.handle_student("ನಮಸ್ಕಾರ", "kn")       # not a choice: say so, ask again, say how
+    assert t.action == "ask_choice" and s.choice is None and t.choices
+    assert t.en.startswith("Sorry, I didn't catch that.") and "ಸಾಕು (sāku)" in t.en and "tap" not in t.en, t.en
+    assert t.kn.startswith("ಕ್ಷಮಿಸಿ") and t.kn.endswith("ಸಾಕೇ?"), t.kn
+    s2 = LessonSession(FL, fake([J("advance")]), step_idx=ids.index("goodbye"), has_next=False)
+    await s2.handle_student("ಧನ್ಯವಾದಗಳು", "kn")
+    t = await s2.handle_student("ಹ್ಮ್", "kn")
+    assert "mundina" not in t.en and "matte" in t.en, t.en
+    page = open("index.html", encoding="utf-8").read()
+    assert "pendingChoice" in page  # the page carries out a spoken pick once AuTut has finished
+asyncio.run(spoken_end_choice()); print("spoken end choice OK")
+
+
+def pause_page():
+    """Pause freezes the lesson (voice, mic, input; server messages wait); Resume says the last sentence again."""
+    page = open("index.html", encoding="utf-8").read()
+    for needed in ('id="pauseBtn"', 'id="pauseLabel"', "function pauseLesson()",
+                   "async function resumeLesson()", "heldMsgs.push(event)",
+                   "paused ? resumeLesson() : pauseLesson()",                       # one button, both ways
+                   "body.paused * { pointer-events: none !important; }",            # nothing else reacts
+                   "body.paused #pauseBtn, body.paused #pauseBtn * { pointer-events: auto !important"):
+        assert needed in page, needed
+    assert "pauseVeil" not in page and "resumeBtn" not in page                # no separate pause screen
+    # The button sits in the left panel, right after "Reset this lesson".
+    assert page.index('id="resetBox"') < page.index('id="pauseBtn"') < page.index("</aside>")
+    pause = page[page.index("function pauseLesson()"):page.index("async function resumeLesson()")]
+    assert "stopRecorder(true)" in pause and "currentSrc.stop()" in pause     # mic dropped, voice stopped
+    assert "resumeFrom = waiting ? -1 : lastTurnAudio.length - 1" in pause
+    resume = page[page.index("async function resumeLesson()"):page.index("function showPaused(")]
+    assert "lastTurnAudio[i]" in resume and "Math.max(0, resumeFrom)" in resume  # the last sentence again
+    assert '$("micBtn").disabled = paused ||' in page and '$("textInput").disabled = paused ||' in page
+    assert "if (paused || playing || playQueue.length === 0) return;" in page
+pause_page(); print("pause page OK")
+
+
+# ---- What AuTut says aloud, and in which order (English first at lesson start; English answers).
+from tutor import welcome_lines
+
+
+def _send_turn_fn():
+    """app.send_turn without loading the speech models: its source, run against stand-ins."""
+    import ast
+    src = open("app.py", encoding="utf-8").read()
+    fn = next(n for n in ast.parse(src).body if isinstance(n, ast.AsyncFunctionDef) and n.name == "send_turn")
+    ns = {"json": json, "asyncio": asyncio, "PAUSE": "\n", "kannada_only": kannada_only, "EN_GAP_SECS": 1.0,
+          "PAUSE_SECS": 0.9, "WebSocket": object, "TTS_LAST_ERROR": {"error": None}, "M": {"en_tts": True},
+          "synthesize": lambda t: ("KN", t), "synthesize_en": lambda t: ("EN", t),
+          "silence_wav": lambda secs: ("GAP", secs)}
+    exec(compile(ast.Module(body=[fn], type_ignores=[]), "app.py", "exec"), ns)
+    return ns
+
+
+class _WS:
+    def __init__(self): self.out = []
+    async def send_text(self, t): self.out.append(("TEXT", json.loads(t).get("type")))
+    async def send_bytes(self, b): self.out.append(b)
+
+
+async def _spoken(turn):
+    ns = _send_turn_fn(); ws = _WS()
+    await ns["send_turn"](ws, turn)
+    return [x for x in ws.out if x[0] in ("KN", "EN", "GAP")]
+
+
+async def speech_order():
+    L1 = LS[0]
+    # Lesson start: English first, a pause, then the Kannada.
+    t = LessonSession(L1, fake([])).opening()
+    assert t.speech[0][0] == "en" and t.speech[1] == ("kn", t.kn)
+    out = await _spoken(t)
+    first_kn = next(i for i, x in enumerate(out) if x[0] == "KN" and "ಇವತ್ತಿನ" in x[1])
+    assert out[0][0] == "EN" and out[first_kn - 1][0] == "GAP", out[:4]
+    assert not any(x[0] == "EN" for x in out[first_kn:]), "no English after the Kannada starts"
+    # A new learner: AuTut introduces itself in English, pause, in Kannada, then the lesson start.
+    t = LessonSession(L1, fake([])).opening(welcome_lessons=5)
+    w_kn, w_en = welcome_lines(5)
+    assert "five lessons" in w_en and "AuTut" in w_en and "ಐದು ಪಾಠಗಳಿವೆ" in w_kn and "keep trying in Kannada" in w_en
+    assert t.speech[:2] == [("en", w_en), ("kn", w_kn)] and t.speech[2][0] == "en" and t.action == "welcome"
+    assert t.en.startswith(w_en) and t.kn.startswith(w_kn)
+    out = await _spoken(t)
+    # Welcome in English, welcome in Kannada, the lesson start in English (its Kannada phrases are said
+    # by the Kannada voice), and last the lesson start in Kannada with no English after it.
+    spoken = [x for x in out if x[0] != "GAP"]
+    assert spoken[0][0] == "EN" and spoken[0][1].startswith("Hello! My name is AuTut"), spoken[0]
+    i_wkn = spoken.index(("KN", w_kn))
+    assert all(x[0] == "EN" for x in spoken[:i_wkn]) and spoken[i_wkn + 1][0] == "EN"
+    i_lkn = next(i for i, x in enumerate(spoken) if x[0] == "KN" and "ಇವತ್ತಿನ" in x[1])
+    assert i_lkn > i_wkn + 1 and not any(x[0] == "EN" for x in spoken[i_lkn:])
+    # The welcome's Kannada starts after a pause.
+    k = next(i for i, x in enumerate(out) if x == ("KN", w_kn))
+    assert out[k - 1][0] == "GAP" and out[k + 1][0] == "GAP", out[k - 1:k + 2]
+    # A returning learner gets no introduction.
+    assert LessonSession(L1, fake([])).opening().action != "welcome"
+    # During the lesson: Kannada only.
+    s = LessonSession(L1, fake([J("advance")])); s.opening()
+    t = await s.handle_student("ಸರಿ", "kn")
+    assert t.speech is None and t.speak_en is None and all(x[0] in ("KN", "GAP") for x in await _spoken(t))
+    # The student asks in English: the answer is spoken in English, then back to the lesson in Kannada.
+    async def chat(msgs): return "There is no fixed timetable."
+    s = LessonSession(L1, fake([J("answer")]), chat=chat); s.step_idx = 2
+    t = await s.handle_student("When is the next class?", "en")
+    assert t.speech[0] == ("en", "There is no fixed timetable.") and t.speech[1][0] == "kn", t.speech
+    assert s.step["tutor_kn"] in t.speech[1][1] and "ಕ್ಷಮಿಸಿ" not in t.speech[1][1]
+    out = await _spoken(t)
+    assert out[0] == ("EN", "There is no fixed timetable.") and out[1][0] == "GAP" and out[-1][0] == "KN"
+    # A Kannada question is still answered in Kannada.
+    s = LessonSession(L1, fake([J("answer", en="I am an AI tutor.")]), chat=chat); s.step_idx = 2
+    t = await s.handle_student("ನೀವು ಯಾರು?", "kn")
+    assert not t.speech or t.speech[0][0] != "en"
+asyncio.run(speech_order()); print("speech order OK")
+
+
+def lesson_layout_page():
+    """Left group (round watch on top) | divider | right group: boxed phrase panel, then a boxed chat panel."""
+    page = open("index.html", encoding="utf-8").read()
+    aside = page[page.index('<aside class="panel">'):page.index("</aside>")]
+    assert aside.index('class="card watch-card"') < aside.index('class="spine card"')    # watch on top
+    for hand in ('id="handH"', 'id="handM"', 'id="handS"'):
+        assert hand in aside
+    assert "function tickWatch()" in page and "setInterval(() => { tickClock(); tickWatch(); }, 1000)" in page
+    stage = page[page.index('<main class="stage">'):page.index("</main>")]
+    assert stage.index('class="card stage-top"') < stage.index('id="focus"') < stage.index('class="card chat-panel"') < stage.index('id="feed"')
+    assert ".stage { border-left: 2px solid var(--border-strong)" in page                 # the vertical line
+    assert '"AuTut is getting ready…"' in page                                            # the phrase box is never blank
+assert True
+lesson_layout_page(); print("lesson layout page OK")

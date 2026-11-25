@@ -42,7 +42,6 @@ Config (env vars):
   LELA_EN_SPEED     tiny-voca speed, 0.25 to 4 (default 0.8: slower than normal, for a learner)
   LELA_EN_PITCH     tiny-voca pitch shift (default -0.1, a little deeper; 0.058 is about one semitone, 0 = normal)
   LELA_EN_VOLUME    tiny-voca loudness, 0 to 1 (default 0.7: a little quieter than the Kannada voice)
-  set LELA_EN_VOLUME (0.5 is quieter, 1.0 is the original level) or LELA_EN_PITCH (-0.15 is deeper, 0 is normal).
   LELA_EN_GAP       seconds of silence between the Kannada and the English (default 1.0)
   LELA_LOG_PARTIAL  1: log each live-preview transcription with its size and time (to measure ASR speed)
   LELA_LESSONS_DIR  folder of lesson1.json, lesson2.json, ... (default ./lessons)
@@ -643,30 +642,49 @@ async def send_turn(ws: WebSocket, turn) -> None:
     # A turn can hold pauses (tutor.PAUSE, a line break): "answer / pause / now you say it", or
     # "let's go back to where we left off / pause / the question". Each piece is its own clip;
     # the page plays the clips in order, with a clip of silence between them.
-    ok, sent = True, False
-    for piece in (p for p in turn.kn.split(PAUSE) if kannada_only(p)):
-        audio = await asyncio.to_thread(synthesize, piece)
-        ok = ok and bool(audio)
-        if audio:
-            if sent:
-                await ws.send_bytes(silence_wav(PAUSE_SECS))
-            await ws.send_bytes(audio)
-            sent = True
-    # Lesson start: the same in English, after a pause. turn_end comes last, so the mic stays
-    # locked until the English has played too.
-    # Kannada words inside the English are said by the Kannada voice (tiny-voca can't say them).
-    if getattr(turn, "speak_en", None) and M.get("en_tts"):
+    state = {"ok": True, "sent": False}
+
+    async def say_kn(text: str, gap: float) -> None:
+        first = True
+        for piece in (p for p in text.split(PAUSE) if kannada_only(p)):
+            audio = await asyncio.to_thread(synthesize, piece)
+            state["ok"] = state["ok"] and bool(audio)
+            if audio:
+                if state["sent"]:
+                    await ws.send_bytes(silence_wav(gap if first else PAUSE_SECS))
+                await ws.send_bytes(audio)
+                state["sent"], first = True, False
+
+    async def say_en(text: str, gap: float) -> None:
+        # Kannada words inside the English are said by the Kannada voice (tiny-voca can't say them).
+        if not (text and M.get("en_tts")):
+            return
         from english_tts import segments
 
         first = True
-        for lang, piece in segments(turn.speak_en, getattr(turn, "speak_en_kn", None)):
+        for lang, piece in segments(text, getattr(turn, "speak_en_kn", None)):
             audio = await asyncio.to_thread(synthesize_en if lang == "en" else synthesize, piece)
             if not audio:
                 continue
-            if first and sent:
-                await ws.send_bytes(silence_wav(EN_GAP_SECS))
-            first = False
+            if first and state["sent"]:
+                await ws.send_bytes(silence_wav(gap))
             await ws.send_bytes(audio)
+            state["sent"], first = True, False
+
+    speech = getattr(turn, "speech", None)
+    if speech and not M.get("en_tts"):
+        speech = [(lang, text) for lang, text in speech if lang == "kn"] or [("kn", turn.kn)]
+    if speech:
+        # In order, with a pause between parts: e.g. lesson start = English, pause, Kannada;
+        # an English question = the answer in English, pause, back to the lesson in Kannada.
+        for lang, text in speech:
+            await (say_en if lang == "en" else say_kn)(text, EN_GAP_SECS)
+    else:
+        await say_kn(turn.kn, PAUSE_SECS)
+        if getattr(turn, "speak_en", None):
+            await say_en(turn.speak_en, EN_GAP_SECS)
+    ok = state["ok"]
+    # turn_end comes last, so the mic stays locked until everything has played.
     await ws.send_text(json.dumps({"type": "turn_end", "tts_error": None if ok else TTS_LAST_ERROR["error"]}))
 
 
@@ -687,6 +705,8 @@ async def websocket_tutor(ws: WebSocket):
         await ws.close(code=4404, reason=f"No lesson {lesson_id}")
         return
     lesson = LESSONS_BY_ID[lesson_id]
+    # A new learner (nothing started yet) first hears AuTut introduce itself.
+    new_learner = all(c.get("status") == "not_started" for c in PROGRESS.cards(user).values())
     card = PROGRESS.start(user, lesson_id, restart=ws.query_params.get("restart") == "1")
     print(f"[WS] {user}: lesson {lesson['num']} ({lesson_id}) from step {card['step']}")
     session = LessonSession(
@@ -701,7 +721,10 @@ async def websocket_tutor(ws: WebSocket):
     next_is_partial = False   # the next audio clip is a live preview, not the student's answer
     try:
         await send_progress(ws, lesson_id, card)
-        await send_turn(ws, session.opening())  # tutor opens the class with a greeting
+        # Tutor opens the class with a greeting (a new learner: AuTut introduces itself first).
+        groups = len({re.match(r"\d+", str(l.get("num", ""))).group() for l in LESSONS
+                      if re.match(r"\d+", str(l.get("num", "")))})
+        await send_turn(ws, session.opening(welcome_lessons=groups if new_learner else 0))
         while True:
             msg = await ws.receive()
             if msg["type"] == "websocket.disconnect":

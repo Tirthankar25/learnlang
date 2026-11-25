@@ -48,6 +48,10 @@ PHASE_START = {
     "close": ("ಪರೀಕ್ಷೆ ಮುಗಿಯಿತು.", "The check is done."),
 }
 
+# The intro's last line: shown with the Kannada word, but spoken in English only (the English voice
+# says the word itself, so the Kannada voice does not cut in mid-sentence).
+READY_LINE_EN = "Say ಸರಿ (sari) when you are ready"
+READY_LINE_SPOKEN = "Say in Kannada the word, saari, when you are ready"
 READY_KN = ["ಸರಿ", "ಹೌದು", "ಆಯ್ತು", "ಓಕೆ", "ಸಿದ್ಧ", "ರೆಡಿ", "ಶುರು ಮಾಡೋಣ"]
 _SAY = re.compile(r"\s*ಎಂದು\s+(ಹೇಳಿ|ಕೇಳಿ)")
 _LEAD = re.compile(r"^(ಉದಾಹರಣೆಗೆ|ಅಥವಾ)[,\s]*")
@@ -109,7 +113,7 @@ def _intro_step(lesson: dict, phrases) -> dict:
     kn = _clean_kn(f"ನಮಸ್ಕಾರ! ಇವತ್ತಿನ ಪಾಠದ ಮುಖ್ಯ ಮಾತುಗಳು. {spoken} ಸಿದ್ಧವೇ?")
     listed = "; ".join(f"{transliterate(p)}" + (f" = {en}" if en else "") for p, en, _ in phrases)
     en = (f"Part 1 of 4, concept intro. Today: {lesson.get('summary_en') or lesson.get('title', '')}\n"
-          f"Key phrases: {listed}.\nSay ಸರಿ (sari) when you are ready, or ask me anything in English or Kannada.")
+          f"Key phrases: {listed}.\n{READY_LINE_EN}, or ask me anything in English or Kannada.")
     return {
         "id": "intro", "phase": "concept", "tutor_kn": kn, "tutor_en": en,
         "goal_en": "The student says they are ready (any reply that is not a question).",
