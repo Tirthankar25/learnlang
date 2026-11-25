@@ -732,3 +732,20 @@ def lesson_layout_page():
     assert '"AuTut is getting ready…"' in page                                            # the phrase box is never blank
 assert True
 lesson_layout_page(); print("lesson layout page OK")
+
+
+def tts_full_stop():
+    """Practice phrases reach the TTS with their full stop stripped. Indic-TTS then ends the audio
+    mid-vowel ('ಪುಸ್ತಕ' heard as 'pustak'), so synthesize() puts one back."""
+    import ast
+    src = open("app.py", encoding="utf-8").read()
+    fn = next(n for n in ast.parse(src).body if isinstance(n, ast.FunctionDef) and n.name == "end_sentence")
+    ns = {}
+    exec(compile(ast.Module(body=[fn], type_ignores=[]), "app.py", "exec"), ns)
+    end = ns["end_sentence"]
+    assert end("ಹೌದು, ಇದು ನನ್ನ ಪುಸ್ತಕ") == "ಹೌದು, ಇದು ನನ್ನ ಪುಸ್ತಕ."
+    assert end("ನೀವು ಹೇಗಿದ್ದೀರಿ?") == "ನೀವು ಹೇಗಿದ್ದೀರಿ?" and end("ನಮಸ್ಕಾರ!") == "ನಮಸ್ಕಾರ!"
+    assert end("ಸರಿ.") == "ಸರಿ." and end("ಸರಿ,") == "ಸರಿ." and end("") == ""
+    body = src[src.index("def synthesize(text: str)"):src.index("\nLLM_JSON_SCHEMA =")]
+    assert body.index("kannada_only(text)") < body.index("end_sentence(text)") < body.index("TTS_CACHE")
+tts_full_stop(); print("tts full stop OK")

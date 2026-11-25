@@ -359,6 +359,14 @@ def split_sentences(text: str) -> list[str]:
     return [p.strip() for p in re.findall(r"[^.!?।]+[.!?।]*", text) if p.strip(" .!?।")]
 
 
+def end_sentence(text: str) -> str:
+    """'ಹೌದು, ಇದು ನನ್ನ ಪುಸ್ತಕ' -> 'ಹೌದು, ಇದು ನನ್ನ ಪುಸ್ತಕ.' Practice phrases reach the TTS with their
+    full stop stripped, and without one the models treat the line as unfinished and swallow the
+    last vowel (ಪುಸ್ತಕ comes out as 'pustak'). A trailing comma becomes a full stop too."""
+    text = text.rstrip(" ,")
+    return text if not text or text[-1] in ".!?।" else text + "."
+
+
 def _run_tts(sentence: str):
     if TTS_BACKEND == "parler":
         desc = M["tts_desc_tok"](TTS_VOICE, return_tensors="pt").to(DEVICE)
@@ -505,6 +513,7 @@ def synthesize(text: str) -> bytes:
     text = kannada_only(text)
     if not text:
         return b""
+    text = end_sentence(text)
     if text in TTS_CACHE:
         return TTS_CACHE[text]
     try:
